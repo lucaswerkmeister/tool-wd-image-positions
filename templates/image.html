@@ -1,0 +1,22 @@
+<h2><a href="https://commons.wikimedia.org/wiki/File:{{ image_title }}">{{ image_title }}</a></h2>
+<div class="image">
+  <img src="https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title }}">
+  {% set depicteds_without_region = [] %}
+  {% for depicted in depicteds %}
+  {% if depicted.iif_region %}
+  <div class="depicted" style="{{ depicted.iif_region | iif_region_to_style }}"><a href="http://www.wikidata.org/entity/{{ depicted.item_id }}">{{ depicted.label }}</a></div>
+  {% else %}
+  {% do depicteds_without_region.append(depicted) %}
+  {% endif %}
+  {% endfor %}
+</div>
+{% if depicteds_without_region %}
+<div>
+  Depicted, but with no region specified:
+  <ul>
+    {% for depicted in depicteds_without_region %}
+    <li><a href="http://www.wikidata.org/entity/{{ depicted.item_id }}">{{ depicted.label }}</a></li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
