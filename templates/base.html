@@ -17,7 +17,7 @@
         <!-- <li><a href="https://phabricator.wikimedia.org/source/tool-wd-image-positions/" class="nav-link">Source code</a></li> -->
       </ul>
     </nav>
-    <main class="container-fluid mt-3">
+    <main {% block main_tag_attributes %}class="container-fluid mt-3"{% endblock main_tag_attributes %}>
       {% block main %}
       {% endblock main %}
     </main>

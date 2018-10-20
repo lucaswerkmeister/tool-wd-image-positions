@@ -9,9 +9,17 @@ app = flask.Flask(__name__)
 app.jinja_env.add_extension('jinja2.ext.do')
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    return 'Hello, World!'
+    if flask.request.method == 'POST':
+        if 'item_id' in flask.request.form:
+            item_id = flask.request.form['item_id']
+            property_id = flask.request.form.get('property_id')
+            if property_id:
+                return flask.redirect(flask.url_for('item_and_property', item_id=item_id, property_id=property_id))
+            else:
+                return flask.redirect(flask.url_for('item', item_id=item_id))
+    return flask.render_template('index.html')
 
 @app.route('/item/<item_id>')
 def item(item_id):
