@@ -50,9 +50,11 @@ def iif_region_to_style(iif_region):
         return 'left: 0px; top: 0px; width: 100%; height: 100%;'
     if iif_region.startswith('pct:'):
         left, top, width, height = iif_region[len('pct:'):].split(',')
-        return 'left: %s%%; top: %s%%; width: %s%%; height: %s%%;' % (left, top, width, height)
+        z_index = int(1_000_000 / (float(width)*float(height)))
+        return 'left: %s%%; top: %s%%; width: %s%%; height: %s%%; z-index: %s;' % (left, top, width, height, z_index)
     left, top, width, height = iif_region.split(',')
-    return 'left: %spx; top: %spx; width: %spx; height: %spx;' % (left, top, width, height)
+    z_index = int(1_000_000_000 / (int(width)*int(height)))
+    return 'left: %spx; top: %spx; width: %spx; height: %spx; z-index: %s;' % (left, top, width, height, z_index)
     
 
 def best_value(item_data, property_id):
