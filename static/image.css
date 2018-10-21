@@ -20,7 +20,7 @@
     /*
      * make the full area visible – this is what this tool is used for, after all
      */
-    border: solid gold 2px;
+    outline: solid gold 2px;
     /* 
      * don’t show this element by default (unless the user hovers over the image, see below)
      */
@@ -32,6 +32,15 @@
      * do show this element if the image is hovered
      */
     visibility: visible;
+}
+
+.image .depicted:hover {
+    /*
+     * make the “active” area even more visible – many overlapping areas can be hard to distinguish
+     * (note that outlines, unlike borders, never occupy space,
+     * so changing the width will not reflow the link text)
+     */
+    outline-width: 5px;
 }
 
 .image .depicted a[href] {
