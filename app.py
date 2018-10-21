@@ -20,13 +20,13 @@ def index():
                 return flask.redirect(flask.url_for('item_and_property', item_id=item_id, property_id=property_id))
             else:
                 return flask.redirect(flask.url_for('item', item_id=item_id))
-        if 'iif_region' in flask.request.form:
-            iif_region = flask.request.form['iif_region']
+        if 'iiif_region' in flask.request.form:
+            iiif_region = flask.request.form['iiif_region']
             property_id = flask.request.form.get('property_id')
             if property_id:
-                return flask.redirect(flask.url_for('iif_region_and_property', iif_region=iif_region, property_id=property_id))
+                return flask.redirect(flask.url_for('iiif_region_and_property', iiif_region=iiif_region, property_id=property_id))
             else:
-                return flask.redirect(flask.url_for('iif_region', iif_region=iif_region))
+                return flask.redirect(flask.url_for('iiif_region', iiif_region=iiif_region))
     return flask.render_template('index.html')
 
 @app.route('/item/<item_id>')
@@ -37,13 +37,13 @@ def item(item_id):
 def item_and_property(item_id, property_id):
     return flask.render_template('item.html', **load_item_and_property(item_id, property_id))
 
-@app.route('/iif_region/<iif_region>')
-def iif_region(iif_region):
-    return iif_region_and_property(iif_region, 'P18')
+@app.route('/iiif_region/<iiif_region>')
+def iiif_region(iiif_region):
+    return iiif_region_and_property(iiif_region, 'P18')
 
-@app.route('/iif_region/<iif_region>/<property_id>')
-def iif_region_and_property(iif_region, property_id):
-    query = 'SELECT DISTINCT ?item WHERE { ?item p:P180/pq:P2677 "' + iif_region.replace('\\', '\\\\').replace('"', '\\"') + '". }'
+@app.route('/iiif_region/<iiif_region>/<property_id>')
+def iiif_region_and_property(iiif_region, property_id):
+    query = 'SELECT DISTINCT ?item WHERE { ?item p:P180/pq:P2677 "' + iiif_region.replace('\\', '\\\\').replace('"', '\\"') + '". }'
     with urllib.request.urlopen('https://query.wikidata.org/sparql?format=json&query=' + urllib.parse.quote(query)) as request:
         query_results = json.load(request)
 
@@ -52,18 +52,18 @@ def iif_region_and_property(iif_region, property_id):
         item_id = result['item']['value'][len('http://www.wikidata.org/entity/'):]
         items.append(load_item_and_property(item_id, property_id))
 
-    return flask.render_template('iif_region.html', items=items)
+    return flask.render_template('iiif_region.html', items=items)
 
 # https://iiif.io/api/image/2.0/#region
 @app.template_filter()
-def iif_region_to_style(iif_region):
-    if iif_region == 'full':
+def iiif_region_to_style(iiif_region):
+    if iiif_region == 'full':
         return 'left: 0px; top: 0px; width: 100%; height: 100%;'
-    if iif_region.startswith('pct:'):
-        left, top, width, height = iif_region[len('pct:'):].split(',')
+    if iiif_region.startswith('pct:'):
+        left, top, width, height = iiif_region[len('pct:'):].split(',')
         z_index = int(1_000_000 / (float(width)*float(height)))
         return 'left: %s%%; top: %s%%; width: %s%%; height: %s%%; z-index: %s;' % (left, top, width, height, z_index)
-    left, top, width, height = iif_region.split(',')
+    left, top, width, height = iiif_region.split(',')
     z_index = int(1_000_000_000 / (int(width)*int(height)))
     return 'left: %spx; top: %spx; width: %spx; height: %spx; z-index: %s;' % (left, top, width, height, z_index)
     
@@ -127,7 +127,7 @@ def depicted_items(item_data):
         for qualifier in statement.get('qualifiers', {}).get('P2677', []):
             if qualifier['snaktype'] != 'value':
                 continue
-            depicted['iif_region'] = qualifier['datavalue']['value']
+            depicted['iiif_region'] = qualifier['datavalue']['value']
             break
 
         depicteds.append(depicted)

@@ -10,8 +10,8 @@
                https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title }}?width=4096 4096w">
   {% set depicteds_without_region = [] %}
   {% for depicted in depicteds %}
-  {% if depicted.iif_region %}
-  <div class="depicted" style="{{ depicted.iif_region | iif_region_to_style }}"><a href="http://www.wikidata.org/entity/{{ depicted.item_id }}">{{ depicted.label }}</a></div>
+  {% if depicted.iiif_region %}
+  <div class="depicted" style="{{ depicted.iiif_region | iiif_region_to_style }}"><a href="http://www.wikidata.org/entity/{{ depicted.item_id }}">{{ depicted.label }}</a></div>
   {% else %}
   {% do depicteds_without_region.append(depicted) %}
   {% endif %}
