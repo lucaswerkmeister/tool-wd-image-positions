@@ -82,7 +82,7 @@ def load_item_and_property(item_id, property_id):
     depicteds = depicted_items(item_data)
     item_ids = [depicted['item_id'] for depicted in depicteds]
     item_ids.append(item_id)
-    labels = load_labels(item_ids)
+    labels = load_labels(item_ids, request_language_codes())
     for depicted in depicteds:
         depicted['label'] = labels[depicted['item_id']]
 
@@ -93,6 +93,19 @@ def load_item_and_property(item_id, property_id):
         'depicteds': depicteds,
     }
 
+def request_language_codes():
+    language_codes = flask.request.args.getlist('uselang')
+
+    for accept_language in flask.request.headers.get('Accept-Language', '').split(','):
+        language_code = accept_language.split(';')[0].strip()
+        language_code = language_code.lower()
+        language_codes.append(language_code)
+        if '-' in language_code:
+            language_codes.append(language_code.split('-')[0])
+    
+    language_codes.append('en')
+
+    return language_codes
 
 def best_value(item_data, property_id):
     if property_id not in item_data['claims']:
@@ -133,16 +146,18 @@ def depicted_items(item_data):
         depicteds.append(depicted)
     return depicteds
 
-def load_labels(item_ids):
+def load_labels(item_ids, language_codes):
     item_ids = list(set(item_ids))
     labels = {}
     for chunk in [item_ids[i:i+50] for i in range(0, len(item_ids), 50)]:
-        with urllib.request.urlopen('https://www.wikidata.org/w/api.php?format=json&formatversion=2&action=wbgetentities&props=labels&languages=en&ids=' +
-                                    '|'.join(chunk)) as request:
+        with urllib.request.urlopen('https://www.wikidata.org/w/api.php?format=json&formatversion=2&action=wbgetentities&props=labels' +
+                                    '&languages=' + '|'.join(language_codes) +
+                                    '&ids=' + '|'.join(chunk)) as request:
             items_data = json.load(request)['entities']
         for item_id, item_data in items_data.items():
-            if 'en' in item_data['labels']:
-                labels[item_id] = item_data['labels']['en']['value']
-            else:
-                labels[item_id] = item_id
+            labels[item_id] = item_id
+            for language_code in language_codes:
+                if language_code in item_data['labels']:
+                    labels[item_id] = item_data['labels'][language_code]['value']
+                    break
     return labels
