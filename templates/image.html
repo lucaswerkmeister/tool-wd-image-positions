@@ -11,7 +11,7 @@
   {% set depicteds_without_region = [] %}
   {% for depicted in depicteds %}
   {% if depicted.iiif_region %}
-  <div class="depicted" style="{{ depicted.iiif_region | iiif_region_to_style }}"><a href="http://www.wikidata.org/entity/{{ depicted.item_id }}">{{ depicted.label }}</a></div>
+  <div class="depicted" style="{{ depicted.iiif_region | iiif_region_to_style }}">{{ item_link(depicted.item_id, depicted.label) }}</div>
   {% else %}
   {% do depicteds_without_region.append(depicted) %}
   {% endif %}
@@ -22,7 +22,7 @@
   Depicted, but with no region specified:
   <ul>
     {% for depicted in depicteds_without_region %}
-    <li><a href="http://www.wikidata.org/entity/{{ depicted.item_id }}">{{ depicted.label }}</a></li>
+    <li>{{ item_link(depicted.item_id, depicted.label) }}</li>
     {% endfor %}
   </ul>
 </div>

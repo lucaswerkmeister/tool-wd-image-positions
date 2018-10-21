@@ -66,7 +66,15 @@ def iiif_region_to_style(iiif_region):
     left, top, width, height = iiif_region.split(',')
     z_index = int(1_000_000_000 / (int(width)*int(height)))
     return 'left: %spx; top: %spx; width: %spx; height: %spx; z-index: %s;' % (left, top, width, height, z_index)
-    
+
+@app.template_global()
+def item_link(item_id, label):
+    return (flask.Markup(r'<a href="http://www.wikidata.org/entity/') +
+            flask.Markup.escape(item_id) +
+            flask.Markup(r'">') +
+            flask.Markup.escape(label) +
+            flask.Markup(r'</a>'))
+
 
 def load_item_and_property(item_id, property_id):
     with urllib.request.urlopen('https://www.wikidata.org/w/api.php?format=json&formatversion=2&action=wbgetentities&props=claims&ids=' + item_id) as request:

@@ -1,5 +1,5 @@
 {% extends "images.html" %}
 {% block main %}
-<h1><a href="http://www.wikidata.org/entity/{{ item_id }}">{{ label }}</a></h1>
+<h1>{{ item_link(item_id, label) }}</h1>
 {% include "image.html" %}
 {% endblock main %}
