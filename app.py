@@ -50,7 +50,7 @@ def iiif_region(iiif_region):
 def iiif_region_and_property(iiif_region, property_id):
     query = 'SELECT DISTINCT ?item WHERE { ?item p:P180/pq:P2677 "' + iiif_region.replace('\\', '\\\\').replace('"', '\\"') + '". }'
     with urllib.request.urlopen('https://query.wikidata.org/sparql?format=json&query=' + urllib.parse.quote(query)) as request:
-        query_results = json.load(request)
+        query_results = json.loads(request.read().decode())
 
     items = []
     items_without_image = []
@@ -99,7 +99,7 @@ def load_item_and_property(item_id, property_id):
     language_codes = request_language_codes()
 
     with urllib.request.urlopen('https://www.wikidata.org/w/api.php?format=json&formatversion=2&action=wbgetentities&props=claims&ids=' + item_id) as request:
-        item_data = json.load(request)['entities'][item_id]
+        item_data = json.loads(request.read().decode())['entities'][item_id]
 
     image_datavalue = best_value(item_data, property_id)
     if image_datavalue is None:
@@ -183,7 +183,7 @@ def load_labels(item_ids, language_codes):
         with urllib.request.urlopen('https://www.wikidata.org/w/api.php?format=json&formatversion=2&action=wbgetentities&props=labels' +
                                     '&languages=' + '|'.join(language_codes) +
                                     '&ids=' + '|'.join(chunk)) as request:
-            items_data = json.load(request)['entities']
+            items_data = json.loads(request.read().decode())['entities']
         for item_id, item_data in items_data.items():
             labels[item_id] = {'language': 'zxx', 'value': item_id}
             for language_code in language_codes:
@@ -197,7 +197,7 @@ def image_attribution(image_title, language_code):
                                 '&action=query&prop=imageinfo&iiprop=extmetadata' +
                                 '&iiextmetadatalanguage=' + language_code +
                                 '&titles=File:' + urllib.parse.quote(image_title)) as request:
-        response = json.load(request)
+        response = json.loads(request.read().decode())
     metadata = response['query']['pages'][0]['imageinfo'][0]['extmetadata']
     no_value = {'value': None}
 
