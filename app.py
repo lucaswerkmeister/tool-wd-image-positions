@@ -71,8 +71,10 @@ def iiif_region_to_style(iiif_region):
 def item_link(item_id, label):
     return (flask.Markup(r'<a href="http://www.wikidata.org/entity/') +
             flask.Markup.escape(item_id) +
+            flask.Markup(r'" lang="') +
+            flask.Markup.escape(label['language']) +
             flask.Markup(r'">') +
-            flask.Markup.escape(label) +
+            flask.Markup.escape(label['value']) +
             flask.Markup(r'</a>'))
 
 
@@ -163,9 +165,9 @@ def load_labels(item_ids, language_codes):
                                     '&ids=' + '|'.join(chunk)) as request:
             items_data = json.load(request)['entities']
         for item_id, item_data in items_data.items():
-            labels[item_id] = item_id
+            labels[item_id] = {'language': 'zxx', 'value': item_id}
             for language_code in language_codes:
                 if language_code in item_data['labels']:
-                    labels[item_id] = item_data['labels'][language_code]['value']
+                    labels[item_id] = item_data['labels'][language_code]
                     break
     return labels
