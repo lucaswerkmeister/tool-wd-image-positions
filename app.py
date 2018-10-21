@@ -79,6 +79,8 @@ def item_link(item_id, label):
 
 
 def load_item_and_property(item_id, property_id):
+    language_codes = request_language_codes()
+
     with urllib.request.urlopen('https://www.wikidata.org/w/api.php?format=json&formatversion=2&action=wbgetentities&props=claims&ids=' + item_id) as request:
         item_data = json.load(request)['entities'][item_id]
 
@@ -92,7 +94,7 @@ def load_item_and_property(item_id, property_id):
     depicteds = depicted_items(item_data)
     item_ids = [depicted['item_id'] for depicted in depicteds]
     item_ids.append(item_id)
-    labels = load_labels(item_ids, request_language_codes())
+    labels = load_labels(item_ids, language_codes)
     for depicted in depicteds:
         depicted['label'] = labels[depicted['item_id']]
 
@@ -100,6 +102,7 @@ def load_item_and_property(item_id, property_id):
         'item_id': item_id,
         'label': labels[item_id],
         'image_title': image_title,
+        'image_attribution': image_attribution(image_title, language_codes[0]),
         'depicteds': depicteds,
     }
 
@@ -171,3 +174,35 @@ def load_labels(item_ids, language_codes):
                     labels[item_id] = item_data['labels'][language_code]
                     break
     return labels
+
+def image_attribution(image_title, language_code):
+    with urllib.request.urlopen('https://commons.wikimedia.org/w/api.php?format=json&formatversion=2' +
+                                '&action=query&prop=imageinfo&iiprop=extmetadata' +
+                                '&iiextmetadatalanguage=' + language_code +
+                                '&titles=File:' + urllib.parse.quote(image_title)) as request:
+        response = json.load(request)
+    metadata = response['query']['pages'][0]['imageinfo'][0]['extmetadata']
+    no_value = {'value': None}
+
+    attribution_required = metadata.get('AttributionRequired', no_value)['value']
+    if attribution_required != 'true':
+        return None
+
+    attribution = flask.Markup()
+
+    artist = metadata.get('Artist', no_value)['value']
+    if artist:
+        attribution += flask.Markup(r', ') + flask.Markup(artist)
+
+    license_short_name = metadata.get('LicenseShortName', no_value)['value']
+    license_url = metadata.get('LicenseUrl', no_value)['value']
+    if license_short_name and license_url:
+        attribution += (flask.Markup(r', <a href="') + flask.Markup.escape(license_url) + flask.Markup(r'">') +
+                        flask.Markup.escape(license_short_name) +
+                        flask.Markup(r'</a>'))
+
+    credit = metadata.get('Credit', no_value)['value']
+    if credit:
+        attribution += flask.Markup(r' (') + flask.Markup(credit) + flask.Markup(r')')
+
+    return attribution
