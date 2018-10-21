@@ -21,4 +21,16 @@
   </div>
   <button type="submit" class="btn btn-primary">Load</button>
 </form>
+<h2>By IIF region and property</h2>
+<form method="post">
+  <div class="form-group">
+    <label for="iif_region">IIF region</label>
+    <input type="text" id="iif_region" name="iif_region" class="form-control" required placeholder="pct:27.2,30,13.1,21.6" pattern="pct:((100|[1-9]?\d(\.\d+)?),){3}(100|[1-9]?\d(\.\d+)?)">
+  </div>
+  <div class="form-group">
+    <label for="property_id">Property ID <small>(optional)</small></label>
+    <input type="text" id="property_id" name="property_id" class="form-control" placeholder="P18" pattern="P[1-9][0-9]*">
+  </div>
+  <button type="submit" class="btn btn-primary">Load</button>
+</form>
 {% endblock %}

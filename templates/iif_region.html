@@ -1,0 +1,9 @@
+{% extends "images.html" %}
+{% block main %}
+{% for item in items %}
+<h1><a href="http://www.wikidata.org/entity/{{ item.item_id }}">{{ item.label }}</a></h1>
+{% set image_title = item.image_title %}
+{% set depicteds = item.depicteds %}
+{% include "image.html" %}
+{% endfor %}
+{% endblock main %}
