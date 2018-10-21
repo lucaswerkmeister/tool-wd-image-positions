@@ -5,6 +5,8 @@ import json
 import urllib.parse
 import urllib.request
 
+from exceptions import *
+
 
 app = flask.Flask(__name__)
 app.jinja_env.add_extension('jinja2.ext.do')
@@ -77,6 +79,13 @@ def item_link(item_id, label):
             flask.Markup.escape(label['value']) +
             flask.Markup(r'</a>'))
 
+@app.errorhandler(WrongDataValueType)
+def handle_wrong_data_value_type(error):
+    response = flask.render_template('wrong-data-value-type.html',
+                                     expected_data_value_type=error.expected_data_value_type,
+                                     actual_data_value_type=error.actual_data_value_type)
+    return response, error.status_code
+
 
 def load_item_and_property(item_id, property_id):
     language_codes = request_language_codes()
@@ -88,7 +97,7 @@ def load_item_and_property(item_id, property_id):
     if image_datavalue is None:
         return 'no image' # TODO proper error page
     if image_datavalue['type'] != 'string':
-        return 'wrong data value type' # TODO proper error page
+        raise WrongDataValueType(expected_data_value_type='string', actual_data_value_type=image_datavalue['type'])
     image_title = image_datavalue['value']
 
     depicteds = depicted_items(item_data)
