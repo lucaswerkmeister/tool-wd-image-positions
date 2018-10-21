@@ -37,7 +37,10 @@ def item(item_id):
 
 @app.route('/item/<item_id>/<property_id>')
 def item_and_property(item_id, property_id):
-    return flask.render_template('item.html', **load_item_and_property(item_id, property_id))
+    item = load_item_and_property(item_id, property_id)
+    if item is None:
+        return flask.render_template('item-without-image.html',)
+    return flask.render_template('item.html', **item)
 
 @app.route('/iiif_region/<iiif_region>')
 def iiif_region(iiif_region):
@@ -50,11 +53,16 @@ def iiif_region_and_property(iiif_region, property_id):
         query_results = json.load(request)
 
     items = []
+    items_without_image = []
     for result in query_results['results']['bindings']:
         item_id = result['item']['value'][len('http://www.wikidata.org/entity/'):]
-        items.append(load_item_and_property(item_id, property_id))
+        item = load_item_and_property(item_id, property_id)
+        if item is None:
+            items_without_image.append(item_id)
+        else:
+            items.append(item)
 
-    return flask.render_template('iiif_region.html', items=items)
+    return flask.render_template('iiif_region.html', items=items, items_without_image=items_without_image)
 
 # https://iiif.io/api/image/2.0/#region
 @app.template_filter()
@@ -95,7 +103,7 @@ def load_item_and_property(item_id, property_id):
 
     image_datavalue = best_value(item_data, property_id)
     if image_datavalue is None:
-        return 'no image' # TODO proper error page
+        return None
     if image_datavalue['type'] != 'string':
         raise WrongDataValueType(expected_data_value_type='string', actual_data_value_type=image_datavalue['type'])
     image_title = image_datavalue['value']

@@ -7,4 +7,7 @@
 {% set depicteds = item.depicteds %}
 {% include "image.html" %}
 {% endfor %}
+{% for item in items_without_image %}
+<p>Item {{ item }} has no image.</p>
+{% endfor %}
 {% endblock main %}
