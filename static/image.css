@@ -75,3 +75,19 @@
     max-width: 100%;
     max-height: 100%;
 }
+
+.image.active {
+    /*
+     * show a crosshair cursor to indicate that the image is active
+     * (i. e., the user can drag to create a new region)
+     */
+    cursor: crosshair;
+}
+
+.image.active * {
+    /*
+     * disable any pointer events (e. g. hyperlink clicks)
+     * while we’re handling mouse events on the image ourselves
+     */
+    pointer-events: none;
+}
