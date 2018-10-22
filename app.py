@@ -83,6 +83,8 @@ def item_link(item_id, label):
             flask.Markup.escape(item_id) +
             flask.Markup(r'" lang="') +
             flask.Markup.escape(label['language']) +
+            flask.Markup(r'" data-entity-id="') +
+            flask.Markup.escape(item_id) +
             flask.Markup(r'">') +
             flask.Markup.escape(label['value']) +
             flask.Markup(r'</a>'))
