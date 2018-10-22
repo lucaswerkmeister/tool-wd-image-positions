@@ -20,7 +20,6 @@ function addEditButton(element) {
         image.classList.add('active');
         image.addEventListener('mousedown', onMouseDown, { once: true });
         button.textContent = 'click and drag on the image to define the region';
-        return false;
     }
     function onMouseDown(eDown) {
         clearSelection();
@@ -37,13 +36,11 @@ function addEditButton(element) {
         image.addEventListener('mousemove', onMouseMove);
         image.addEventListener('mouseup', onMouseUp, { once: true });
         document.addEventListener('keypress', onKeyPress);
-        return false;
 
         function onMouseMove(eMove) {
             clearSelection();
             depicted.style.width = (100 * (eMove.offsetX - downX) / width) + '%';
             depicted.style.height = (100 * (eMove.offsetY - downY) / height) + '%';
-            return false;
         }
         function onMouseUp(eUp) {
             clearSelection();
@@ -61,7 +58,6 @@ function addEditButton(element) {
             } else {
                 depicted.remove();
             }
-            return false;
         }
         function onKeyPress(eKey) {
             if (eKey.key === 'Escape') {
@@ -71,7 +67,6 @@ function addEditButton(element) {
                 document.removeEventListener('keypress', onKeyPress);
                 button.textContent = 'add region';
                 depicted.remove();
-                return false;
             }
         }
     }
