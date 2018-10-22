@@ -1,11 +1,8 @@
+{% from "image.html" import image %}
 {% extends "images.html" %}
 {% block main %}
 {% for item in items %}
-<h1>{{ item_link(item.item_id, item.label) }}</h1>
-{% set image_title = item.image_title %}
-{% set image_attribution = item.image_attribution %}
-{% set depicteds = item.depicteds %}
-{% include "image.html" %}
+{{ image(**item) }}
 {% endfor %}
 {% for item in items_without_image %}
 <p>Item {{ item }} has no image.</p>

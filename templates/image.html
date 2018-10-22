@@ -1,3 +1,5 @@
+{% macro image(item_id, label, image_title, image_attribution, depicteds) %}
+<h1>{{ item_link(item_id, label) }}</h1>
 <h2><a href="https://commons.wikimedia.org/wiki/File:{{ image_title }}">{{ image_title }}</a>{% if image_attribution %}{{ image_attribution }}{% endif %}</h2>
 <div class="image">
   <img src="https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title }}"
@@ -27,3 +29,4 @@
   </ul>
 </div>
 {% endif %}
+{% endmacro %}

@@ -1,5 +1,5 @@
+{% from "image.html" import image %}
 {% extends "images.html" %}
 {% block main %}
-<h1>{{ item_link(item_id, label) }}</h1>
-{% include "image.html" %}
+{{ image(item_id, label, image_title, image_attribution, depicteds) }}
 {% endblock main %}
