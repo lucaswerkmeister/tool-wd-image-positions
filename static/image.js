@@ -16,13 +16,12 @@ function addEditButton(element) {
     element.append(button);
 
     function onClick() {
-        clearSelection();
         image.classList.add('active');
         image.addEventListener('mousedown', onMouseDown, { once: true });
         button.textContent = 'click and drag on the image to define the region';
     }
     function onMouseDown(eDown) {
-        clearSelection();
+        eDown.preventDefault();
         const downX = eDown.offsetX,
               downY = eDown.offsetY,
               width = eDown.target.offsetWidth,
@@ -38,12 +37,10 @@ function addEditButton(element) {
         document.addEventListener('keypress', onKeyPress);
 
         function onMouseMove(eMove) {
-            clearSelection();
             depicted.style.width = (100 * (eMove.offsetX - downX) / width) + '%';
             depicted.style.height = (100 * (eMove.offsetY - downY) / height) + '%';
         }
         function onMouseUp(eUp) {
-            clearSelection();
             image.classList.remove('active');
             image.removeEventListener('mousemove', onMouseMove);
             document.removeEventListener('keypress', onKeyPress);
@@ -70,10 +67,6 @@ function addEditButton(element) {
             }
         }
     }
-}
-
-function clearSelection() {
-    window.getSelection().empty();
 }
 
 if (document.readyState === 'loading') {
