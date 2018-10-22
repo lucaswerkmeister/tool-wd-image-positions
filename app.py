@@ -2,6 +2,8 @@
 
 import flask
 import json
+import requests
+import toolforge
 import urllib.parse
 import urllib.request
 
@@ -10,6 +12,11 @@ from exceptions import *
 
 app = flask.Flask(__name__)
 app.jinja_env.add_extension('jinja2.ext.do')
+
+app.before_request(toolforge.redirect_to_https)
+
+toolforge.set_user_agent('lexeme-forms', email='mail@lucaswerkmeister.de')
+user_agent = requests.utils.default_user_agent()
 
 
 @app.route('/', methods=['GET', 'POST'])
