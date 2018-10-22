@@ -167,7 +167,10 @@ def depicted_items(item_data):
     for statement in item_data['claims'].get('P180', []):
         if statement['mainsnak']['snaktype'] != 'value':
             continue
-        depicted = {'item_id': statement['mainsnak']['datavalue']['value']['id']}
+        depicted = {
+            'item_id': statement['mainsnak']['datavalue']['value']['id'],
+            'statement_id': statement['id'],
+        }
 
         for qualifier in statement.get('qualifiers', {}).get('P2677', []):
             if qualifier['snaktype'] != 'value':
