@@ -36,6 +36,7 @@ function addEditButton(element) {
         image.append(depicted);
         image.addEventListener('mousemove', onMouseMove);
         image.addEventListener('mouseup', onMouseUp, { once: true });
+        document.addEventListener('keypress', onKeyPress);
         return false;
 
         function onMouseMove(eMove) {
@@ -48,6 +49,7 @@ function addEditButton(element) {
             clearSelection();
             image.classList.remove('active');
             image.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('keypress', onKeyPress);
             button.textContent = 'add region';
             if (window.confirm('Copy the new region to the clipboard (in QuickStatements syntax)?')) {
                 const x = depicted.style.left.replace('%', ''),
@@ -60,6 +62,17 @@ function addEditButton(element) {
                 depicted.remove();
             }
             return false;
+        }
+        function onKeyPress(eKey) {
+            if (eKey.key === 'Escape') {
+                image.classList.remove('active');
+                image.removeEventListener('mousemove', onMouseMove);
+                image.removeEventListener('mouseup', onMouseUp);
+                document.removeEventListener('keypress', onKeyPress);
+                button.textContent = 'add region';
+                depicted.remove();
+                return false;
+            }
         }
     }
 }
