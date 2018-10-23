@@ -2,10 +2,12 @@
 
 import flask
 import json
+import mwapi
 import mwoauth
 import os
 import random
 import requests
+import requests_oauthlib
 import string
 import toolforge
 import urllib.parse
@@ -96,6 +98,26 @@ def iiif_region_and_property(iiif_region, property_id):
             items.append(item)
 
     return flask.render_template('iiif_region.html', items=items, items_without_image=items_without_image)
+
+@app.route('/api/add_qualifier/<statement_id>/<iiif_region>/<csrf_token>', methods=['POST'])
+def api_add_qualifier(statement_id, iiif_region, csrf_token):
+    if csrf_token != flask.session['_csrf_token']:
+        return 'Wrong CSRF token (try reloading the page).', 403
+
+    access_token = mwoauth.AccessToken(**flask.session['oauth_access_token'])
+    auth = requests_oauthlib.OAuth1(client_key=consumer_token.key, client_secret=consumer_token.secret,
+                                    resource_owner_key=access_token.key, resource_owner_secret=access_token.secret)
+    session = mwapi.Session(host='https://www.wikidata.org', auth=auth, user_agent=user_agent)
+
+    token = session.get(action='query', meta='tokens', type='csrf')['query']['tokens']['csrftoken']
+    response = session.post(action='wbsetqualifier', claim=statement_id, property='P2677',
+                            snaktype='value', value=('"' + iiif_region + '"'),
+                            summary='region drawn manually using [[User:Lucas Werkmeister/Wikidata Image Positions|Wikidata Image Positions tool]]',
+                            token=token)
+    if response['success'] == 1:
+        return '', 204
+    else:
+        return str(response), 500
 
 # https://iiif.io/api/image/2.0/#region
 @app.template_filter()
