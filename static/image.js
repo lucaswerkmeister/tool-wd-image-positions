@@ -44,16 +44,47 @@ function addEditButton(element) {
             image.classList.remove('active');
             image.removeEventListener('mousemove', onMouseMove);
             document.removeEventListener('keypress', onKeyPress);
-            button.textContent = 'add region';
-            if (window.confirm('Copy the new region to the clipboard (in QuickStatements syntax)?')) {
-                const x = depicted.style.left.replace('%', ''),
-                      y = depicted.style.top.replace('%', ''),
-                      w = depicted.style.width.replace('%', ''),
-                      h = depicted.style.height.replace('%', '');
-                navigator.clipboard.writeText(`${subjectId}\tP180\t${depictedId}\tP2677\t"pct:${x},${y},${w},${h}"`);
-                element.remove();
+
+            const x = depicted.style.left.replace('%', ''),
+                  y = depicted.style.top.replace('%', ''),
+                  w = depicted.style.width.replace('%', ''),
+                  h = depicted.style.height.replace('%', ''),
+                  iiifRegion = `pct:${x},${y},${w},${h}`,
+                  quickStatements = `${subjectId}\tP180\t${depictedId}\tP2677\t"${iiifRegion}"`;
+
+            const csrfTokenElement = document.getElementById('csrf_token');
+            if (csrfTokenElement !== null) {
+                button.textContent = 'adding qualifier…';
+                const baseUrl = document.querySelector('link[rel=index]').href.replace(/\/$/, ''),
+                      statementId = element.dataset.statementId,
+                      csrfToken = csrfTokenElement.textContent;
+                fetch(`${baseUrl}/api/add_qualifier/${statementId}/${iiifRegion}/${csrfToken}`, { method: 'POST', credentials: 'include' }).then(response => {
+                    if (response.ok) {
+                        element.remove();
+                    } else {
+                        response.text().then(text => {
+                            message = `An error occurred:\n\n${text}\n\n`;
+                            // we’re not in an event handler, we can’t write to the clipboard directly
+                            message += `Here is the new region in QuickStatements syntax:\n\n${quickStatements}`;
+                            window.alert(message);
+                            element.remove();
+                        });
+                    }
+                });
             } else {
-                depicted.remove();
+                const loginElement = document.getElementById('login');
+                let message = '';
+                if (loginElement !== null) {
+                    message = 'You are not logged in. ';
+                }
+                message += 'Copy the new region to the clipboard (in QuickStatements syntax)?';
+                if (window.confirm(message)) {
+                    navigator.clipboard.writeText(quickStatements);
+                    element.remove();
+                } else {
+                    depicted.remove();
+                    button.textContent = 'add region';
+                }
             }
         }
         function onKeyPress(eKey) {
