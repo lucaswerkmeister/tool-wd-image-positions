@@ -2,10 +2,12 @@
 
 import flask
 import json
+import os
 import requests
 import toolforge
 import urllib.parse
 import urllib.request
+import yaml
 
 from exceptions import *
 
@@ -17,6 +19,13 @@ app.before_request(toolforge.redirect_to_https)
 
 toolforge.set_user_agent('lexeme-forms', email='mail@lucaswerkmeister.de')
 user_agent = requests.utils.default_user_agent()
+
+__dir__ = os.path.dirname(__file__)
+try:
+    with open(os.path.join(__dir__, 'config.yaml')) as config_file:
+        app.config.update(yaml.safe_load(config_file))
+except FileNotFoundError:
+    print('config.yaml file not found, assuming local development setup')
 
 
 @app.route('/', methods=['GET', 'POST'])
