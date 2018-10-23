@@ -1,16 +1,17 @@
 {% macro image(item_id, label, image_title, image_attribution, depicteds) %}
+{% set image_title_ = image_title.replace(' ', '_') %}
 <div class="item" data-entity-id="{{ item_id }}">
   <h1>{{ item_link(item_id, label) }}</h1>
-  <h2><a href="https://commons.wikimedia.org/wiki/File:{{ image_title }}">{{ image_title }}</a>{% if image_attribution %}{{ image_attribution }}{% endif %}</h2>
+  <h2><a href="https://commons.wikimedia.org/wiki/File:{{ image_title_ }}">{{ image_title }}</a>{% if image_attribution %}{{ image_attribution }}{% endif %}</h2>
   <div class="image">
-    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title }}"
-         srcset="https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title }}?width=320 320w,
-                 https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title }}?width=640 640w,
-                 https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title }}?width=1024 1024w,
-                 https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title }}?width=1280 1280w,
-                 https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title }}?width=1920 1920w,
-                 https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title }}?width=3840 3840w,
-                 https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title }}?width=4096 4096w">
+    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ }}"
+         srcset="https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ }}?width=320 320w,
+                 https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ }}?width=640 640w,
+                 https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ }}?width=1024 1024w,
+                 https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ }}?width=1280 1280w,
+                 https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ }}?width=1920 1920w,
+                 https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ }}?width=3840 3840w,
+                 https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ }}?width=4096 4096w">
     {% set depicteds_without_region = [] %}
     {% for depicted in depicteds %}
     {% if depicted.iiif_region %}
