@@ -2,8 +2,11 @@
 
 import flask
 import json
+import mwoauth
 import os
+import random
 import requests
+import string
 import toolforge
 import urllib.parse
 import urllib.request
@@ -26,6 +29,8 @@ try:
         app.config.update(yaml.safe_load(config_file))
 except FileNotFoundError:
     print('config.yaml file not found, assuming local development setup')
+else:
+    consumer_token = mwoauth.ConsumerToken(app.config['oauth']['consumer_key'], app.config['oauth']['consumer_secret'])
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -46,6 +51,18 @@ def index():
             else:
                 return flask.redirect(flask.url_for('iiif_region', iiif_region=iiif_region))
     return flask.render_template('index.html')
+
+@app.route('/login')
+def login():
+    redirect, request_token = mwoauth.initiate('https://www.wikidata.org/w/index.php', consumer_token, user_agent=user_agent)
+    flask.session['oauth_request_token'] = dict(zip(request_token._fields, request_token))
+    return flask.redirect(redirect)
+
+@app.route('/oauth/callback')
+def oauth_callback():
+    access_token = mwoauth.complete('https://www.wikidata.org/w/index.php', consumer_token, mwoauth.RequestToken(**flask.session['oauth_request_token']), flask.request.query_string, user_agent=user_agent)
+    flask.session['oauth_access_token'] = dict(zip(access_token._fields, access_token))
+    return flask.redirect(flask.url_for('index'))
 
 @app.route('/item/<item_id>')
 def item(item_id):
@@ -93,6 +110,16 @@ def iiif_region_to_style(iiif_region):
     z_index = int(1000000000 / (int(width)*int(height)))
     return 'left: %spx; top: %spx; width: %spx; height: %spx; z-index: %s;' % (left, top, width, height, z_index)
 
+@app.template_filter()
+def user_link(user_name):
+    return (flask.Markup(r'<a href="https://www.wikidata.org/wiki/User:') +
+            flask.Markup.escape(user_name.replace(' ', '_')) +
+            flask.Markup(r'">') +
+            flask.Markup(r'<bdi>') +
+            flask.Markup.escape(user_name) +
+            flask.Markup(r'</bdi>') +
+            flask.Markup(r'</a>'))
+
 @app.template_global()
 def item_link(item_id, label):
     return (flask.Markup(r'<a href="http://www.wikidata.org/entity/') +
@@ -104,6 +131,30 @@ def item_link(item_id, label):
             flask.Markup(r'">') +
             flask.Markup.escape(label['value']) +
             flask.Markup(r'</a>'))
+
+@app.template_global()
+def authentication_area():
+    if 'oauth' not in app.config:
+        return flask.Markup()
+
+    if 'oauth_access_token' not in flask.session:
+        return (flask.Markup(r'<a id="login" class="navbar-text" href="') +
+                flask.Markup.escape(flask.url_for('login')) +
+                flask.Markup(r'">Log in</a>'))
+
+    access_token = mwoauth.AccessToken(**flask.session['oauth_access_token'])
+    identity = mwoauth.identify('https://www.wikidata.org/w/index.php',
+                                consumer_token,
+                                access_token)
+
+    csrf_token = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(64))
+    flask.session['_csrf_token'] = csrf_token
+
+    return (flask.Markup(r'<span class="navbar-text">Logged in as ') +
+            user_link(identity['username']) +
+            flask.Markup(r'</span><span id="csrf_token" style="display: none;">') +
+            flask.Markup.escape(csrf_token) +
+            flask.Markup(r'</span>'))
 
 @app.errorhandler(WrongDataValueType)
 def handle_wrong_data_value_type(error):
