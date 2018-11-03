@@ -25,6 +25,8 @@ app.before_request(toolforge.redirect_to_https)
 toolforge.set_user_agent('lexeme-forms', email='mail@lucaswerkmeister.de')
 user_agent = requests.utils.default_user_agent()
 
+anonymous_session = mwapi.Session(host='https://www.wikidata.org', user_agent=user_agent, formatversion=2)
+
 __dir__ = os.path.dirname(__file__)
 try:
     with open(os.path.join(__dir__, 'config.yaml')) as config_file:
@@ -107,7 +109,7 @@ def api_add_qualifier(statement_id, iiif_region, csrf_token):
     access_token = mwoauth.AccessToken(**flask.session['oauth_access_token'])
     auth = requests_oauthlib.OAuth1(client_key=consumer_token.key, client_secret=consumer_token.secret,
                                     resource_owner_key=access_token.key, resource_owner_secret=access_token.secret)
-    session = mwapi.Session(host='https://www.wikidata.org', auth=auth, user_agent=user_agent)
+    session = mwapi.Session(host='https://www.wikidata.org', auth=auth, user_agent=user_agent, formatversion=2)
 
     token = session.get(action='query', meta='tokens', type='csrf')['query']['tokens']['csrftoken']
     response = session.post(action='wbsetqualifier', claim=statement_id, property='P2677',
@@ -189,8 +191,7 @@ def handle_wrong_data_value_type(error):
 def load_item_and_property(item_id, property_id):
     language_codes = request_language_codes()
 
-    with urllib.request.urlopen('https://www.wikidata.org/w/api.php?format=json&formatversion=2&action=wbgetentities&props=claims&ids=' + item_id) as request:
-        item_data = json.loads(request.read().decode())['entities'][item_id]
+    item_data = anonymous_session.get(action='wbgetentities', props='claims', ids=item_id)['entities'][item_id]
 
     image_datavalue = best_value(item_data, property_id)
     if image_datavalue is None:
@@ -274,10 +275,7 @@ def load_labels(item_ids, language_codes):
     item_ids = list(set(item_ids))
     labels = {}
     for chunk in [item_ids[i:i+50] for i in range(0, len(item_ids), 50)]:
-        with urllib.request.urlopen('https://www.wikidata.org/w/api.php?format=json&formatversion=2&action=wbgetentities&props=labels' +
-                                    '&languages=' + '|'.join(language_codes) +
-                                    '&ids=' + '|'.join(chunk)) as request:
-            items_data = json.loads(request.read().decode())['entities']
+        items_data = anonymous_session.get(action='wbgetentities', props='labels', languages=language_codes, ids=chunk)['entities']
         for item_id, item_data in items_data.items():
             labels[item_id] = {'language': 'zxx', 'value': item_id}
             for language_code in language_codes:
@@ -287,11 +285,9 @@ def load_labels(item_ids, language_codes):
     return labels
 
 def image_attribution(image_title, language_code):
-    with urllib.request.urlopen('https://commons.wikimedia.org/w/api.php?format=json&formatversion=2' +
-                                '&action=query&prop=imageinfo&iiprop=extmetadata' +
-                                '&iiextmetadatalanguage=' + language_code +
-                                '&titles=File:' + urllib.parse.quote(image_title)) as request:
-        response = json.loads(request.read().decode())
+    response = anonymous_session.get(action='query', prop='imageinfo', iiprop='extmetadata',
+                                     iiextmetadatalanguage=language_code,
+                                     titles=('File:' + image_title))
     metadata = response['query']['pages'][0]['imageinfo'][0]['extmetadata']
     no_value = {'value': None}
 
