@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import flask
+import iiif_prezi.factory
 import json
 import mwapi
 import mwoauth
@@ -27,6 +28,8 @@ user_agent = requests.utils.default_user_agent()
 
 anonymous_session = mwapi.Session(host='https://www.wikidata.org', user_agent=user_agent, formatversion=2)
 
+default_property = 'P18'
+
 __dir__ = os.path.dirname(__file__)
 try:
     with open(os.path.join(__dir__, 'config.yaml')) as config_file:
@@ -43,10 +46,19 @@ def index():
         if 'item_id' in flask.request.form:
             item_id = flask.request.form['item_id']
             property_id = flask.request.form.get('property_id')
-            if property_id:
-                return flask.redirect(flask.url_for('item_and_property', item_id=item_id, property_id=property_id))
+            if 'manifest' in flask.request.form or 'preview' in flask.request.form:
+                manifest_url = full_url('iiif_manifest_with_property', item_id=item_id, property_id=property_id or default_property)
+                if 'manifest' in flask.request.form:
+                    return flask.redirect(manifest_url)
+                else:
+                    mirador_protocol = 'https' if manifest_url.startswith('https') else 'http'
+                    mirador_url = mirador_protocol + '://tomcrane.github.io/scratch/mirador/?manifest=' + manifest_url
+                    return flask.redirect(mirador_url)
             else:
-                return flask.redirect(flask.url_for('item', item_id=item_id))
+                if property_id:
+                    return flask.redirect(flask.url_for('item_and_property', item_id=item_id, property_id=property_id))
+                else:
+                    return flask.redirect(flask.url_for('item', item_id=item_id))
         if 'iiif_region' in flask.request.form:
             iiif_region = flask.request.form['iiif_region']
             property_id = flask.request.form.get('property_id')
@@ -70,7 +82,7 @@ def oauth_callback():
 
 @app.route('/item/<item_id>')
 def item(item_id):
-    return item_and_property(item_id, property_id='P18')
+    return item_and_property(item_id, property_id=default_property)
 
 @app.route('/item/<item_id>/<property_id>')
 def item_and_property(item_id, property_id):
@@ -79,9 +91,71 @@ def item_and_property(item_id, property_id):
         return flask.render_template('item-without-image.html',)
     return flask.render_template('item.html', **item)
 
+@app.route('/iiif/<item_id>/manifest.json')
+def iiif_manifest(item_id):
+    return flask.redirect(flask.url_for('iiif_manifest_with_property', item_id=item_id, property_id=default_property))
+
+@app.route('/iiif/<item_id>/<property_id>/manifest.json')
+def iiif_manifest_with_property(item_id, property_id):
+    item = load_item_and_property(item_id, property_id)
+    manifest = build_manifest(item, property_id)
+    resp = flask.jsonify(manifest.toJSON(top=True))
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+    return resp
+
+@app.route('/iiif/<item_id>/list/annotations.json')
+def iiif_annotations(item_id):
+    return iiif_annotations_with_property(item_id, property_id=default_property)
+
+@app.route('/iiif/<item_id>/<property_id>/list/annotations.json')
+def iiif_annotations_with_property(item_id, property_id):
+    item = load_item_and_property(item_id, property_id)
+    # Although the pct canvas is OK for the image API, we need to target
+    # canvas coordinates with the annotations, so we need the w,h
+    image_info = load_image_info(item['image_title'])
+    width, height = int(image_info['thumbwidth']), int(image_info['thumbheight'])
+
+    url = flask.url_for('iiif_annotations_with_property',
+                item_id=item_id, property_id=property_id, _external=True,
+                _scheme=flask.request.headers.get('X-Forwarded-Proto', 'http'))
+    annolist = {
+        '@id': url,
+        '@type': 'sc:AnnotationList',
+        'label': 'Annotations for ' + item['label']['value'],
+        'resources': []
+    }
+    canvas_url = url[:-len('list/annotations.json')] + 'canvas/c0.json'
+    for depicted in item['depicteds']:
+        link = 'http://www.wikidata.org/entity/' + flask.Markup.escape(item_id)
+        label = depicted['label']['value']
+        # We can put a lot more in here, but minimum for now, and ensure works in Mirador
+        anno = {
+            '@id': '#' + depicted['statement_id'],
+            '@type': 'oa:Annotation',
+            'motivation': 'identifying',
+            'on': canvas_url,
+            'resource': {
+                '@id': link,
+                'format': 'text/plain',
+                'chars': label
+            }
+        }
+        iiif_region = depicted.get('iiif_region', None)
+        if iiif_region:
+            parts = iiif_region.replace('pct:', '').split(',')
+            x = int(float(parts[0])*width/100)
+            y = int(float(parts[1])*height/100)
+            w = int(float(parts[2])*width/100)
+            h = int(float(parts[3])*height/100)
+            anno['on'] = anno['on'] + '#xywh=' + ','.join(str(d) for d in [x,y,w,h])
+        annolist['resources'].append(anno)
+    resp = flask.jsonify(annolist)
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+    return resp
+
 @app.route('/iiif_region/<iiif_region>')
 def iiif_region(iiif_region):
-    return iiif_region_and_property(iiif_region, 'P18')
+    return iiif_region_and_property(iiif_region, default_property)
 
 @app.route('/iiif_region/<iiif_region>/<property_id>')
 def iiif_region_and_property(iiif_region, property_id):
@@ -120,6 +194,7 @@ def api_add_qualifier(statement_id, iiif_region, csrf_token):
         return '', 204
     else:
         return str(response), 500
+
 
 # https://iiif.io/api/image/2.0/#region
 @app.template_filter()
@@ -215,6 +290,53 @@ def load_item_and_property(item_id, property_id):
         'depicteds': depicteds,
     }
 
+def load_image_info(image_title):
+    file_title = 'File:' + image_title.replace(' ', '_')
+    response = anonymous_session.get(action='query', prop='imageinfo', iiprop='url|mime',
+                                     iiurlwidth=8000, titles=file_title)
+
+    return response['query']['pages'][0]['imageinfo'][0]
+
+def full_url(endpoint, **kwargs):
+    return flask.url_for(endpoint, _external=True, _scheme=flask.request.headers.get('X-Forwarded-Proto', 'http'), **kwargs)
+
+def current_url():
+    return full_url(flask.request.endpoint, **flask.request.view_args)
+
+def build_manifest(item, property_id):
+    base_url = current_url()[:-len('/manifest.json')]
+    fac = iiif_prezi.factory.ManifestFactory()
+    fac.set_base_prezi_uri(base_url)
+    fac.set_debug('error')
+    label = item['label']['value'] # we could use these language strings properly
+
+    manifest = fac.manifest(ident='manifest.json', label=label)
+    manifest.description = '(add more info from Wikidata)'
+    sequence = manifest.sequence(ident='normal', label='default order')
+    canvas = sequence.canvas(ident='c0', label=label)
+    annolist = fac.annotationList(ident='annotations', label='Things depicted on this canvas')
+    canvas.add_annotationList(annolist)
+    populate_canvas(canvas, item, fac)
+
+    return manifest
+
+def populate_canvas(canvas, item, fac):
+    image_info = load_image_info(item['image_title'])
+    width, height = image_info['thumbwidth'], image_info['thumbheight']
+    canvas.set_hw(height, width)
+    anno = canvas.annotation(ident='a0')
+    img = anno.image(ident=image_info['thumburl'], iiif=False)
+    img.set_hw(height, width)
+    img.format = image_info['mime']
+
+    # add a thumbnail to the canvas
+    thumbs_path = image_info['thumburl'].replace('/wikipedia/commons/', '/wikipedia/commons/thumb/')
+    thumb_400 = thumbs_path + '/400px-' + item['image_title']
+    canvas.thumbnail = fac.image(ident=thumb_400)
+    canvas.thumbnail.format = image_info['mime']
+    thumbwidth, thumbheight = 400, int(height*(400/width))
+    canvas.thumbnail.set_hw(thumbheight, thumbwidth)
+
 def request_language_codes():
     language_codes = flask.request.args.getlist('uselang')
 
@@ -224,7 +346,7 @@ def request_language_codes():
         language_codes.append(language_code)
         if '-' in language_code:
             language_codes.append(language_code.split('-')[0])
-    
+
     language_codes.append('en')
 
     return language_codes

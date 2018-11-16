@@ -1,4 +1,5 @@
 flask
+iiif-prezi
 mwapi
 mwoauth
 pyyaml
