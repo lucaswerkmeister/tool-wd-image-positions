@@ -268,7 +268,17 @@ def handle_wrong_data_value_type(error):
 def load_item_and_property(item_id, property_id):
     language_codes = request_language_codes()
 
-    item_data = anonymous_session.get(action='wbgetentities', props='claims', ids=item_id)['entities'][item_id]
+    api_response = anonymous_session.get(action='wbgetentities',
+                                         props=['descriptions', 'claims'],
+                                         ids=item_id,
+                                         languages=language_codes)
+    item_data = api_response['entities'][item_id]
+
+    description = None
+    for language_code in language_codes:
+        if language_code in item_data['descriptions']:
+            description = item_data['descriptions'][language_code]
+            break
 
     image_datavalue = best_value(item_data, property_id)
     if image_datavalue is None:
@@ -287,6 +297,7 @@ def load_item_and_property(item_id, property_id):
     return {
         'item_id': item_id,
         'label': labels[item_id],
+        'description': description,
         'image_title': image_title,
         'image_attribution': image_attribution(image_title, language_codes[0]),
         'depicteds': depicteds,
@@ -318,7 +329,7 @@ def build_manifest(item):
 
     manifest = fac.manifest(ident='manifest.json')
     manifest.label = language_string_wikibase_to_iiif(item['label'])
-    manifest.description = '(add more info from Wikidata)'
+    manifest.description = language_string_wikibase_to_iiif(item['description'])
     sequence = manifest.sequence(ident='normal', label='default order')
     canvas = sequence.canvas(ident='c0')
     canvas.label = language_string_wikibase_to_iiif(item['label'])
