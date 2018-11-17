@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import collections
 import flask
 import iiif_prezi.factory
 import json
@@ -319,11 +320,12 @@ def load_item_and_property(item_id, property_id,
 
     if include_metadata:
         item['metadata'] = []
-        for property_id, value in metadata.items():
-            item['metadata'].append({
-                'label': labels[property_id],
-                'value': value
-            })
+        for property_id, values in metadata.items():
+            for value in values:
+                item['metadata'].append({
+                    'label': labels[property_id],
+                    'value': value
+                })
 
     return item
 
@@ -425,6 +427,29 @@ def best_value(item_data, property_id):
 
     return normal_value or deprecated_value
 
+def best_values(item_data, property_id):
+    if property_id not in item_data['claims']:
+        return []
+
+    statements = item_data['claims'][property_id]
+    preferred_values = []
+    normal_values = []
+    deprecated_values = []
+
+    for statement in statements:
+        if statement['mainsnak']['snaktype'] != 'value':
+            continue
+
+        datavalue = statement['mainsnak']['datavalue']
+        if statement['rank'] == 'preferred':
+            preferred_values.append(datavalue)
+        elif statement['rank'] == 'normal':
+            normal_values.append(datavalue)
+        else:
+            deprecated_values.append(datavalue)
+
+    return preferred_values or normal_values or deprecated_values
+
 def depicted_items(item_data):
     depicteds = []
 
@@ -470,17 +495,15 @@ def item_metadata(item_data):
         'P144', # based on
         'P941', # inspired by
     ]
-    metadata = {}
+    metadata = collections.defaultdict(list)
 
     for property_id in property_ids:
-        value = best_value(item_data, property_id)
-        if value is None:
-            continue
-        response = anonymous_session.get(action='wbformatvalue',
-                                         generate='text/html',
-                                         datavalue=json.dumps(value),
-                                         property=property_id)
-        metadata[property_id] = response['result']
+        for value in best_values(item_data, property_id):
+            response = anonymous_session.get(action='wbformatvalue',
+                                             generate='text/html',
+                                             datavalue=json.dumps(value),
+                                             property=property_id)
+            metadata[property_id].append(response['result'])
 
     return metadata
 
