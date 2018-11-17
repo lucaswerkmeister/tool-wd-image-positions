@@ -86,7 +86,7 @@ def item(item_id):
 
 @app.route('/item/<item_id>/<property_id>')
 def item_and_property(item_id, property_id):
-    item = load_item_and_property(item_id, property_id)
+    item = load_item_and_property(item_id, property_id, include_depicteds=True)
     if item is None:
         return flask.render_template('item-without-image.html',)
     return flask.render_template('item.html', **item)
@@ -97,7 +97,7 @@ def iiif_manifest(item_id):
 
 @app.route('/iiif/<item_id>/<property_id>/manifest.json')
 def iiif_manifest_with_property(item_id, property_id):
-    item = load_item_and_property(item_id, property_id)
+    item = load_item_and_property(item_id, property_id, include_description=True)
     if item is None:
         return '', 404
     manifest = build_manifest(item)
@@ -111,7 +111,7 @@ def iiif_annotations(item_id):
 
 @app.route('/iiif/<item_id>/<property_id>/list/annotations.json')
 def iiif_annotations_with_property(item_id, property_id):
-    item = load_item_and_property(item_id, property_id)
+    item = load_item_and_property(item_id, property_id, include_depicteds=True)
     # Although the pct canvas is OK for the image API, we need to target
     # canvas coordinates with the annotations, so we need the w,h
     image_info = load_image_info(item['image_title'])
@@ -169,7 +169,7 @@ def iiif_region_and_property(iiif_region, property_id):
     items_without_image = []
     for result in query_results['results']['bindings']:
         item_id = result['item']['value'][len('http://www.wikidata.org/entity/'):]
-        item = load_item_and_property(item_id, property_id)
+        item = load_item_and_property(item_id, property_id, include_depicteds=True)
         if item is None:
             items_without_image.append(item_id)
         else:
@@ -265,20 +265,31 @@ def handle_wrong_data_value_type(error):
     return response, error.status_code
 
 
-def load_item_and_property(item_id, property_id):
+def load_item_and_property(item_id, property_id,
+                           include_depicteds=False, include_description=False):
     language_codes = request_language_codes()
 
+    props = ['claims']
+    if include_description:
+        props.append('descriptions')
+
     api_response = anonymous_session.get(action='wbgetentities',
-                                         props=['descriptions', 'claims'],
+                                         props=props,
                                          ids=item_id,
                                          languages=language_codes)
     item_data = api_response['entities'][item_id]
+    item = {
+        'item_id': item_id,
+    }
+    entity_ids = [item_id]
 
-    description = None
-    for language_code in language_codes:
-        if language_code in item_data['descriptions']:
-            description = item_data['descriptions'][language_code]
-            break
+    if include_description:
+        description = None
+        for language_code in language_codes:
+            if language_code in item_data['descriptions']:
+                description = item_data['descriptions'][language_code]
+                break
+        item['description'] = description
 
     image_datavalue = best_value(item_data, property_id)
     if image_datavalue is None:
@@ -286,22 +297,23 @@ def load_item_and_property(item_id, property_id):
     if image_datavalue['type'] != 'string':
         raise WrongDataValueType(expected_data_value_type='string', actual_data_value_type=image_datavalue['type'])
     image_title = image_datavalue['value']
+    item['image_title'] = image_title
+    item['image_attribution'] = image_attribution(image_title, language_codes[0])
 
-    depicteds = depicted_items(item_data)
-    item_ids = [depicted['item_id'] for depicted in depicteds]
-    item_ids.append(item_id)
-    labels = load_labels(item_ids, language_codes)
-    for depicted in depicteds:
-        depicted['label'] = labels[depicted['item_id']]
+    if include_depicteds:
+        depicteds = depicted_items(item_data)
+        for depicted in depicteds:
+            entity_ids.append(depicted['item_id'])
 
-    return {
-        'item_id': item_id,
-        'label': labels[item_id],
-        'description': description,
-        'image_title': image_title,
-        'image_attribution': image_attribution(image_title, language_codes[0]),
-        'depicteds': depicteds,
-    }
+    labels = load_labels(entity_ids, language_codes)
+    item['label'] = labels[item_id]
+
+    if include_depicteds:
+        for depicted in depicteds:
+            depicted['label'] = labels[depicted['item_id']]
+        item['depicteds'] = depicteds
+
+    return item
 
 def load_image_info(image_title):
     file_title = 'File:' + image_title.replace(' ', '_')
@@ -416,16 +428,16 @@ def depicted_items(item_data):
         depicteds.append(depicted)
     return depicteds
 
-def load_labels(item_ids, language_codes):
-    item_ids = list(set(item_ids))
+def load_labels(entity_ids, language_codes):
+    entity_ids = list(set(entity_ids))
     labels = {}
-    for chunk in [item_ids[i:i+50] for i in range(0, len(item_ids), 50)]:
+    for chunk in [entity_ids[i:i+50] for i in range(0, len(entity_ids), 50)]:
         items_data = anonymous_session.get(action='wbgetentities', props='labels', languages=language_codes, ids=chunk)['entities']
-        for item_id, item_data in items_data.items():
-            labels[item_id] = {'language': 'zxx', 'value': item_id}
+        for entity_id, item_data in items_data.items():
+            labels[entity_id] = {'language': 'zxx', 'value': entity_id}
             for language_code in language_codes:
                 if language_code in item_data['labels']:
-                    labels[item_id] = item_data['labels'][language_code]
+                    labels[entity_id] = item_data['labels'][language_code]
                     break
     return labels
 
