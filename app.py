@@ -97,7 +97,7 @@ def iiif_manifest(item_id):
 
 @app.route('/iiif/<item_id>/<property_id>/manifest.json')
 def iiif_manifest_with_property(item_id, property_id):
-    item = load_item_and_property(item_id, property_id, include_description=True)
+    item = load_item_and_property(item_id, property_id, include_description=True, include_metadata=True)
     if item is None:
         return '', 404
     manifest = build_manifest(item)
@@ -266,7 +266,7 @@ def handle_wrong_data_value_type(error):
 
 
 def load_item_and_property(item_id, property_id,
-                           include_depicteds=False, include_description=False):
+                           include_depicteds=False, include_description=False, include_metadata=False):
     language_codes = request_language_codes()
 
     props = ['claims']
@@ -305,6 +305,10 @@ def load_item_and_property(item_id, property_id,
         for depicted in depicteds:
             entity_ids.append(depicted['item_id'])
 
+    if include_metadata:
+        metadata = item_metadata(item_data)
+        entity_ids += metadata.keys()
+
     labels = load_labels(entity_ids, language_codes)
     item['label'] = labels[item_id]
 
@@ -312,6 +316,14 @@ def load_item_and_property(item_id, property_id,
         for depicted in depicteds:
             depicted['label'] = labels[depicted['item_id']]
         item['depicteds'] = depicteds
+
+    if include_metadata:
+        item['metadata'] = []
+        for property_id, value in metadata.items():
+            item['metadata'].append({
+                'label': labels[property_id],
+                'value': value
+            })
 
     return item
 
@@ -346,6 +358,11 @@ def build_manifest(item):
     if attribution is not None:
         manifest.attribution = attribution['attribution_text']
         manifest.license = attribution['license_url']
+    for metadata in item['metadata']:
+        manifest.set_metadata({
+            'label': language_string_wikibase_to_iiif(metadata['label']),
+            'value': metadata['value'],
+        })
     sequence = manifest.sequence(ident='normal', label='default order')
     canvas = sequence.canvas(ident='c0')
     canvas.label = language_string_wikibase_to_iiif(item['label'])
@@ -427,6 +444,45 @@ def depicted_items(item_data):
 
         depicteds.append(depicted)
     return depicteds
+
+def item_metadata(item_data):
+    # property IDs based on https://www.wikidata.org/wiki/Wikidata:WikiProject_Visual_arts/Item_structure#Describing_individual_objects
+    property_ids = [
+        'P170', # creator
+        'P1476', # title
+        'P571', # inception
+        'P186', # material used
+        'P2079', # fabrication method
+        'P2048', # height
+        'P2049', # width
+        'P2610', # thickness
+        'P88', # commissioned by
+        'P1071', # location of final assembly
+        'P127', # owned by
+        'P1259', # coordinates of the point of view
+        'P195', # collection
+        'P276', # location
+        'P635', # coordinate location
+        'P1684', # inscription
+        'P136', # genre
+        'P135', # movement
+        'P921', # main subject
+        'P144', # based on
+        'P941', # inspired by
+    ]
+    metadata = {}
+
+    for property_id in property_ids:
+        value = best_value(item_data, property_id)
+        if value is None:
+            continue
+        response = anonymous_session.get(action='wbformatvalue',
+                                         generate='text/html',
+                                         datavalue=json.dumps(value),
+                                         property=property_id)
+        metadata[property_id] = response['result']
+
+    return metadata
 
 def load_labels(entity_ids, language_codes):
     entity_ids = list(set(entity_ids))
