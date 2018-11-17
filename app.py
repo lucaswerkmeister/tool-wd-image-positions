@@ -98,7 +98,7 @@ def iiif_manifest(item_id):
 @app.route('/iiif/<item_id>/<property_id>/manifest.json')
 def iiif_manifest_with_property(item_id, property_id):
     item = load_item_and_property(item_id, property_id)
-    manifest = build_manifest(item, property_id)
+    manifest = build_manifest(item)
     resp = flask.jsonify(manifest.toJSON(top=True))
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
@@ -303,7 +303,7 @@ def full_url(endpoint, **kwargs):
 def current_url():
     return full_url(flask.request.endpoint, **flask.request.view_args)
 
-def build_manifest(item, property_id):
+def build_manifest(item):
     base_url = current_url()[:-len('/manifest.json')]
     fac = iiif_prezi.factory.ManifestFactory()
     fac.set_base_prezi_uri(base_url)
