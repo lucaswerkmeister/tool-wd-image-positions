@@ -98,6 +98,8 @@ def iiif_manifest(item_id):
 @app.route('/iiif/<item_id>/<property_id>/manifest.json')
 def iiif_manifest_with_property(item_id, property_id):
     item = load_item_and_property(item_id, property_id)
+    if item is None:
+        return '', 404
     manifest = build_manifest(item)
     resp = flask.jsonify(manifest.toJSON(top=True))
     resp.headers['Access-Control-Allow-Origin'] = '*'
