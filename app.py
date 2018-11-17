@@ -330,6 +330,10 @@ def build_manifest(item):
     manifest = fac.manifest(ident='manifest.json')
     manifest.label = language_string_wikibase_to_iiif(item['label'])
     manifest.description = language_string_wikibase_to_iiif(item['description'])
+    attribution = image_attribution(item['image_title'], request_language_codes()[0])
+    if attribution is not None:
+        manifest.attribution = attribution['attribution_text']
+        manifest.license = attribution['license_url']
     sequence = manifest.sequence(ident='normal', label='default order')
     canvas = sequence.canvas(ident='c0')
     canvas.label = language_string_wikibase_to_iiif(item['label'])
@@ -453,4 +457,10 @@ def image_attribution(image_title, language_code):
     if credit:
         attribution += flask.Markup(r' (') + flask.Markup(credit) + flask.Markup(r')')
 
-    return attribution
+    attribution = attribution[len(', '):]
+
+    return {
+        'license_url': license_url,
+        'attribution_text': attribution.striptags(),
+        'attribution_html': attribution,
+    }
