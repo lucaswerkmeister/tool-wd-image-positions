@@ -52,7 +52,7 @@ def index():
                     return flask.redirect(manifest_url)
                 else:
                     mirador_protocol = 'https' if manifest_url.startswith('https') else 'http'
-                    mirador_url = mirador_protocol + '://tomcrane.github.io/scratch/mirador/?manifest=' + manifest_url
+                    mirador_url = mirador_protocol + '://tools.wmflabs.org/mirador/?manifest=' + manifest_url
                     return flask.redirect(mirador_url)
             else:
                 if property_id:
