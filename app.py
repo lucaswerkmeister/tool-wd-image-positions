@@ -305,17 +305,23 @@ def full_url(endpoint, **kwargs):
 def current_url():
     return full_url(flask.request.endpoint, **flask.request.view_args)
 
+def language_string_wikibase_to_iiif(language_string):
+    if language_string is None:
+        return None
+    return {language_string['language']: language_string['value']}
+
 def build_manifest(item):
     base_url = current_url()[:-len('/manifest.json')]
     fac = iiif_prezi.factory.ManifestFactory()
     fac.set_base_prezi_uri(base_url)
     fac.set_debug('error')
-    label = item['label']['value'] # we could use these language strings properly
 
-    manifest = fac.manifest(ident='manifest.json', label=label)
+    manifest = fac.manifest(ident='manifest.json')
+    manifest.label = language_string_wikibase_to_iiif(item['label'])
     manifest.description = '(add more info from Wikidata)'
     sequence = manifest.sequence(ident='normal', label='default order')
-    canvas = sequence.canvas(ident='c0', label=label)
+    canvas = sequence.canvas(ident='c0')
+    canvas.label = language_string_wikibase_to_iiif(item['label'])
     annolist = fac.annotationList(ident='annotations', label='Things depicted on this canvas')
     canvas.add_annotationList(annolist)
     populate_canvas(canvas, item, fac)
