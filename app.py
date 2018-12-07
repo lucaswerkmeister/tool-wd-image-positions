@@ -183,6 +183,9 @@ def api_add_qualifier(statement_id, iiif_region, csrf_token):
     if csrf_token != flask.session['_csrf_token']:
         return 'Wrong CSRF token (try reloading the page).', 403
 
+    if not flask.request.referrer.startswith(full_url('index')):
+        return 'Wrong Referer header', 403
+
     access_token = mwoauth.AccessToken(**flask.session['oauth_access_token'])
     auth = requests_oauthlib.OAuth1(client_key=consumer_token.key, client_secret=consumer_token.secret,
                                     resource_owner_key=access_token.key, resource_owner_secret=access_token.secret)
