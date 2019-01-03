@@ -558,3 +558,15 @@ def image_attribution(image_title, language_code):
         'attribution_text': attribution.striptags(),
         'attribution_html': attribution,
     }
+
+@app.after_request
+def denyFrame(response):
+    """Disallow embedding the tool’s pages in other websites.
+
+    If other websites can embed this tool’s pages, e. g. in <iframe>s,
+    other tools hosted on tools.wmflabs.org can send arbitrary web
+    requests from this tool’s context, bypassing the referrer-based
+    CSRF protection.
+    """
+    response.headers['X-Frame-Options'] = 'deny'
+    return response
