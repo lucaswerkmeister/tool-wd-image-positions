@@ -524,10 +524,21 @@ def load_labels(entity_ids, language_codes):
     return labels
 
 def image_attribution(image_title, language_code):
-    response = anonymous_session.get(action='query', prop='imageinfo', iiprop='extmetadata',
-                                     iiextmetadatalanguage=language_code,
-                                     titles=('File:' + image_title))
-    metadata = response['query']['pages'][0]['imageinfo'][0]['extmetadata']
+    params = query_default_params()
+    image_attribution_query_add_params(params, image_title, language_code)
+    response = anonymous_session.get(**params)
+    return image_attribution_query_process_response(response, image_title, language_code)
+
+def image_attribution_query_add_params(params, image_title, language_code):
+    params.setdefault('prop', set()).update(['imageinfo'])
+    params.setdefault('iiprop', set()).update(['extmetadata'])
+    params['iiextmetadatalanguage'] = language_code
+    params.setdefault('titles', set()).update(['File:' + image_title])
+
+def image_attribution_query_process_response(response, image_title, language_code):
+    page = query_response_page(response, 'File:' + image_title)
+    imageinfo = page['imageinfo'][0]
+    metadata = imageinfo['extmetadata']
     no_value = {'value': None}
 
     attribution_required = metadata.get('AttributionRequired', no_value)['value']
@@ -558,6 +569,18 @@ def image_attribution(image_title, language_code):
         'attribution_text': attribution.striptags(),
         'attribution_html': attribution,
     }
+
+def query_default_params():
+    return {'action': 'query', 'formatversion': 2}
+
+def query_response_page(response, title):
+    """Get the page corresponding to a title from a query response."""
+    for normalized in response['query'].get('normalized', []):
+        if normalized['from'] == title:
+            title = normalized['to']
+            break
+    pages = response['query']['pages']
+    return next(page for page in pages if page['title'] == title)
 
 @app.after_request
 def denyFrame(response):
