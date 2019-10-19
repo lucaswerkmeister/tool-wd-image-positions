@@ -15,41 +15,50 @@ function addEditButton(element) {
     element.append(document.createTextNode(' '));
     element.append(button);
 
+    let cropper = null;
+
     function onClick() {
-        image.classList.add('active');
-        image.addEventListener('mousedown', onMouseDown, { once: true });
-        button.textContent = 'click and drag on the image to define the region';
-    }
-    function onMouseDown(eDown) {
-        eDown.preventDefault();
-        const downX = eDown.offsetX,
-              downY = eDown.offsetY,
-              width = eDown.target.offsetWidth,
-              height = eDown.target.offsetHeight;
-        const depicted = document.createElement('div');
-        depicted.classList.add('depicted')
-        depicted.append(element.firstChild.cloneNode(true));
-        depicted.style.left = (100 * downX / width) + '%';
-        depicted.style.top = (100 * downY / height) + '%';
-        image.append(depicted);
-        image.addEventListener('mousemove', onMouseMove);
-        image.addEventListener('mouseup', onMouseUp, { once: true });
-        document.addEventListener('keypress', onKeyPress);
-
-        function onMouseMove(eMove) {
-            depicted.style.width = (100 * (eMove.offsetX - downX) / width) + '%';
-            depicted.style.height = (100 * (eMove.offsetY - downY) / height) + '%';
-        }
-        function onMouseUp(eUp) {
+        if (cropper === null) {
+            button.textContent = 'loading...';
+            image.classList.add('active');
+            cropper = new Cropper(image.firstElementChild, {
+                viewMode: 2,
+                movable: false,
+                rotatable: false,
+                scalable: false,
+                zoomable: false,
+                ready: function() {
+                    button.textContent = 'use this region';
+                },
+            });
+            document.addEventListener('keydown', onKeyDown);
+        } else {
+            if (button.textContent === 'loading...') {
+                return;
+            }
             image.classList.remove('active');
-            image.removeEventListener('mousemove', onMouseMove);
-            document.removeEventListener('keypress', onKeyPress);
-
-            const x = depicted.style.left.replace('%', ''),
-                  y = depicted.style.top.replace('%', ''),
-                  w = depicted.style.width.replace('%', ''),
-                  h = depicted.style.height.replace('%', ''),
-                  iiifRegion = `pct:${x},${y},${w},${h}`,
+            const cropData = cropper.getData(),
+                  imageData = cropper.getImageData(),
+                  x = 100 * cropData.x / imageData.naturalWidth,
+                  y = 100 * cropData.y / imageData.naturalHeight,
+                  w = 100 * cropData.width / imageData.naturalWidth,
+                  h = 100 * cropData.height / imageData.naturalHeight,
+                  depicted = document.createElement('div');
+            depicted.classList.add('depicted')
+            depicted.append(element.firstChild.cloneNode(true));
+            // note: the browser rounds the percentages a bit,
+            // and we’ll use the rounded values for the IIIF region
+            depicted.style.left = `${x}%`;
+            depicted.style.top = `${y}%`;
+            depicted.style.width = `${w}%`;
+            depicted.style.height = `${h}%`;
+            cropper.destroy();
+            cropper = null;
+            image.append(depicted);
+            function pct(name) {
+                return depicted.style[name].replace('%', '');
+            }
+            const iiifRegion = `pct:${pct('left')},${pct('top')},${pct('width')},${pct('height')}`,
                   quickStatements = `${subjectId}\tP180\t${depictedId}\tP2677\t"${iiifRegion}"`;
 
             const csrfTokenElement = document.getElementById('csrf_token');
@@ -87,14 +96,13 @@ function addEditButton(element) {
                 }
             }
         }
-        function onKeyPress(eKey) {
+        function onKeyDown(eKey) {
             if (eKey.key === 'Escape') {
+                cropper.destroy();
+                cropper = null;
                 image.classList.remove('active');
-                image.removeEventListener('mousemove', onMouseMove);
-                image.removeEventListener('mouseup', onMouseUp);
-                document.removeEventListener('keypress', onKeyPress);
+                document.removeEventListener('keydown', onKeyDown);
                 button.textContent = 'add region';
-                depicted.remove();
             }
         }
     }
