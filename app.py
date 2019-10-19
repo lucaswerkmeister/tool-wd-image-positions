@@ -570,6 +570,24 @@ def image_attribution_query_process_response(response, image_title, language_cod
         'attribution_html': attribution,
     }
 
+def image_url(image_title):
+    params = query_default_params()
+    image_url_query_add_params(params, image_title)
+    response = anonymous_session.get(**params)
+    return image_url_query_process_response(response, image_title)
+
+def image_url_query_add_params(params, image_title):
+    params.setdefault('prop', set()).update(['imageinfo'])
+    params.setdefault('iiprop', set()).update(['url'])
+    params.setdefault('titles', set()).update(['File:' + image_title])
+
+def image_url_query_process_response(response, image_title):
+    page = query_response_page(response, 'File:' + image_title)
+    imageinfo = page['imageinfo'][0]
+    url = imageinfo['url']
+
+    return url
+
 def query_default_params():
     return {'action': 'query', 'formatversion': 2}
 
