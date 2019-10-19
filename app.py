@@ -302,7 +302,13 @@ def load_item_and_property(item_id, property_id,
         raise WrongDataValueType(expected_data_value_type='string', actual_data_value_type=image_datavalue['type'])
     image_title = image_datavalue['value']
     item['image_title'] = image_title
-    item['image_attribution'] = image_attribution(image_title, language_codes[0])
+
+    info_params = query_default_params()
+    image_attribution_query_add_params(info_params, image_title, language_codes[0])
+    image_url_query_add_params(info_params, image_title)
+    info_response = anonymous_session.get(**info_params)
+    item['image_attribution'] = image_attribution_query_process_response(info_response, image_title, language_codes[0])
+    item['image_url'] = image_url_query_process_response(info_response, image_title)
 
     if include_depicteds:
         depicteds = depicted_items(item_data)
