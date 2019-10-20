@@ -259,9 +259,16 @@ def authentication_area():
                 flask.Markup(r'">Log in</a>'))
 
     access_token = mwoauth.AccessToken(**flask.session['oauth_access_token'])
-    identity = mwoauth.identify('https://www.wikidata.org/w/index.php',
-                                consumer_token,
-                                access_token)
+    try:
+        identity = mwoauth.identify('https://www.wikidata.org/w/index.php',
+                                    consumer_token,
+                                    access_token)
+    except mwoauth.OAuthException:
+        # invalid access token, e. g. consumer version updated
+        flask.session.pop('oauth_access_token')
+        return (flask.Markup(r'<a id="login" class="navbar-text" href="') +
+                flask.Markup.escape(flask.url_for('login')) +
+                flask.Markup(r'">Log in</a>'))
 
     csrf_token = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(64))
     flask.session['_csrf_token'] = csrf_token
