@@ -190,6 +190,10 @@ def iiif_region_and_property(iiif_region, property_id):
 
     return flask.render_template('iiif_region.html', items=items, items_without_image=items_without_image)
 
+@app.route('/file/<image_title>')
+def file(image_title):
+    return flask.render_template('file.html', **load_file(image_title))
+
 @app.route('/api/add_qualifier/<statement_id>/<iiif_region>/<csrf_token>', methods=['POST'])
 def api_add_qualifier_legacy(statement_id, iiif_region, csrf_token): # TODO remove this soon
     if csrf_token != flask.session['_csrf_token']:
@@ -226,7 +230,7 @@ def api_add_qualifier(domain):
     if not flask.request.referrer.startswith(full_url('index')):
         return 'Wrong Referer header', 403
 
-    if domain not in {'www.wikidata.org'}:
+    if domain not in {'www.wikidata.org', 'commons.wikimedia.org'}:
         return 'Unsupported domain', 403
 
     session = authenticated_session(domain)
@@ -388,6 +392,43 @@ def load_item_and_property(item_id, property_id,
 
     return item
 
+def load_file(image_title):
+    language_codes = request_language_codes()
+
+    session = anonymous_session('commons.wikimedia.org')
+    query_params = query_default_params()
+    query_params.setdefault('titles', set()).update(['File:' + image_title])
+    image_attribution_query_add_params(query_params, image_title, language_codes[0])
+    image_url_query_add_params(query_params, image_title)
+    query_response = session.get(**query_params)
+    page_id = query_response_page(query_response, 'File:' + image_title)['pageid']
+    entity_id = 'M' + str(page_id)
+    file = {
+        'entity_id': entity_id,
+        'image_title': image_title,
+        'image_attribution': image_attribution_query_process_response(query_response, image_title, language_codes[0]),
+        'image_url': image_url_query_process_response(query_response, image_title),
+    }
+    entity_ids = []
+
+    api_response = session.get(action='wbgetentities',
+                               props=['claims'],
+                               ids=[entity_id],
+                               languages=language_codes)
+    file_data = api_response['entities'][entity_id]
+
+    depicteds = depicted_items(file_data)
+    for depicted in depicteds:
+        entity_ids.append(depicted['item_id'])
+
+    labels = load_labels(entity_ids, language_codes)
+
+    for depicted in depicteds:
+        depicted['label'] = labels[depicted['item_id']]
+    file['depicteds'] = depicteds
+
+    return file
+
 def load_image_info(image_title):
     file_title = 'File:' + image_title.replace(' ', '_')
     session = anonymous_session('commons.wikimedia.org')
@@ -513,7 +554,8 @@ def best_values(item_data, property_id):
 def depicted_items(entity_data):
     depicteds = []
 
-    for statement in entity_data['claims'].get('P180', []):
+    statements = entity_data.get('claims', entity_data.get('statements', {}))
+    for statement in statements.get('P180', []):
         if statement['mainsnak']['snaktype'] != 'value':
             continue
         depicted = {
