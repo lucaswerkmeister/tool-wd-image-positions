@@ -295,7 +295,7 @@ def load_item_and_property(item_id, property_id,
                                languages=language_codes)
     item_data = api_response['entities'][item_id]
     item = {
-        'item_id': item_id,
+        'entity_id': item_id,
     }
     entity_ids = [item_id]
 
@@ -472,10 +472,10 @@ def best_values(item_data, property_id):
 
     return preferred_values or normal_values or deprecated_values
 
-def depicted_items(item_data):
+def depicted_items(entity_data):
     depicteds = []
 
-    for statement in item_data['claims'].get('P180', []):
+    for statement in entity_data['claims'].get('P180', []):
         if statement['mainsnak']['snaktype'] != 'value':
             continue
         depicted = {

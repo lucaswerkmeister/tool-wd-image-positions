@@ -3,10 +3,10 @@ function addEditButtons() {
 }
 
 function addEditButton(element) {
-    const item = element.closest('.item'),
-          subjectId = item.dataset.entityId,
+    const entity = element.closest('.entity'),
+          subjectId = entity.dataset.entityId,
           depictedId = element.firstChild.dataset.entityId,
-          image = item.querySelector('.image');
+          image = entity.querySelector('.image');
     const button = document.createElement('button');
     button.type = 'button';
     button.classList.add('btn', 'btn-secondary', 'btn-sm');

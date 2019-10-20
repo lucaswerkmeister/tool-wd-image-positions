@@ -1,5 +1,8 @@
 {% from "image.html" import image %}
 {% extends "images.html" %}
 {% block main %}
-{{ image(item_id, label, image_title, image_attribution, image_url, depicteds) }}
+<div class="entity" data-entity-id="{{ entity_id }}">
+  <h1>{{ item_link(entity_id, label) }}</h1>
+  {{ image(image_title, image_attribution, image_url, depicteds) }}
+</div>
 {% endblock main %}

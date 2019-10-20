@@ -2,7 +2,10 @@
 {% extends "images.html" %}
 {% block main %}
 {% for item in items %}
-{{ image(**item) }}
+<div class="entity" data-entity-id="{{ item.entity_id }}">
+  <h1>{{ item_link(item.entity_id, item.label) }}</h1>
+  {{ image(item.image_title, item.image_attribution, item.image_url, item.depicteds) }}
+</div>
 {% endfor %}
 {% for item in items_without_image %}
 <p>Item {{ item }} has no image.</p>
