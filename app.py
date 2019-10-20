@@ -191,7 +191,7 @@ def iiif_region_and_property(iiif_region, property_id):
     return flask.render_template('iiif_region.html', items=items, items_without_image=items_without_image)
 
 @app.route('/api/add_qualifier/<statement_id>/<iiif_region>/<csrf_token>', methods=['POST'])
-def api_add_qualifier(statement_id, iiif_region, csrf_token):
+def api_add_qualifier_legacy(statement_id, iiif_region, csrf_token): # TODO remove this soon
     if csrf_token != flask.session['_csrf_token']:
         return 'Wrong CSRF token (try reloading the page).', 403
 
@@ -206,6 +206,37 @@ def api_add_qualifier(statement_id, iiif_region, csrf_token):
     response = session.post(action='wbsetqualifier', claim=statement_id, property='P2677',
                             snaktype='value', value=('"' + iiif_region + '"'),
                             summary='region drawn manually using [[User:Lucas Werkmeister/Wikidata Image Positions|Wikidata Image Positions tool]]',
+                            token=token)
+    if response['success'] == 1:
+        return '', 204
+    else:
+        return str(response), 500
+
+@app.route('/api/v2/add_qualifier/<domain>', methods=['POST'])
+def api_add_qualifier(domain):
+    statement_id = flask.request.form.get('statement_id')
+    iiif_region = flask.request.form.get('iiif_region')
+    csrf_token = flask.request.form.get('_csrf_token')
+    if not statement_id or not iiif_region or not csrf_token:
+        return 'Incomplete form data', 400
+
+    if csrf_token != flask.session['_csrf_token']:
+        return 'Wrong CSRF token (try reloading the page).', 403
+
+    if not flask.request.referrer.startswith(full_url('index')):
+        return 'Wrong Referer header', 403
+
+    if domain not in {'www.wikidata.org'}:
+        return 'Unsupported domain', 403
+
+    session = authenticated_session(domain)
+    if session is None:
+        return 'Not logged in', 403
+
+    token = session.get(action='query', meta='tokens', type='csrf')['query']['tokens']['csrftoken']
+    response = session.post(action='wbsetqualifier', claim=statement_id, property='P2677',
+                            snaktype='value', value=('"' + iiif_region + '"'),
+                            summary='region drawn manually using [[d:User:Lucas Werkmeister/Wikidata Image Positions|Wikidata Image Positions tool]]',
                             token=token)
     if response['success'] == 1:
         return '', 204

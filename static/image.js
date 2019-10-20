@@ -5,6 +5,7 @@ function addEditButtons() {
 function addEditButton(element) {
     const entity = element.closest('.entity'),
           subjectId = entity.dataset.entityId,
+          subjectDomain = entity.dataset.entityDomain,
           depictedId = element.firstChild.dataset.entityId,
           image = entity.querySelector('.image');
     const button = document.createElement('button');
@@ -66,8 +67,16 @@ function addEditButton(element) {
                 button.textContent = 'adding qualifier…';
                 const baseUrl = document.querySelector('link[rel=index]').href.replace(/\/$/, ''),
                       statementId = element.dataset.statementId,
-                      csrfToken = csrfTokenElement.textContent;
-                fetch(`${baseUrl}/api/add_qualifier/${statementId}/${iiifRegion}/${csrfToken}`, { method: 'POST', credentials: 'include' }).then(response => {
+                      csrfToken = csrfTokenElement.textContent,
+                      formData = new FormData();
+                formData.append('statement_id', statementId);
+                formData.append('iiif_region', iiifRegion);
+                formData.append('_csrf_token', csrfToken);
+                fetch(`${baseUrl}/api/v2/add_qualifier/${subjectDomain}`, {
+                    method: 'POST',
+                    body: formData,
+                    credentials: 'include',
+                } ).then(response => {
                     if (response.ok) {
                         element.remove();
                     } else {
