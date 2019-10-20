@@ -27,8 +27,6 @@ app.before_request(toolforge.redirect_to_https)
 toolforge.set_user_agent('lexeme-forms', email='mail@lucaswerkmeister.de')
 user_agent = requests.utils.default_user_agent()
 
-anonymous_session = mwapi.Session(host='https://www.wikidata.org', user_agent=user_agent, formatversion=2)
-
 default_property = 'P18'
 
 __dir__ = os.path.dirname(__file__)
@@ -39,6 +37,20 @@ except FileNotFoundError:
     print('config.yaml file not found, assuming local development setup')
 else:
     consumer_token = mwoauth.ConsumerToken(app.config['oauth']['consumer_key'], app.config['oauth']['consumer_secret'])
+
+
+def anonymous_session(domain):
+    host = 'https://' + domain
+    return mwapi.Session(host=host, user_agent=user_agent, formatversion=2)
+
+def authenticated_session(domain):
+    if 'oauth_access_token' not in flask.session:
+        return None
+    host = 'https://' + domain
+    access_token = mwoauth.AccessToken(**flask.session['oauth_access_token'])
+    auth = requests_oauthlib.OAuth1(client_key=consumer_token.key, client_secret=consumer_token.secret,
+                                    resource_owner_key=access_token.key, resource_owner_secret=access_token.secret)
+    return mwapi.Session(host=host, auth=auth, user_agent=user_agent, formatversion=2)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -186,10 +198,9 @@ def api_add_qualifier(statement_id, iiif_region, csrf_token):
     if not flask.request.referrer.startswith(full_url('index')):
         return 'Wrong Referer header', 403
 
-    access_token = mwoauth.AccessToken(**flask.session['oauth_access_token'])
-    auth = requests_oauthlib.OAuth1(client_key=consumer_token.key, client_secret=consumer_token.secret,
-                                    resource_owner_key=access_token.key, resource_owner_secret=access_token.secret)
-    session = mwapi.Session(host='https://www.wikidata.org', auth=auth, user_agent=user_agent, formatversion=2)
+    session = authenticated_session('www.wikidata.org')
+    if session is None:
+        return 'Not logged in', 403
 
     token = session.get(action='query', meta='tokens', type='csrf')['query']['tokens']['csrftoken']
     response = session.post(action='wbsetqualifier', claim=statement_id, property='P2677',
@@ -277,10 +288,11 @@ def load_item_and_property(item_id, property_id,
     if include_description:
         props.append('descriptions')
 
-    api_response = anonymous_session.get(action='wbgetentities',
-                                         props=props,
-                                         ids=item_id,
-                                         languages=language_codes)
+    session = anonymous_session('www.wikidata.org')
+    api_response = session.get(action='wbgetentities',
+                               props=props,
+                               ids=item_id,
+                               languages=language_codes)
     item_data = api_response['entities'][item_id]
     item = {
         'item_id': item_id,
@@ -306,7 +318,7 @@ def load_item_and_property(item_id, property_id,
     info_params = query_default_params()
     image_attribution_query_add_params(info_params, image_title, language_codes[0])
     image_url_query_add_params(info_params, image_title)
-    info_response = anonymous_session.get(**info_params)
+    info_response = session.get(**info_params)
     item['image_attribution'] = image_attribution_query_process_response(info_response, image_title, language_codes[0])
     item['image_url'] = image_url_query_process_response(info_response, image_title)
 
@@ -340,8 +352,9 @@ def load_item_and_property(item_id, property_id,
 
 def load_image_info(image_title):
     file_title = 'File:' + image_title.replace(' ', '_')
-    response = anonymous_session.get(action='query', prop='imageinfo', iiprop='url|mime',
-                                     iiurlwidth=8000, titles=file_title)
+    session = anonymous_session('commons.wikimedia.org')
+    response = session.get(action='query', prop='imageinfo', iiprop='url|mime',
+                           iiurlwidth=8000, titles=file_title)
 
     return response['query']['pages'][0]['imageinfo'][0]
 
@@ -506,12 +519,13 @@ def item_metadata(item_data):
     ]
     metadata = collections.defaultdict(list)
 
+    session = anonymous_session('www.wikidata.org')
     for property_id in property_ids:
         for value in best_values(item_data, property_id):
-            response = anonymous_session.get(action='wbformatvalue',
-                                             generate='text/html',
-                                             datavalue=json.dumps(value),
-                                             property=property_id)
+            response = session.get(action='wbformatvalue',
+                                   generate='text/html',
+                                   datavalue=json.dumps(value),
+                                   property=property_id)
             metadata[property_id].append(response['result'])
 
     return metadata
@@ -519,8 +533,9 @@ def item_metadata(item_data):
 def load_labels(entity_ids, language_codes):
     entity_ids = list(set(entity_ids))
     labels = {}
+    session = anonymous_session('www.wikidata.org')
     for chunk in [entity_ids[i:i+50] for i in range(0, len(entity_ids), 50)]:
-        items_data = anonymous_session.get(action='wbgetentities', props='labels', languages=language_codes, ids=chunk)['entities']
+        items_data = session.get(action='wbgetentities', props='labels', languages=language_codes, ids=chunk)['entities']
         for entity_id, item_data in items_data.items():
             labels[entity_id] = {'language': 'zxx', 'value': entity_id}
             for language_code in language_codes:
@@ -532,7 +547,8 @@ def load_labels(entity_ids, language_codes):
 def image_attribution(image_title, language_code):
     params = query_default_params()
     image_attribution_query_add_params(params, image_title, language_code)
-    response = anonymous_session.get(**params)
+    session = anonymous_session.get('commons.wikimedia.org')
+    response = session.get(**params)
     return image_attribution_query_process_response(response, image_title, language_code)
 
 def image_attribution_query_add_params(params, image_title, language_code):
@@ -579,7 +595,8 @@ def image_attribution_query_process_response(response, image_title, language_cod
 def image_url(image_title):
     params = query_default_params()
     image_url_query_add_params(params, image_title)
-    response = anonymous_session.get(**params)
+    session = anonymous_session.get('commons.wikimedia.org')
+    response = session.get(**params)
     return image_url_query_process_response(response, image_title)
 
 def image_url_query_add_params(params, image_title):
