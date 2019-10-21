@@ -22,6 +22,7 @@ function addEditButton(element) {
         if (cropper === null) {
             button.textContent = 'loading...';
             image.classList.add('active');
+            button.classList.add('active');
             cropper = new Cropper(image.firstElementChild, {
                 viewMode: 2,
                 movable: false,
@@ -102,6 +103,7 @@ function addEditButton(element) {
                 } else {
                     depicted.remove();
                     button.textContent = 'add region';
+                    button.classList.remove('active');
                 }
             }
         }
@@ -112,6 +114,7 @@ function addEditButton(element) {
                 image.classList.remove('active');
                 document.removeEventListener('keydown', onKeyDown);
                 button.textContent = 'add region';
+                button.classList.remove('active');
             }
         }
     }
