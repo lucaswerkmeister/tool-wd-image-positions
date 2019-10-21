@@ -79,6 +79,11 @@ def index():
                 return flask.redirect(flask.url_for('iiif_region_and_property', iiif_region=iiif_region, property_id=property_id))
             else:
                 return flask.redirect(flask.url_for('iiif_region', iiif_region=iiif_region))
+        if 'image_title' in flask.request.form:
+            image_title = flask.request.form['image_title']
+            if image_title.startswith('File:'):
+                image_title = image_title[len('File:'):]
+            return flask.redirect(flask.url_for('file', image_title=image_title))
     return flask.render_template('index.html')
 
 @app.route('/login')
