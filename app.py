@@ -192,6 +192,9 @@ def iiif_region_and_property(iiif_region, property_id):
 
 @app.route('/file/<image_title>')
 def file(image_title):
+    if image_title.startswith('File:'):
+        image_title = image_title[len('File:'):]
+        return flask.redirect(flask.url_for('file', image_title=image_title, **flask.request.args))
     return flask.render_template('file.html', **load_file(image_title))
 
 @app.route('/api/add_qualifier/<statement_id>/<iiif_region>/<csrf_token>', methods=['POST'])
