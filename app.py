@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import collections
+import decorator
 import flask
 import iiif_prezi.factory
 import json
@@ -51,6 +52,14 @@ def authenticated_session(domain):
     auth = requests_oauthlib.OAuth1(client_key=consumer_token.key, client_secret=consumer_token.secret,
                                     resource_owner_key=access_token.key, resource_owner_secret=access_token.secret)
     return mwapi.Session(host=host, auth=auth, user_agent=user_agent, formatversion=2)
+
+
+@decorator.decorator
+def enableCORS(func, *args, **kwargs):
+    rv = func(*args, **kwargs)
+    response = flask.make_response(rv)
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    return response
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -201,6 +210,12 @@ def file(image_title):
         image_title = image_title[len('File:'):]
         return flask.redirect(flask.url_for('file', image_title=image_title, **flask.request.args))
     return flask.render_template('file.html', **load_file(image_title))
+
+@app.route('/api/v1/depicteds_html/file/<image_title>')
+@enableCORS
+def file_depicteds_html(image_title):
+    file = load_file(image_title)
+    return flask.render_template('depicteds.html', depicteds=file['depicteds'])
 
 @app.route('/api/add_qualifier/<statement_id>/<iiif_region>/<csrf_token>', methods=['POST'])
 def api_add_qualifier_legacy(statement_id, iiif_region, csrf_token): # TODO remove this soon

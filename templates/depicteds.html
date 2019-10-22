@@ -1,0 +1,5 @@
+{% for depicted in depicteds %}
+{% if depicted.iiif_region %}
+<div class="depicted" style="{{ depicted.iiif_region | iiif_region_to_style }}" data-statement-id="{{ depicted.statement_id }}">{{ item_link(depicted.item_id, depicted.label) }}</div>
+{% endif %}
+{% endfor %}
