@@ -1,7 +1,7 @@
 {% macro image(image_title, image_attribution, image_url, depicteds) %}
 {% set image_title_ = image_title.replace(' ', '_') %}
 <h2><a href="https://commons.wikimedia.org/wiki/File:{{ image_title_ }}">{{ image_title }}</a>{% if image_attribution %}, {{ image_attribution.attribution_html }}{% endif %}</h2>
-<div class="image">
+<div class="wd-image-positions--image">
   <img src="{{ image_url }}"
        srcset="https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ }}?width=320 320w,
                https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ }}?width=640 640w,
@@ -13,7 +13,7 @@
   {% set depicteds_without_region = [] %}
   {% for depicted in depicteds %}
   {% if depicted.iiif_region %}
-  <div class="depicted" style="{{ depicted.iiif_region | iiif_region_to_style }}" data-statement-id="{{ depicted.statement_id }}">{{ item_link(depicted.item_id, depicted.label) }}</div>
+  <div class="wd-image-positions--depicted" style="{{ depicted.iiif_region | iiif_region_to_style }}" data-statement-id="{{ depicted.statement_id }}">{{ item_link(depicted.item_id, depicted.label) }}</div>
   {% else %}
   {% do depicteds_without_region.append(depicted) %}
   {% endif %}
@@ -24,7 +24,7 @@
   Depicted, but with no region specified:
   <ul>
     {% for depicted in depicteds_without_region %}
-    <li class="depicted-without-region" data-statement-id="{{ depicted.statement_id }}">{{ item_link(depicted.item_id, depicted.label) }}</li>
+    <li class="wd-image-positions--depicted-without-region" data-statement-id="{{ depicted.statement_id }}">{{ item_link(depicted.item_id, depicted.label) }}</li>
     {% endfor %}
   </ul>
 </div>

@@ -1,7 +1,7 @@
 {% from "image.html" import image %}
 {% extends "images.html" %}
 {% block main %}
-<div class="entity" data-entity-id="{{ entity_id }}" data-entity-domain="commons.wikimedia.org">
+<div class="wd-image-positions--entity" data-entity-id="{{ entity_id }}" data-entity-domain="commons.wikimedia.org">
   {{ image(image_title, image_attribution, image_url, depicteds) }}
 </div>
 {% endblock main %}

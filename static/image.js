@@ -1,13 +1,13 @@
 function addEditButtons() {
-    document.querySelectorAll('.depicted-without-region').forEach(addEditButton);
+    document.querySelectorAll('.wd-image-positions--depicted-without-region').forEach(addEditButton);
 }
 
 function addEditButton(element) {
-    const entity = element.closest('.entity'),
+    const entity = element.closest('.wd-image-positions--entity'),
           subjectId = entity.dataset.entityId,
           subjectDomain = entity.dataset.entityDomain,
           depictedId = element.firstChild.dataset.entityId,
-          image = entity.querySelector('.image');
+          image = entity.querySelector('.wd-image-positions--image');
     const button = document.createElement('button');
     button.type = 'button';
     button.classList.add('btn', 'btn-secondary', 'btn-sm');
@@ -21,8 +21,8 @@ function addEditButton(element) {
     function onClick() {
         if (cropper === null) {
             button.textContent = 'loading...';
-            image.classList.add('active');
-            button.classList.add('active');
+            image.classList.add('wd-image-positions--active');
+            button.classList.add('wd-image-positions--active');
             cropper = new Cropper(image.firstElementChild, {
                 viewMode: 2,
                 movable: false,
@@ -38,7 +38,7 @@ function addEditButton(element) {
             if (button.textContent === 'loading...') {
                 return;
             }
-            image.classList.remove('active');
+            image.classList.remove('wd-image-positions--active');
             const cropData = cropper.getData(),
                   imageData = cropper.getImageData(),
                   x = 100 * cropData.x / imageData.naturalWidth,
@@ -46,7 +46,7 @@ function addEditButton(element) {
                   w = 100 * cropData.width / imageData.naturalWidth,
                   h = 100 * cropData.height / imageData.naturalHeight,
                   depicted = document.createElement('div');
-            depicted.classList.add('depicted')
+            depicted.classList.add('wd-image-positions--depicted')
             depicted.append(element.firstChild.cloneNode(true));
             // note: the browser rounds the percentages a bit,
             // and we’ll use the rounded values for the IIIF region
@@ -103,7 +103,7 @@ function addEditButton(element) {
                 } else {
                     depicted.remove();
                     button.textContent = 'add region';
-                    button.classList.remove('active');
+                    button.classList.remove('wd-image-positions--active');
                 }
             }
         }
@@ -111,10 +111,10 @@ function addEditButton(element) {
             if (eKey.key === 'Escape') {
                 cropper.destroy();
                 cropper = null;
-                image.classList.remove('active');
+                image.classList.remove('wd-image-positions--active');
                 document.removeEventListener('keydown', onKeyDown);
                 button.textContent = 'add region';
-                button.classList.remove('active');
+                button.classList.remove('wd-image-positions--active');
             }
         }
     }

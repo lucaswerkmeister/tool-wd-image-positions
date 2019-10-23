@@ -1,4 +1,4 @@
-.image {
+.wd-image-positions--image {
     /*
      * ensure that this element is the containing block of the inner .depicted elements,
      * so that their left/top/width/height percentage values apply to the size of this element
@@ -11,28 +11,28 @@
     display: inline-block;
 }
 
-.image .depicted {
+.wd-image-positions--image .wd-image-positions--depicted {
     /* 
      * don’t show this element by default (unless the user hovers over the image, see below)
      */
     visibility: hidden;
 }
 
-.image:hover .depicted {
+.wd-image-positions--image:hover .wd-image-positions--depicted {
     /*
      * do show this element if the image is hovered
      */
     visibility: visible;
 }
 
-.image.active .depicted {
+.wd-image-positions--image.wd-image-positions--active .wd-image-positions--depicted {
     /*
      * but not while the area for another depicted is being defined
      */
     visibility: hidden;
 }
 
-.image img {
+.wd-image-positions--image img {
     /*
      * ensure the image is not larger than its container (e. g. the surrounding Bootstrap container)
      */
@@ -40,7 +40,7 @@
     max-height: 100%;
 }
 
-.image.active ~ * .depicted-without-region button:not(.active) {
+.wd-image-positions--image.wd-image-positions--active ~ * .wd-image-positions--depicted-without-region button:not(.wd-image-positions--active) {
     /*
      * hide other buttons when defining a new depicted
      */

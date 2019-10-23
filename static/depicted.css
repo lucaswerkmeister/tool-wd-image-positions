@@ -1,4 +1,4 @@
-.depicted {
+.wd-image-positions--depicted {
     /*
      * position this element absolutely within its containing block
      * (which has position: relative; within the tool, the .image element),
@@ -11,7 +11,7 @@
     outline: solid gold 2px;
 }
 
-.depicted:hover {
+.wd-image-positions--depicted:hover {
     /*
      * make the “active” area even more visible – many overlapping areas can be hard to distinguish
      * (note that outlines, unlike borders, never occupy space,
@@ -20,7 +20,7 @@
     outline-width: 5px;
 }
 
-.depicted a[href] {
+.wd-image-positions--depicted a[href] {
     /*
      * make the link take up the full area of the depicted element
      */
