@@ -650,7 +650,7 @@ def load_labels(entity_ids, language_codes):
 def image_attribution(image_title, language_code):
     params = query_default_params()
     image_attribution_query_add_params(params, image_title, language_code)
-    session = anonymous_session.get('commons.wikimedia.org')
+    session = anonymous_session('commons.wikimedia.org')
     response = session.get(**params)
     return image_attribution_query_process_response(response, image_title, language_code)
 
@@ -698,7 +698,7 @@ def image_attribution_query_process_response(response, image_title, language_cod
 def image_url(image_title):
     params = query_default_params()
     image_url_query_add_params(params, image_title)
-    session = anonymous_session.get('commons.wikimedia.org')
+    session = anonymous_session('commons.wikimedia.org')
     response = session.get(**params)
     return image_url_query_process_response(response, image_title)
 
