@@ -29,6 +29,7 @@ function addEditButton(element) {
                 rotatable: false,
                 scalable: false,
                 zoomable: false,
+                checkCrossOrigin: false,
                 ready: function() {
                     button.textContent = 'use this region';
                 },
