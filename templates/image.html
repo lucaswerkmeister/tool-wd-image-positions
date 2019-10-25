@@ -1,6 +1,6 @@
-{% macro image(image_title, image_attribution, image_url, depicteds) %}
+{% macro image(image_title, image_attribution, image_url, depicteds, heading="h2") %}
 {% set image_title_ = image_title.replace(' ', '_') %}
-<h2><a href="https://commons.wikimedia.org/wiki/File:{{ image_title_ }}">{{ image_title }}</a></h2>
+<{{ heading }}><a href="https://commons.wikimedia.org/wiki/File:{{ image_title_ }}">{{ image_title }}</a></{{ heading }}>
 {% if image_attribution %}
 <p class="lead">
   {{ image_attribution.attribution_html }}
