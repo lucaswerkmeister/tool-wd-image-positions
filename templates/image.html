@@ -1,6 +1,11 @@
 {% macro image(image_title, image_attribution, image_url, depicteds) %}
 {% set image_title_ = image_title.replace(' ', '_') %}
-<h2><a href="https://commons.wikimedia.org/wiki/File:{{ image_title_ }}">{{ image_title }}</a>{% if image_attribution %}, {{ image_attribution.attribution_html }}{% endif %}</h2>
+<h2><a href="https://commons.wikimedia.org/wiki/File:{{ image_title_ }}">{{ image_title }}</a></h2>
+{% if image_attribution %}
+<p class="lead">
+  {{ image_attribution.attribution_html }}
+</p>
+{% endif %}
 <div class="wd-image-positions--image">
   <img src="{{ image_url }}"
        srcset="https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ }}?width=320 320w,
