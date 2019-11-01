@@ -578,6 +578,8 @@ def depicted_items(entity_data):
     depicteds = []
 
     statements = entity_data.get('claims', entity_data.get('statements', {}))
+    if statements == []:
+        statements = {} # T222159
     for statement in statements.get('P180', []):
         if statement['mainsnak']['snaktype'] != 'value':
             continue
