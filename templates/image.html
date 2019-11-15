@@ -18,7 +18,12 @@
   {% set depicteds_without_region = [] %}
   {% for depicted in depicteds %}
   {% if depicted.iiif_region %}
-  <div class="wd-image-positions--depicted" style="{{ depicted.iiif_region | iiif_region_to_style }}" data-statement-id="{{ depicted.statement_id }}">{{ item_link(depicted.item_id, depicted.label) }}</div>
+  <div class="wd-image-positions--depicted"
+       title="{{ depicted.label.value }} ({{ depicted.item_id }})"
+       style="{{ depicted.iiif_region | iiif_region_to_style }}"
+       data-statement-id="{{ depicted.statement_id }}">
+    {{ item_link(depicted.item_id, depicted.label) }}
+  </div>
   {% else %}
   {% do depicteds_without_region.append(depicted) %}
   {% endif %}

@@ -9,6 +9,10 @@
      * make the full area visible – this is what this tool is used for, after all
      */
     outline: solid gold 2px;
+    /*
+     * if the text doesn’t fit, cut it off rather than enlarging the outline
+     */
+    overflow: hidden;
 }
 
 .wd-image-positions--depicted:hover {
