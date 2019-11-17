@@ -92,6 +92,7 @@ def index():
             image_title = flask.request.form['image_title']
             if image_title.startswith('File:'):
                 image_title = image_title[len('File:'):]
+            image_title = image_title.replace(' ', '_')
             return flask.redirect(flask.url_for('file', image_title=image_title))
     return flask.render_template('index.html')
 
@@ -206,15 +207,17 @@ def iiif_region_and_property(iiif_region, property_id):
 
 @app.route('/file/<image_title>')
 def file(image_title):
-    if image_title.startswith('File:'):
-        image_title = image_title[len('File:'):]
-        return flask.redirect(flask.url_for('file', image_title=image_title, **flask.request.args))
-    return flask.render_template('file.html', **load_file(image_title))
+    image_title_ = image_title.replace(' ', '_')
+    if image_title_.startswith('File:'):
+        image_title_ = image_title_[len('File:'):]
+    if image_title_ != image_title:
+        return flask.redirect(flask.url_for('file', image_title=image_title_, **flask.request.args))
+    return flask.render_template('file.html', **load_file(image_title.replace('_', ' ')))
 
 @app.route('/api/v1/depicteds_html/file/<image_title>')
 @enableCORS
 def file_depicteds_html(image_title):
-    file = load_file(image_title)
+    file = load_file(image_title.replace('_', ' '))
     return flask.render_template('depicteds.html', depicteds=file['depicteds'])
 
 @app.route('/api/add_qualifier/<statement_id>/<iiif_region>/<csrf_token>', methods=['POST'])
