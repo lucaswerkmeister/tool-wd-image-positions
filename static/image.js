@@ -131,7 +131,125 @@ function setup() {
         }
     }
 
+    function addNewDepictedForm(entityElement) {
+        const entity = entityElement.closest('.wd-image-positions--entity'),
+              subjectId = entity.dataset.entityId,
+              subjectDomain = entity.dataset.entityDomain,
+              form = document.createElement('form'),
+              fieldset = document.createElement('fieldset'),
+              explanationSpan = document.createElement('span'),
+              itemIdLabel = document.createElement('label'),
+              itemIdInputGroup = document.createElement('div'),
+              itemIdInput = document.createElement('input'),
+              itemIdButton = document.createElement('button'),
+              somevalueButton = document.createElement('button'),
+              novalueButton = document.createElement('button');
+        form.classList.add('form-inline');
+        fieldset.classList.add('form-inline');
+        explanationSpan.classList.add('form-text', 'mr-2');
+        explanationSpan.textContent = 'Add more “depicted” statements:';
+        itemIdInputGroup.classList.add('input-group');
+        itemIdLabel.classList.add('sr-only');
+        itemIdLabel.textContent = 'Item ID';
+        itemIdInput.classList.add('form-control', 'w-75');
+        itemIdInput.name = 'item_id';
+        itemIdInput.type = 'text';
+        itemIdInput.pattern = 'Q[1-9][0-9]*';
+        itemIdInput.required = true;
+        itemIdInput.placeholder = 'Q42';
+        itemIdInput.id = Math.random().toString(36).substring(2);
+        itemIdLabel.htmlFor = itemIdInput.id;
+        itemIdButton.type = 'submit';
+        itemIdButton.classList.add('btn', 'btn-primary', 'form-control', 'w-25');
+        itemIdButton.name = 'snaktype';
+        itemIdButton.value = 'value';
+        itemIdButton.textContent = 'Add';
+        for (const button of [somevalueButton, novalueButton]) {
+            button.type = 'submit';
+            button.classList.add('btn', 'btn-secondary', 'form-control', 'ml-sm-2', 'mt-1', 'mt-sm-0');
+            button.formNoValidate = true;
+            button.name = 'snaktype';
+        }
+        somevalueButton.value = 'somevalue';
+        somevalueButton.textContent = 'Unknown value';
+        somevalueButton.hidden = true; // the overall SDoC ecosystem isn’t quite ready for this yet; TODO: unhide
+        novalueButton.value = 'novalue';
+        novalueButton.textContent = 'No value';
+        novalueButton.hidden = true; // there’s no technical reason not to implement this, but it’s not really useful
+        itemIdInputGroup.append(itemIdInput, itemIdButton);
+        fieldset.append(explanationSpan, itemIdLabel, itemIdInputGroup, somevalueButton, novalueButton);
+        form.append(fieldset);
+        entityElement.append(form);
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            fieldset.disabled = true;
+
+            const formData = new FormData();
+            formData.append('entity_id', subjectId);
+            formData.append('_csrf_token', csrfTokenElement.textContent);
+
+            // the event doesn’t tell us which button was clicked :/
+            const focusedElement = form.querySelector(':focus');
+            for (const button of [itemIdButton, somevalueButton, novalueButton]) {
+                if (button === focusedElement) {
+                    formData.append(button.name, button.value);
+                }
+            }
+            if (itemIdInput === focusedElement) {
+                formData.append(itemIdButton.name, itemIdButton.value);
+            }
+
+            if (formData.get('snaktype') === 'value') {
+                formData.append('item_id', itemIdInput.value);
+            }
+
+            fetch(`${baseUrl}/api/v1/add_statement/${subjectDomain}`, {
+                method: 'POST',
+                body: formData,
+                credentials: 'include',
+            } ).then(response => {
+                if (response.ok) {
+                    return response.json().then(json => {
+                        const statementId = json.depicted.statement_id;
+                        const previousElement = form.previousElementSibling;
+                        let depictedsWithoutRegionList;
+                        if (previousElement.classList.contains('wd-image-positions--depicteds-without-region')) {
+                            depictedsWithoutRegionList = previousElement.children[0];
+                        } else {
+                            const depictedsWithoutRegionDiv = document.createElement('div'),
+                                  depictedsWithoutRegionText = document.createTextNode('Depicted, but with no region specified:');
+                            depictedsWithoutRegionList = document.createElement('ul');
+                            depictedsWithoutRegionDiv.classList.add('wd-image-positions--depicteds-without-region');
+                            depictedsWithoutRegionDiv.append(depictedsWithoutRegionText, depictedsWithoutRegionList);
+                            form.insertAdjacentElement('beforebegin', depictedsWithoutRegionDiv);
+                        }
+                        const depicted = document.createElement('li');
+                        depicted.classList.add('wd-image-positions--depicted-without-region');
+                        depicted.dataset.statementId = statementId;
+                        depicted.innerHTML = json.depicted_item_link;
+                        depictedsWithoutRegionList.append(depicted);
+                        addEditButton(depicted);
+                    });
+                } else {
+                    return response.text().then(error => {
+                        window.alert(`An error occurred:\n\n${error}`);
+                    });
+                }
+            }).finally(() => {
+                fieldset.disabled = false;
+            });;
+        });
+    }
+
+    function addNewDepictedForms() {
+        if (csrfTokenElement !== null && loginElement === null) {
+            document.querySelectorAll('.wd-image-positions--entity').forEach(addNewDepictedForm);
+        }
+    }
+
     addEditButtons();
+    addNewDepictedForms();
 }
 
 if (document.readyState === 'loading') {

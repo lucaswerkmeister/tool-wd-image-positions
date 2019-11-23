@@ -230,6 +230,64 @@ def file_depicteds_html(image_title):
     file = load_file(image_title.replace('_', ' '))
     return flask.render_template('depicteds.html', depicteds=file['depicteds'])
 
+@app.route('/api/v1/add_statement/<domain>', methods=['POST'])
+def api_add_statement(domain):
+    language_codes = request_language_codes()
+    entity_id = flask.request.form.get('entity_id')
+    snaktype = flask.request.form.get('snaktype')
+    item_id = flask.request.form.get('item_id')
+    csrf_token = flask.request.form.get('_csrf_token')
+    if not entity_id or not snaktype or not csrf_token:
+        return 'Incomplete form data', 400
+    if (snaktype == 'value') != (item_id is not None):
+        return 'Inconsistent form data', 400
+    if snaktype not in {'value', 'somevalue', 'novalue'}:
+        return 'Bad snaktype', 400
+
+    if csrf_token != flask.session['_csrf_token']:
+        return 'Wrong CSRF token (try reloading the page).', 403
+
+    if not flask.request.referrer.startswith(full_url('index')):
+        return 'Wrong Referer header', 403
+
+    if domain not in {'www.wikidata.org', 'commons.wikimedia.org'}:
+        return 'Unsupported domain', 403
+
+    session = authenticated_session(domain)
+    if session is None:
+        return 'Not logged in', 403
+
+    token = session.get(action='query', meta='tokens', type='csrf')['query']['tokens']['csrftoken']
+    depicted = {
+        'snaktype': snaktype,
+    }
+    if snaktype == 'value':
+        value = json.dumps({'entity-type': 'item', 'id': item_id})
+        depicted['item_id'] = item_id
+        labels = load_labels([item_id], language_codes)
+        depicted['label'] = labels[item_id]
+    else:
+        value = None
+        if snaktype == 'somevalue':
+            depicted['label'] = messages.somevalue(language_codes[0])
+        elif snaktype == 'novalue':
+            depicted['label'] = messages.novalue(language_codes[0])
+        else:
+            raise ValueError('Unknown snaktype')
+    response = session.post(action='wbcreateclaim',
+                            entity=entity_id,
+                            snaktype=snaktype,
+                            property='P180',
+                            value=value,
+                            token=token)
+    statement_id = response['claim']['id']
+    depicted['statement_id'] = statement_id
+    if response['success'] == 1:
+        return flask.jsonify(depicted=depicted,
+                             depicted_item_link=depicted_item_link(depicted))
+    else:
+        return str(response), 500
+
 @app.route('/api/v2/add_qualifier/<domain>', methods=['POST'])
 def api_add_qualifier(domain):
     statement_id = flask.request.form.get('statement_id')
