@@ -92,7 +92,7 @@ function setup() {
                             element.remove();
                         } else {
                             response.text().then(text => {
-                                message = `An error occurred:\n\n${text}`;
+                                let message = `An error occurred:\n\n${text}`;
                                 if (depictedId !== undefined) {
                                     // we’re not in an event handler, we can’t write to the clipboard directly
                                     message += `\n\nHere is the new region in QuickStatements syntax:\n\n${quickStatements}`;
