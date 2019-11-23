@@ -8,6 +8,12 @@ function addEditButton(element) {
           subjectDomain = entity.dataset.entityDomain,
           depictedId = element.firstChild.dataset.entityId,
           image = entity.querySelector('.wd-image-positions--image');
+
+    if (depictedId === undefined) {
+        // editing somevalue/novalue not supported
+        return;
+    }
+
     const button = document.createElement('button');
     button.type = 'button';
     button.classList.add('btn', 'btn-secondary', 'btn-sm');

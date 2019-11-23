@@ -19,10 +19,10 @@
   {% for depicted in depicteds %}
   {% if depicted.iiif_region %}
   <div class="wd-image-positions--depicted"
-       title="{{ depicted.label.value }} ({{ depicted.item_id }})"
+       title="{{ depicted.label.value }}{% if 'item_id' in depicted %} ({{ depicted.item_id }}){% endif %}"
        style="{{ depicted.iiif_region | iiif_region_to_style }}"
        data-statement-id="{{ depicted.statement_id }}">
-    {{ item_link(depicted.item_id, depicted.label) }}
+    {{ depicted | depicted_item_link }}
   </div>
   {% else %}
   {% do depicteds_without_region.append(depicted) %}
@@ -34,7 +34,7 @@
   Depicted, but with no region specified:
   <ul>
     {% for depicted in depicteds_without_region %}
-    <li class="wd-image-positions--depicted-without-region" data-statement-id="{{ depicted.statement_id }}">{{ item_link(depicted.item_id, depicted.label) }}</li>
+    <li class="wd-image-positions--depicted-without-region" data-statement-id="{{ depicted.statement_id }}">{{ depicted | depicted_item_link }}</li>
     {% endfor %}
   </ul>
 </div>

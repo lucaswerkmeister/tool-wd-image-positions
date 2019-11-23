@@ -18,6 +18,7 @@ import urllib.request
 import yaml
 
 from exceptions import *
+import messages
 
 
 app = flask.Flask(__name__)
@@ -156,6 +157,8 @@ def iiif_annotations_with_property(item_id, property_id):
     }
     canvas_url = url[:-len('list/annotations.json')] + 'canvas/c0.json'
     for depicted in item['depicteds']:
+        if 'item_id' not in depicted:
+            continue # somevalue/novalue not supported for now
         link = 'http://www.wikidata.org/entity/' + flask.Markup.escape(depicted['item_id'])
         label = depicted['label']['value']
         # We can put a lot more in here, but minimum for now, and ensure works in Mirador
@@ -309,6 +312,17 @@ def item_link(item_id, label):
             flask.Markup.escape(label['value']) +
             flask.Markup(r'</a>'))
 
+@app.template_filter()
+def depicted_item_link(depicted):
+    if 'item_id' in depicted:
+        return item_link(depicted['item_id'], depicted['label'])
+    else:
+        return (flask.Markup(r'<span class="wd-image-positions--snaktype-not-value" lang="') +
+                flask.Markup.escape(depicted['label']['language']) +
+                flask.Markup(r'">') +
+                flask.Markup.escape(depicted['label']['value']) +
+                flask.Markup(r'</span>'))
+
 @app.template_global()
 def authentication_area():
     if 'oauth' not in app.config:
@@ -393,7 +407,8 @@ def load_item_and_property(item_id, property_id,
     if include_depicteds:
         depicteds = depicted_items(item_data)
         for depicted in depicteds:
-            entity_ids.append(depicted['item_id'])
+            if 'item_id' in depicted:
+                entity_ids.append(depicted['item_id'])
 
     if include_metadata:
         metadata = item_metadata(item_data)
@@ -404,7 +419,14 @@ def load_item_and_property(item_id, property_id,
 
     if include_depicteds:
         for depicted in depicteds:
-            depicted['label'] = labels[depicted['item_id']]
+            if 'item_id' in depicted:
+                depicted['label'] = labels[depicted['item_id']]
+            elif depicted['snaktype'] == 'somevalue':
+                depicted['label'] = messages.somevalue(language_codes[0])
+            elif depicted['snaktype'] == 'novalue':
+                depicted['label'] = messages.novalue(language_codes[0])
+            else:
+                raise ValueError('depicted has neither item ID nor somevalue/novalue snaktype')
         item['depicteds'] = depicteds
 
     if include_metadata:
@@ -445,12 +467,20 @@ def load_file(image_title):
 
     depicteds = depicted_items(file_data)
     for depicted in depicteds:
-        entity_ids.append(depicted['item_id'])
+        if 'item_id' in depicted:
+            entity_ids.append(depicted['item_id'])
 
     labels = load_labels(entity_ids, language_codes)
 
     for depicted in depicteds:
-        depicted['label'] = labels[depicted['item_id']]
+        if 'item_id' in depicted:
+            depicted['label'] = labels[depicted['item_id']]
+        elif depicted['snaktype'] == 'somevalue':
+            depicted['label'] = messages.somevalue(language_codes[0])
+        elif depicted['snaktype'] == 'novalue':
+            depicted['label'] = messages.novalue(language_codes[0])
+        else:
+            raise ValueError('depicted has neither item ID nor somevalue/novalue snaktype')
     file['depicteds'] = depicteds
 
     return file
@@ -584,12 +614,13 @@ def depicted_items(entity_data):
     if statements == []:
         statements = {} # T222159
     for statement in statements.get('P180', []):
-        if statement['mainsnak']['snaktype'] != 'value':
-            continue
+        snaktype = statement['mainsnak']['snaktype']
         depicted = {
-            'item_id': statement['mainsnak']['datavalue']['value']['id'],
+            'snaktype': snaktype,
             'statement_id': statement['id'],
         }
+        if snaktype == 'value':
+            depicted['item_id'] = statement['mainsnak']['datavalue']['value']['id']
 
         for qualifier in statement.get('qualifiers', {}).get('P2677', []):
             if qualifier['snaktype'] != 'value':
