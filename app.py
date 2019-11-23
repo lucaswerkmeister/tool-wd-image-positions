@@ -105,9 +105,16 @@ def login():
 
 @app.route('/oauth/callback')
 def oauth_callback():
-    access_token = mwoauth.complete('https://www.wikidata.org/w/index.php', consumer_token, mwoauth.RequestToken(**flask.session.pop('oauth_request_token')), flask.request.query_string, user_agent=user_agent)
-    flask.session['oauth_access_token'] = dict(zip(access_token._fields, access_token))
-    return flask.redirect(flask.url_for('index'))
+    try:
+        access_token = mwoauth.complete('https://www.wikidata.org/w/index.php', consumer_token, mwoauth.RequestToken(**flask.session.pop('oauth_request_token')), flask.request.query_string, user_agent=user_agent)
+        flask.session['oauth_access_token'] = dict(zip(access_token._fields, access_token))
+        return flask.redirect(flask.url_for('index'))
+    except KeyError:
+        # no oauth_request_token in the session; try to wipe it and hope it works on retry?
+        flask.session.clear()
+        return (flask.Markup(r'<html><p>That didn’t work, sorry. Please try again? <a href="') +
+                flask.Markup.escape(flask.url_for('login')) +
+                flask.Markup(r'">login</a></p><p>You can also try deleting the session cookie, if you know how to do that.</p></html>'))
 
 @app.route('/item/<item_id>')
 def item(item_id):
