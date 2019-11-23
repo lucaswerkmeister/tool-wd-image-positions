@@ -156,7 +156,7 @@ def iiif_annotations_with_property(item_id, property_id):
     }
     canvas_url = url[:-len('list/annotations.json')] + 'canvas/c0.json'
     for depicted in item['depicteds']:
-        link = 'http://www.wikidata.org/entity/' + flask.Markup.escape(item_id)
+        link = 'http://www.wikidata.org/entity/' + flask.Markup.escape(depicted['item_id'])
         label = depicted['label']['value']
         # We can put a lot more in here, but minimum for now, and ensure works in Mirador
         anno = {
