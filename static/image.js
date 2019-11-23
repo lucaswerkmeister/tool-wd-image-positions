@@ -7,10 +7,11 @@ function addEditButton(element) {
           subjectId = entity.dataset.entityId,
           subjectDomain = entity.dataset.entityDomain,
           depictedId = element.firstChild.dataset.entityId,
-          image = entity.querySelector('.wd-image-positions--image');
+          image = entity.querySelector('.wd-image-positions--image'),
+          csrfTokenElement = document.getElementById('csrf_token');
 
-    if (depictedId === undefined) {
-        // editing somevalue/novalue not supported
+    if (depictedId === undefined && csrfTokenElement === null) {
+        // editing somevalue/novalue not supported in QuickStatements mode
         return;
     }
 
@@ -70,7 +71,6 @@ function addEditButton(element) {
             const iiifRegion = `pct:${pct('left')},${pct('top')},${pct('width')},${pct('height')}`,
                   quickStatements = `${subjectId}\tP180\t${depictedId}\tP2677\t"${iiifRegion}"`;
 
-            const csrfTokenElement = document.getElementById('csrf_token');
             if (csrfTokenElement !== null) {
                 button.textContent = 'adding qualifier…';
                 const baseUrl = document.querySelector('link[rel=index]').href.replace(/\/$/, ''),
@@ -89,9 +89,11 @@ function addEditButton(element) {
                         element.remove();
                     } else {
                         response.text().then(text => {
-                            message = `An error occurred:\n\n${text}\n\n`;
-                            // we’re not in an event handler, we can’t write to the clipboard directly
-                            message += `Here is the new region in QuickStatements syntax:\n\n${quickStatements}`;
+                            message = `An error occurred:\n\n${text}`;
+                            if (depictedId !== undefined) {
+                                // we’re not in an event handler, we can’t write to the clipboard directly
+                                message += `\n\nHere is the new region in QuickStatements syntax:\n\n${quickStatements}`;
+                            }
                             window.alert(message);
                             element.remove();
                         });
