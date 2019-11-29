@@ -46,11 +46,3 @@
      */
     display: none;
 }
-
-.wd-image-positions--snaktype-not-value {
-    /*
-     * show somevalue/novalue snaks similar to Wikibase
-     */
-    color: #54595d; /* Base20 */
-    font-style: italic;
-}

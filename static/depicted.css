@@ -24,9 +24,10 @@
     outline-width: 5px;
 }
 
-.wd-image-positions--depicted a[href] {
+.wd-image-positions--depicted a[href],
+.wd-image-positions--depicted .wd-image-positions--snaktype-not-value {
     /*
-     * make the link take up the full area of the depicted element
+     * make the text take up the full area of the depicted element
      */
     display: block;
     width: 100%;
@@ -36,9 +37,8 @@
      */
     text-align: center;
     /*
-     * make text black on white to improve readability against a potentially noisy background (the image)
+     * add white “text background” to improve readability against a potentially noisy background (the image)
      */
-    color: black;
     text-shadow: 0px -1px white,
                  1px -1px white,
                  1px 0px white,
@@ -47,4 +47,19 @@
                  -1px 1px white,
                  -1px 0px white,
                  -1px -1px white;
+}
+
+.wd-image-positions--depicted a[href] {
+    /*
+     * make text itself black for maximum visibility against white background
+     */
+    color: black;
+}
+
+.wd-image-positions--depicted .wd-image-positions--snaktype-not-value {
+    /*
+     * show somevalue/novalue snaks similar to Wikibase
+     */
+    color: #54595d; /* Base20 */
+    font-style: italic;
 }
