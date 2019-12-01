@@ -87,7 +87,7 @@ function setup() {
                         method: 'POST',
                         body: formData,
                         credentials: 'include',
-                    } ).then(response => {
+                    }).then(response => {
                         if (response.ok) {
                             element.remove();
                         } else {
@@ -208,7 +208,7 @@ function setup() {
                 method: 'POST',
                 body: formData,
                 credentials: 'include',
-            } ).then(response => {
+            }).then(response => {
                 if (response.ok) {
                     return response.json().then(json => {
                         const statementId = json.depicted.statement_id;
@@ -238,7 +238,7 @@ function setup() {
                 }
             }).finally(() => {
                 fieldset.disabled = false;
-            });;
+            });
         });
     }
 
