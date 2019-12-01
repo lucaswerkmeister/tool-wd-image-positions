@@ -397,6 +397,10 @@ def authentication_area():
             flask.Markup.escape(csrf_token) +
             flask.Markup(r'</span>'))
 
+@app.template_global()
+def user_logged_in():
+    return 'oauth_access_token' in flask.session
+
 @app.errorhandler(WrongDataValueType)
 def handle_wrong_data_value_type(error):
     response = flask.render_template('wrong-data-value-type.html',

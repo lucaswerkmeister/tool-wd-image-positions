@@ -2,6 +2,7 @@ function setup() {
     const baseUrl = document.querySelector('link[rel=index]').href.replace(/\/$/, ''),
           loginElement = document.getElementById('login'),
           csrfTokenElement = document.getElementById('csrf_token');
+    let ItemInputWidget; // loaded in addNewDepictedForms
 
     function addEditButtons() {
         document.querySelectorAll('.wd-image-positions--depicted-without-region').forEach(addEditButton);
@@ -135,75 +136,78 @@ function setup() {
         const entity = entityElement.closest('.wd-image-positions--entity'),
               subjectId = entity.dataset.entityId,
               subjectDomain = entity.dataset.entityDomain,
-              form = document.createElement('form'),
-              fieldset = document.createElement('fieldset'),
-              explanationSpan = document.createElement('span'),
-              itemIdLabel = document.createElement('label'),
-              itemIdInputGroup = document.createElement('div'),
-              itemIdInput = document.createElement('input'),
-              itemIdButton = document.createElement('button'),
-              somevalueButton = document.createElement('button'),
-              novalueButton = document.createElement('button');
-        form.classList.add('form-inline');
-        fieldset.classList.add('form-inline');
-        explanationSpan.classList.add('form-text', 'mr-2');
-        explanationSpan.textContent = 'Add more “depicted” statements:';
-        itemIdInputGroup.classList.add('input-group');
-        itemIdLabel.classList.add('sr-only');
-        itemIdLabel.textContent = 'Item ID';
-        itemIdInput.classList.add('form-control', 'w-75');
-        itemIdInput.name = 'item_id';
-        itemIdInput.type = 'text';
-        itemIdInput.pattern = 'Q[1-9][0-9]*';
-        itemIdInput.required = true;
-        itemIdInput.placeholder = 'Q42';
-        itemIdInput.id = Math.random().toString(36).substring(2);
-        itemIdLabel.htmlFor = itemIdInput.id;
-        itemIdButton.type = 'submit';
-        itemIdButton.classList.add('btn', 'btn-primary', 'form-control', 'w-25');
-        itemIdButton.name = 'snaktype';
-        itemIdButton.value = 'value';
-        itemIdButton.textContent = 'Add';
-        for (const button of [somevalueButton, novalueButton]) {
-            button.type = 'submit';
-            button.classList.add('btn', 'btn-secondary', 'form-control', 'ml-sm-2', 'mt-1', 'mt-sm-0');
-            button.formNoValidate = true;
-            button.name = 'snaktype';
+              itemIdInput = new ItemInputWidget({
+                  name: 'item_id',
+                  required: true,
+                  placeholder: 'Q42',
+              }),
+              itemIdButton = new OO.ui.ButtonWidget({
+                  label: 'Add',
+              }),
+              somevalueButton = new OO.ui.ButtonWidget({
+                  label: 'Unknown value',
+              }),
+              novalueButton = new OO.ui.ButtonWidget({
+                  label: 'No value',
+              }),
+              layout = new OO.ui.FieldsetLayout({
+                  items: [
+                      new OO.ui.ActionFieldLayout(
+                          itemIdInput,
+                          itemIdButton,
+                          {
+                              label: 'Item ID',
+                              invisibleLabel: true,
+                          },
+                      ),
+                      new OO.ui.FieldLayout(
+                          new OO.ui.ButtonGroupWidget({
+                              items: [
+                                  // somevalueButton, // the overall SDoC ecosystem isn’t quite ready for this yet; TODO: unhide
+                                  // novalueButton, // there’s no technical reason not to implement this, but it’s not really useful
+                              ],
+                          }),
+                      ),
+                  ],
+                  label: 'Add more “depicted” statements:',
+              }),
+              layoutElement = layout.$element[0];
+        itemIdInput.on('enter', addItemId);
+        itemIdButton.on('click', addItemId);
+        somevalueButton.on('click', addSomevalue);
+        novalueButton.on('click', addNovalue);
+        layout.$header.addClass('col-form-label-sm'); // Bootstrap makes OOUI’s <legend> too large by default
+        entityElement.append(layoutElement);
+
+        function setAllDisabled(disabled) {
+            for (const widget of [itemIdInput, itemIdButton, somevalueButton, novalueButton]) {
+                widget.setDisabled(disabled);
+            }
         }
-        somevalueButton.value = 'somevalue';
-        somevalueButton.textContent = 'Unknown value';
-        somevalueButton.hidden = true; // the overall SDoC ecosystem isn’t quite ready for this yet; TODO: unhide
-        novalueButton.value = 'novalue';
-        novalueButton.textContent = 'No value';
-        novalueButton.hidden = true; // there’s no technical reason not to implement this, but it’s not really useful
-        itemIdInputGroup.append(itemIdInput, itemIdButton);
-        fieldset.append(explanationSpan, itemIdLabel, itemIdInputGroup, somevalueButton, novalueButton);
-        form.append(fieldset);
-        entityElement.append(form);
 
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
-            fieldset.disabled = true;
-
+        function addItemId() {
             const formData = new FormData();
+            formData.append('snaktype', 'value');
+            formData.append('item_id', itemIdInput.id);
+            addStatement(formData);
+        }
+
+        function addSomevalue() {
+            const formData = new FormData();
+            formData.append('snaktype', 'somevalue');
+            addStatement(formData);
+        }
+
+        function addNovalue() {
+            const formData = new FormData();
+            formData.append('snaktype', 'novalue');
+            addStatement(formData);
+        }
+
+        function addStatement(formData) {
+            setAllDisabled(true);
             formData.append('entity_id', subjectId);
             formData.append('_csrf_token', csrfTokenElement.textContent);
-
-            // the event doesn’t tell us which button was clicked :/
-            const focusedElement = form.querySelector(':focus');
-            for (const button of [itemIdButton, somevalueButton, novalueButton]) {
-                if (button === focusedElement) {
-                    formData.append(button.name, button.value);
-                }
-            }
-            if (itemIdInput === focusedElement) {
-                formData.append(itemIdButton.name, itemIdButton.value);
-            }
-
-            if (formData.get('snaktype') === 'value') {
-                formData.append('item_id', itemIdInput.value);
-            }
-
             fetch(`${baseUrl}/api/v1/add_statement/${subjectDomain}`, {
                 method: 'POST',
                 body: formData,
@@ -212,7 +216,7 @@ function setup() {
                 if (response.ok) {
                     return response.json().then(json => {
                         const statementId = json.depicted.statement_id;
-                        const previousElement = form.previousElementSibling;
+                        const previousElement = layoutElement.previousElementSibling;
                         let depictedsWithoutRegionList;
                         if (previousElement.classList.contains('wd-image-positions--depicteds-without-region')) {
                             depictedsWithoutRegionList = previousElement.children[0];
@@ -222,7 +226,7 @@ function setup() {
                             depictedsWithoutRegionList = document.createElement('ul');
                             depictedsWithoutRegionDiv.classList.add('wd-image-positions--depicteds-without-region');
                             depictedsWithoutRegionDiv.append(depictedsWithoutRegionText, depictedsWithoutRegionList);
-                            form.insertAdjacentElement('beforebegin', depictedsWithoutRegionDiv);
+                            layoutElement.insertAdjacentElement('beforebegin', depictedsWithoutRegionDiv);
                         }
                         const depicted = document.createElement('li');
                         depicted.classList.add('wd-image-positions--depicted-without-region');
@@ -237,15 +241,61 @@ function setup() {
                     });
                 }
             }).finally(() => {
-                fieldset.disabled = false;
+                setAllDisabled(false);
             });
-        });
+        }
     }
 
     function addNewDepictedForms() {
         if (csrfTokenElement !== null && loginElement === null) {
-            document.querySelectorAll('.wd-image-positions--entity').forEach(addNewDepictedForm);
+            fixMediaWiki().then(() => {
+                mediaWiki.loader.using('wikibase.mediainfo.statements', require => {
+                    ItemInputWidget = require('wikibase.mediainfo.statements').ItemInputWidget;
+                    document.querySelectorAll('.wd-image-positions--entity').forEach(addNewDepictedForm);
+                });
+            }, console.error);
         }
+    }
+
+    function fixMediaWiki() {
+        return new Promise((resolve, reject) => {
+            // rewrite 'local' source (/w/load.php) to one with explicit domain,
+            // and reset modules that could not be loaded from 'local'
+            mediaWiki.loader.addSource({
+                'commons': 'https://commons.wikimedia.org/w/load.php',
+            });
+            const needReload = [];
+            for (const [name, module] of Object.entries(mediaWiki.loader.moduleRegistry)) {
+                if (module.source === 'local') {
+                    module.source = 'commons';
+                }
+                if (module.state === 'loading') {
+                    module.state = 'registered';
+                    needReload.push(name);
+                }
+            }
+            // configure WikibaseMediaInfo
+            mediaWiki.config.set('wbmiExternalEntitySearchBaseUri', 'https://www.wikidata.org/w/api.php');
+            // remove private dependency of mediawiki.api module
+            const mwApiModule = mediaWiki.loader.moduleRegistry['mediawiki.api'],
+                  userTokensDependencyIndex = mwApiModule.dependencies.indexOf('user.tokens');
+            if (userTokensDependencyIndex !== -1) {
+                mwApiModule.dependencies.splice(userTokensDependencyIndex, 1); // user.tokens module is private, we can’t load it
+            }
+            // reload modules that could not be loaded from 'local'
+            mediaWiki.loader.enqueue(needReload, resolve, reject);
+        }).then(() => {
+            return mediaWiki.loader.using('wikibase.api.RepoApi').then(() => {
+                if ('getLocationAgnosticMwApi' in wikibase.api) { // used for ItemInputWidget’s search, but cf. T239518
+                    wikibase.api.getLocationAgnosticMwApi = function(apiEndpoint) {
+                        // original implementation isn’t anonymous, but we can only make anonymous requests
+                        return new mediaWiki.ForeignApi(apiEndpoint, { anonymous: true });
+                    };
+                } else {
+                    console.error('no getLocationAgnosticMwApi!');
+                }
+            });
+        });
     }
 
     addEditButtons();
