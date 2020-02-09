@@ -596,14 +596,20 @@ def populate_canvas(canvas, item, fac):
     canvas.thumbnail.set_hw(thumbheight, thumbwidth)
 
 def request_language_codes():
+    """Determine the MediaWiki language codes to use from the request context."""
+    # this could be made more accurate by using meta=languageinfo to match MediaWiki and BCP 47
     language_codes = flask.request.args.getlist('uselang')
 
     for accept_language in flask.request.headers.get('Accept-Language', '').split(','):
         language_code = accept_language.split(';')[0].strip()
         language_code = language_code.lower()
-        language_codes.append(language_code)
         if '-' in language_code:
+            # these almost never match between MediaWiki and BCP 47:
+            # https://gist.github.com/lucaswerkmeister/3469d5e7edbc59a8d03f347d35eed585
             language_codes.append(language_code.split('-')[0])
+        else:
+            # these often match between MediaWiki and BCP 47, just assume they do
+            language_codes.append(language_code)
 
     language_codes.append('en')
 
