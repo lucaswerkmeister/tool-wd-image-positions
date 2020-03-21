@@ -602,7 +602,7 @@ def request_language_codes():
 
     for accept_language in flask.request.headers.get('Accept-Language', '').split(','):
         language_code = accept_language.split(';')[0].strip()
-        if language_code == '*':
+        if language_code == '*' or not language_code:
             continue
         language_code = language_code.lower()
         if '-' in language_code:
