@@ -222,12 +222,17 @@ def file(image_title):
         image_title_ = image_title_[len('File:'):]
     if image_title_ != image_title:
         return flask.redirect(flask.url_for('file', image_title=image_title_, **flask.request.args))
-    return flask.render_template('file.html', **load_file(image_title.replace('_', ' ')))
+    file = load_file(image_title.replace('_', ' '))
+    if not file:
+        return flask.render_template('file-not-found.html', title=image_title), 404
+    return flask.render_template('file.html', **file)
 
 @app.route('/api/v1/depicteds_html/file/<image_title>')
 @enableCORS
 def file_depicteds_html(image_title):
     file = load_file(image_title.replace('_', ' '))
+    if not file:
+        return flask.render_template('file-not-found.html', title=image_title), 404
     return flask.render_template('depicteds.html', depicteds=file['depicteds'])
 
 @app.route('/api/v1/add_statement/<domain>', methods=['POST'])
@@ -496,7 +501,10 @@ def load_file(image_title):
     image_attribution_query_add_params(query_params, image_title, language_codes[0])
     image_url_query_add_params(query_params, image_title)
     query_response = session.get(**query_params)
-    page_id = query_response_page(query_response, 'File:' + image_title)['pageid']
+    page = query_response_page(query_response, 'File:' + image_title)
+    if page.get('missing', False) or page.get('invalid', False):
+        return None
+    page_id = page['pageid']
     entity_id = 'M' + str(page_id)
     file = {
         'entity_id': entity_id,

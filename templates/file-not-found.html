@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Error – {{ super() }}{% endblock title %}
+{% block main_tag_attributes %}class="container mt-3"{% endblock main_tag_attributes %}
+{% block main %}
+<div class="alert alert-danger">
+  <h4 class="alert-heading">File not found</h4>
+  <p>
+    A file by the title <q>{{ title }}</q> could not be found.
+    It might be missing, or the title might be invalid.
+  </p>
+</div>
+{% endblock %}
