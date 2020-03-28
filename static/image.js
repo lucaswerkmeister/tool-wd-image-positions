@@ -38,7 +38,7 @@ function setup() {
                 cropper = new Cropper(image.firstElementChild, {
                     viewMode: 2,
                     movable: false,
-                    rotatable: false,
+                    rotatable: true, // we don’t rotate the image ourselves, but this allows cropper.js to respect JPEG orientation
                     scalable: false,
                     zoomable: false,
                     checkCrossOrigin: false,
