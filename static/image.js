@@ -53,11 +53,11 @@ function setup() {
                 }
                 image.classList.remove('wd-image-positions--active');
                 const cropData = cropper.getData(),
-                      imageData = cropper.getImageData(),
-                      x = 100 * cropData.x / imageData.naturalWidth,
-                      y = 100 * cropData.y / imageData.naturalHeight,
-                      w = 100 * cropData.width / imageData.naturalWidth,
-                      h = 100 * cropData.height / imageData.naturalHeight,
+                      canvasData = cropper.getCanvasData(),
+                      x = 100 * cropData.x / canvasData.naturalWidth,
+                      y = 100 * cropData.y / canvasData.naturalHeight,
+                      w = 100 * cropData.width / canvasData.naturalWidth,
+                      h = 100 * cropData.height / canvasData.naturalHeight,
                       depicted = document.createElement('div');
                 depicted.classList.add('wd-image-positions--depicted')
                 depicted.append(element.firstChild.cloneNode(true));
