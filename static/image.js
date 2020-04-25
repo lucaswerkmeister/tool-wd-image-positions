@@ -2,7 +2,7 @@ function setup() {
     const baseUrl = document.querySelector('link[rel=index]').href.replace(/\/$/, ''),
           loginElement = document.getElementById('login'),
           csrfTokenElement = document.getElementById('csrf_token');
-    let ItemInputWidget; // loaded in addNewDepictedForms
+    let EntityInputWidget; // loaded in addNewDepictedForms
 
     function addEditButtons() {
         document.querySelectorAll('.wd-image-positions--depicted-without-region').forEach(addEditButton);
@@ -136,7 +136,7 @@ function setup() {
         const entity = entityElement.closest('.wd-image-positions--entity'),
               subjectId = entity.dataset.entityId,
               subjectDomain = entity.dataset.entityDomain,
-              itemIdInput = new ItemInputWidget({
+              itemIdInput = new EntityInputWidget({
                   name: 'item_id',
                   required: true,
                   placeholder: 'Q42',
@@ -188,7 +188,7 @@ function setup() {
         function addItemId() {
             const formData = new FormData();
             formData.append('snaktype', 'value');
-            formData.append('item_id', itemIdInput.id);
+            formData.append('item_id', itemIdInput.getData().getSerialization());
             addStatement(formData);
         }
 
@@ -250,7 +250,7 @@ function setup() {
         if (csrfTokenElement !== null && loginElement === null) {
             fixMediaWiki().then(() => {
                 mediaWiki.loader.using('wikibase.mediainfo.statements', require => {
-                    ItemInputWidget = require('wikibase.mediainfo.statements').ItemInputWidget;
+                    EntityInputWidget = require('wikibase.mediainfo.statements').inputs.EntityInputWidget;
                     document.querySelectorAll('.wd-image-positions--entity').forEach(addNewDepictedForm);
                 });
             }, console.error);
@@ -276,17 +276,18 @@ function setup() {
             }
             // configure WikibaseMediaInfo
             mediaWiki.config.set('wbmiExternalEntitySearchBaseUri', 'https://www.wikidata.org/w/api.php');
-            // remove private dependency of mediawiki.api module
-            const mwApiModule = mediaWiki.loader.moduleRegistry['mediawiki.api'],
-                  userTokensDependencyIndex = mwApiModule.dependencies.indexOf('user.tokens');
-            if (userTokensDependencyIndex !== -1) {
-                mwApiModule.dependencies.splice(userTokensDependencyIndex, 1); // user.tokens module is private, we can’t load it
+            // remove private dependencies of modules
+            for (const module of Object.values(mediaWiki.loader.moduleRegistry)) {
+                const userOptionsDependencyIndex = module.dependencies.indexOf('user.options');
+                if (userOptionsDependencyIndex !== -1) {
+                    module.dependencies.splice(userOptionsDependencyIndex, 1); // user.options module is private, we can’t load it
+                }
             }
             // reload modules that could not be loaded from 'local'
             mediaWiki.loader.enqueue(needReload, resolve, reject);
         }).then(() => {
             return mediaWiki.loader.using('wikibase.api.RepoApi').then(() => {
-                if ('getLocationAgnosticMwApi' in wikibase.api) { // used for ItemInputWidget’s search, but cf. T239518
+                if ('getLocationAgnosticMwApi' in wikibase.api) { // used for EntityInputWidget’s search, but cf. T239518
                     wikibase.api.getLocationAgnosticMwApi = function(apiEndpoint) {
                         // original implementation isn’t anonymous, but we can only make anonymous requests
                         return new mediaWiki.ForeignApi(apiEndpoint, { anonymous: true });
