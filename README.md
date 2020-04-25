@@ -1,14 +1,14 @@
 # Wikidata Image Positions
 
-[This tool](https://tools.wmflabs.org/wd-image-positions/) shows
+[This tool](https://wd-image-positions.toolforge.org/) shows
 [relative position within image](https://www.wikidata.org/wiki/Property:P2677) qualifiers
 of [depicts](https://www.wikidata.org/wiki/Property:P180) statements on [Wikidata](https://www.wikidata.org/) items
 as areas on the item’s [image](https://www.wikidata.org/wiki/Property:P18) (or other property).
 
 Examples:
 
-* [The Coronation of Napoleon](https://tools.wmflabs.org/wd-image-positions/item/Q1231009)
-* [Situation Room](https://tools.wmflabs.org/wd-image-positions/item/Q2915674)
+* [The Coronation of Napoleon](https://wd-image-positions.toolforge.org/item/Q1231009)
+* [Situation Room](https://wd-image-positions.toolforge.org/item/Q2915674)
 
 For more usage information,
 please see the tool’s [on-wiki documentation page](https://www.wikidata.org/wiki/User:Lucas_Werkmeister/Wikidata_Image_Positions).
