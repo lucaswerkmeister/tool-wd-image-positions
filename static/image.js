@@ -163,7 +163,7 @@ function setup() {
                       new OO.ui.FieldLayout(
                           new OO.ui.ButtonGroupWidget({
                               items: [
-                                  // somevalueButton, // the overall SDoC ecosystem isn’t quite ready for this yet; TODO: unhide
+                                  somevalueButton,
                                   // novalueButton, // there’s no technical reason not to implement this, but it’s not really useful
                               ],
                           }),
