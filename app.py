@@ -319,10 +319,13 @@ def api_add_qualifier(domain):
                             snaktype='value', value=('"' + iiif_region + '"'),
                             summary='region drawn manually using [[d:User:Lucas Werkmeister/Wikidata Image Positions|Wikidata Image Positions tool]]',
                             token=token)
-    if response['success'] == 1:
-        return '', 204
-    else:
+    if response['success'] != 1:
         return str(response), 500
+    # find hash of qualifier
+    for qualifier in response['claim']['qualifiers']['P2677']:
+        if qualifier['snaktype'] == 'value' and qualifier['datavalue']['value'] == iiif_region:
+            return flask.jsonify(qualifier_hash=qualifier['hash'])
+    return flask.jsonify(qualifier_hash=None)
 
 
 # https://iiif.io/api/image/2.0/#region
@@ -689,6 +692,7 @@ def depicted_items(entity_data):
             if qualifier['snaktype'] != 'value':
                 continue
             depicted['iiif_region'] = qualifier['datavalue']['value']
+            depicted['qualifier_hash'] = qualifier['hash']
             break
 
         depicteds.append(depicted)

@@ -91,6 +91,10 @@ function setup() {
                     }).then(response => {
                         if (response.ok) {
                             element.remove();
+                            response.json().then(json => {
+                                depicted.dataset.statementId = statementId;
+                                depicted.dataset.qualifierHash = json.qualifier_hash;
+                            });
                         } else {
                             response.text().then(text => {
                                 let message = `An error occurred:\n\n${text}`;
