@@ -24,7 +24,7 @@ function setup() {
         button.type = 'button';
         button.classList.add('btn', 'btn-secondary', 'btn-sm');
         button.textContent = 'add region';
-        button.addEventListener('click', onClick)
+        button.addEventListener('click', onClick);
         element.append(document.createTextNode(' '));
         element.append(button);
 
