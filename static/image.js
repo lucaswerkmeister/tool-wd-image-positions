@@ -64,6 +64,9 @@ function setup() {
                     function() {
                         if (depicted.parentElement) {
                             element.remove();
+                            if (image.querySelectorAll('.wd-image-positions--depicted').length === 1) {
+                                addEditRegionButton(entity);
+                            }
                         } else {
                             button.textContent = 'add region';
                             button.classList.remove('wd-image-positions--active');
@@ -182,6 +185,9 @@ function setup() {
             return;
         }
         const image = entityElement.querySelector('.wd-image-positions--image');
+        if (!image.querySelector('.wd-image-positions--depicted')) {
+            return;
+        }
         const button = document.createElement('button');
         button.type = 'button';
         button.classList.add('btn', 'btn-secondary');
@@ -190,6 +196,10 @@ function setup() {
         const buttonWrapper = document.createElement('div');
         buttonWrapper.append(button);
         entityElement.append(buttonWrapper);
+        const fieldSet = entityElement.querySelector('fieldset');
+        if (fieldSet) {
+            entityElement.append(fieldSet); // move after buttonWrapper
+        }
 
         function addEditRegionListeners() {
             button.textContent = 'Select a region to edit';
