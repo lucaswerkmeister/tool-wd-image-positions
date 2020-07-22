@@ -298,6 +298,7 @@ def api_add_qualifier(domain):
     statement_id = flask.request.form.get('statement_id')
     iiif_region = flask.request.form.get('iiif_region')
     csrf_token = flask.request.form.get('_csrf_token')
+    qualifier_hash = flask.request.form.get('qualifier_hash') # optional
     if not statement_id or not iiif_region or not csrf_token:
         return 'Incomplete form data', 400
 
@@ -317,6 +318,7 @@ def api_add_qualifier(domain):
     token = session.get(action='query', meta='tokens', type='csrf')['query']['tokens']['csrftoken']
     response = session.post(action='wbsetqualifier', claim=statement_id, property='P2677',
                             snaktype='value', value=('"' + iiif_region + '"'),
+                            **({'snakhash': qualifier_hash} if qualifier_hash else {}),
                             summary='region drawn manually using [[d:User:Lucas Werkmeister/Wikidata Image Positions|Wikidata Image Positions tool]]',
                             token=token)
     if response['success'] != 1:

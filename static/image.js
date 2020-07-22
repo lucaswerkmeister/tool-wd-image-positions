@@ -10,8 +10,6 @@ function setup() {
 
     function addEditButton(element) {
         const entity = element.closest('.wd-image-positions--entity'),
-              subjectId = entity.dataset.entityId,
-              subjectDomain = entity.dataset.entityDomain,
               depictedId = element.firstChild.dataset.entityId,
               image = entity.querySelector('.wd-image-positions--image');
 
@@ -51,77 +49,31 @@ function setup() {
                 if (button.textContent === 'loading...') {
                     return;
                 }
-                image.classList.remove('wd-image-positions--active');
-                const cropData = cropper.getData(),
-                      canvasData = cropper.getCanvasData(),
-                      x = 100 * cropData.x / canvasData.naturalWidth,
-                      y = 100 * cropData.y / canvasData.naturalHeight,
-                      w = 100 * cropData.width / canvasData.naturalWidth,
-                      h = 100 * cropData.height / canvasData.naturalHeight,
-                      depicted = document.createElement('div');
-                depicted.classList.add('wd-image-positions--depicted')
-                depicted.append(element.firstChild.cloneNode(true));
-                // note: the browser rounds the percentages a bit,
-                // and we’ll use the rounded values for the IIIF region
-                depicted.style.left = `${x}%`;
-                depicted.style.top = `${y}%`;
-                depicted.style.width = `${w}%`;
-                depicted.style.height = `${h}%`;
-                cropper.destroy();
-                cropper = null;
-                image.append(depicted);
-                function pct(name) {
-                    return depicted.style[name].replace('%', '');
-                }
-                const iiifRegion = `pct:${pct('left')},${pct('top')},${pct('width')},${pct('height')}`,
-                      quickStatements = `${subjectId}\tP180\t${depictedId}\tP2677\t"${iiifRegion}"`;
 
-                if (csrfTokenElement !== null) {
-                    button.textContent = 'adding qualifier…';
-                    const statementId = element.dataset.statementId,
-                          csrfToken = csrfTokenElement.textContent,
-                          formData = new FormData();
-                    formData.append('statement_id', statementId);
-                    formData.append('iiif_region', iiifRegion);
-                    formData.append('_csrf_token', csrfToken);
-                    fetch(`${baseUrl}/api/v2/add_qualifier/${subjectDomain}`, {
-                        method: 'POST',
-                        body: formData,
-                        credentials: 'include',
-                    }).then(response => {
-                        if (response.ok) {
-                            element.remove();
-                            response.json().then(json => {
-                                depicted.dataset.statementId = statementId;
-                                depicted.dataset.qualifierHash = json.qualifier_hash;
-                            });
-                        } else {
-                            response.text().then(text => {
-                                let message = `An error occurred:\n\n${text}`;
-                                if (depictedId !== undefined) {
-                                    // we’re not in an event handler, we can’t write to the clipboard directly
-                                    message += `\n\nHere is the new region in QuickStatements syntax:\n\n${quickStatements}`;
-                                }
-                                window.alert(message);
-                                element.remove();
-                            });
-                        }
-                    });
-                } else {
-                    let message = '';
-                    if (loginElement !== null) {
-                        message = 'You are not logged in. ';
-                    }
-                    message += 'Copy the new region to the clipboard (in QuickStatements syntax)?';
-                    if (window.confirm(message)) {
-                        navigator.clipboard.writeText(quickStatements);
-                        element.remove();
-                    } else {
-                        depicted.remove();
-                        button.textContent = 'add region';
-                        button.classList.remove('wd-image-positions--active');
-                    }
+                const depicted = document.createElement('div');
+                depicted.classList.add('wd-image-positions--depicted')
+                if (depictedId !== undefined) {
+                    depicted.dataset.entityId = depictedId;
                 }
+                depicted.dataset.statementId = element.dataset.statementId;
+                depicted.append(element.firstChild.cloneNode(true));
+                image.append(depicted);
+                button.textContent = 'editing statement…';
+                const subject = { id: entity.dataset.entityId, domain: entity.dataset.entityDomain };
+                saveCropper(subject, image, depicted, cropper).then(
+                    function() {
+                        if (depicted.parentElement) {
+                            element.remove();
+                        } else {
+                            button.textContent = 'add region';
+                            button.classList.remove('wd-image-positions--active');
+                        }
+                    },
+                    function() {
+                        element.remove();
+                    },
+                );
+                cropper = null;
             }
             function onKeyDown(eKey) {
                 if (eKey.key === 'Escape') {
@@ -132,6 +84,164 @@ function setup() {
                     button.textContent = 'add region';
                     button.classList.remove('wd-image-positions--active');
                 }
+            }
+        }
+    }
+
+    /**
+     * Save the cropper as a region qualifier for the depicted.
+     *
+     * @param {{ id: string, domain: string}} subject The subject entity
+     * @param {HTMLElement} image The .wd-image-positions--image (*not* the <img>)
+     * @param {HTMLElement} depicted The .wd-image-positions--depicted,
+     * with a dataset containing a statementId, optional entityId and optional qualifierHash
+     * @param {Cropper} cropper The cropper (will be destroyed)
+     * @return {Promise} Rejects in case of error.
+     * If it resolves, either the statement was saved successfully,
+     * or the user declined to save (in which case the depicted is removed from its parent).
+     */
+    function saveCropper(subject, image, depicted, cropper) {
+        image.classList.remove('wd-image-positions--active');
+        const cropData = cropper.getData(),
+              canvasData = cropper.getCanvasData(),
+              x = 100 * cropData.x / canvasData.naturalWidth,
+              y = 100 * cropData.y / canvasData.naturalHeight,
+              w = 100 * cropData.width / canvasData.naturalWidth,
+              h = 100 * cropData.height / canvasData.naturalHeight;
+        // note: the browser rounds the percentages a bit,
+        // and we’ll use the rounded values for the IIIF region
+        depicted.style.left = `${x}%`;
+        depicted.style.top = `${y}%`;
+        depicted.style.width = `${w}%`;
+        depicted.style.height = `${h}%`;
+        cropper.destroy();
+        function pct(name) {
+            return depicted.style[name].replace('%', '');
+        }
+        const iiifRegion = `pct:${pct('left')},${pct('top')},${pct('width')},${pct('height')}`,
+              quickStatements = `${subject.id}\tP180\t${depicted.dataset.entityId}\tP2677\t"${iiifRegion}"`;
+
+        if (csrfTokenElement !== null) {
+            const statementId = depicted.dataset.statementId,
+                  qualifierHash = depicted.dataset.qualifierHash,
+                  csrfToken = csrfTokenElement.textContent,
+                  formData = new FormData();
+            formData.append('statement_id', statementId);
+            if (qualifierHash) {
+                formData.append('qualifier_hash', qualifierHash);
+            }
+            formData.append('iiif_region', iiifRegion);
+            formData.append('_csrf_token', csrfToken);
+            return fetch(`${baseUrl}/api/v2/add_qualifier/${subject.domain}`, {
+                method: 'POST',
+                body: formData,
+                credentials: 'include',
+            }).then(response => {
+                if (response.ok) {
+                    return response.json().then(json => {
+                        depicted.dataset.qualifierHash = json.qualifier_hash;
+                    });
+                } else {
+                    return response.text().then(text => {
+                        let message = `An error occurred:\n\n${text}`;
+                        if (depicted.dataset.entityId !== undefined) {
+                            // we’re not in an event handler, we can’t write to the clipboard directly
+                            message += `\n\nHere is the new region in QuickStatements syntax:\n\n${quickStatements}`;
+                        }
+                        window.alert(message);
+                        throw new Error('Saving failed');
+                    });
+                }
+            });
+        } else if (depicted.dataset.qualifierHash !== 'undefined') {
+            let message = '';
+            if (loginElement !== null) {
+                message = 'You are not logged in. ';
+            }
+            message += 'Copy the new region to the clipboard (in QuickStatements syntax)?';
+            if (window.confirm(message)) {
+                navigator.clipboard.writeText(quickStatements);
+            } else {
+                depicted.remove();
+            }
+            return Promise.resolve();
+        } else {
+            throw new Error('Editing region without being logged in is not supported!');
+        }
+    }
+
+    function addEditRegionButtons() {
+        if (csrfTokenElement !== null && loginElement === null) {
+            document.querySelectorAll('.wd-image-positions--entity').forEach(addEditRegionButton);
+        }
+    }
+
+    function addEditRegionButton(entityElement) {
+        if (csrfTokenElement === null || loginElement !== null) {
+            return;
+        }
+        const image = entityElement.querySelector('.wd-image-positions--image');
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.classList.add('btn', 'btn-secondary');
+        button.textContent = 'Edit a region';
+        button.addEventListener('click', addEditRegionListeners);
+        const buttonWrapper = document.createElement('div');
+        buttonWrapper.append(button);
+        entityElement.append(buttonWrapper);
+
+        function addEditRegionListeners() {
+            button.textContent = 'Select a region to edit';
+            button.classList.add('wd-image-positions--active');
+            for (const depicted of entityElement.querySelectorAll('.wd-image-positions--depicted')) {
+                depicted.addEventListener('click', editRegion);
+            }
+            button.removeEventListener('click', addEditRegionListeners);
+        }
+
+        function editRegion(event) {
+            event.preventDefault();
+            image.classList.add('wd-image-positions--active');
+            for (const depicted of entityElement.querySelectorAll('.wd-image-positions--depicted')) {
+                depicted.removeEventListener('click', editRegion);
+            }
+            const depicted = event.target.closest('.wd-image-positions--depicted');
+            const cropper = new Cropper(image.firstElementChild, {
+                viewMode: 2,
+                movable: false,
+                rotatable: true, // we don’t rotate the image ourselves, but this allows cropper.js to respect JPEG orientation
+                scalable: false,
+                zoomable: false,
+                checkCrossOrigin: false,
+                ready: function() {
+                    const canvasData = cropper.getCanvasData();
+                    cropper.setData({
+                        x: Math.round(parseFloat(depicted.style.left) * canvasData.naturalWidth / 100),
+                        y: Math.round(parseFloat(depicted.style.top) * canvasData.naturalHeight / 100),
+                        width: Math.round(parseFloat(depicted.style.width) * canvasData.naturalWidth / 100),
+                        height: Math.round(parseFloat(depicted.style.height) * canvasData.naturalHeight / 100),
+                    });
+                    button.textContent = 'use this region';
+                    button.addEventListener('click', doEditRegion);
+                },
+            });
+
+            function doEditRegion() {
+                button.removeEventListener('click', doEditRegion);
+                button.textContent = 'editing statement…';
+                const subject = { id: entityElement.dataset.entityId, domain: entityElement.dataset.entityDomain };
+                saveCropper(subject, image, depicted, cropper).then(
+                    function() {
+                        button.textContent = 'Edit a region';
+                        button.classList.remove('wd-image-positions--active');
+                        button.addEventListener('click', addEditRegionListeners);
+                    },
+                    function() {
+                        button.textContent = 'Edit a region';
+                        button.classList.remove('wd-image-positions--active');
+                        button.addEventListener('click', addEditRegionListeners);
+                    },
+                );
             }
         }
     }
@@ -304,6 +414,7 @@ function setup() {
     }
 
     addEditButtons();
+    addEditRegionButtons();
     addNewDepictedForms();
 }
 

@@ -40,7 +40,7 @@
     max-height: 100%;
 }
 
-.wd-image-positions--image.wd-image-positions--active ~ * .wd-image-positions--depicted-without-region button:not(.wd-image-positions--active) {
+.wd-image-positions--image.wd-image-positions--active ~ * button:not(.wd-image-positions--active) {
     /*
      * hide other buttons when defining a new depicted
      */
