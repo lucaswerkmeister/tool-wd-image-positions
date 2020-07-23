@@ -279,19 +279,19 @@ def api_add_statement(domain):
             depicted['label'] = messages.novalue(language_codes[0])
         else:
             raise ValueError('Unknown snaktype')
-    response = session.post(action='wbcreateclaim',
-                            entity=entity_id,
-                            snaktype=snaktype,
-                            property='P180',
-                            value=value,
-                            token=token)
+    try:
+        response = session.post(action='wbcreateclaim',
+                                entity=entity_id,
+                                snaktype=snaktype,
+                                property='P180',
+                                value=value,
+                                token=token)
+    except mwapi.errors.APIError as error:
+        return str(error), 500
     statement_id = response['claim']['id']
     depicted['statement_id'] = statement_id
-    if response['success'] == 1:
-        return flask.jsonify(depicted=depicted,
-                             depicted_item_link=depicted_item_link(depicted))
-    else:
-        return str(response), 500
+    return flask.jsonify(depicted=depicted,
+                         depicted_item_link=depicted_item_link(depicted))
 
 @app.route('/api/v2/add_qualifier/<domain>', methods=['POST'])
 def api_add_qualifier(domain):
@@ -316,13 +316,16 @@ def api_add_qualifier(domain):
         return 'Not logged in', 403
 
     token = session.get(action='query', meta='tokens', type='csrf')['query']['tokens']['csrftoken']
-    response = session.post(action='wbsetqualifier', claim=statement_id, property='P2677',
-                            snaktype='value', value=('"' + iiif_region + '"'),
-                            **({'snakhash': qualifier_hash} if qualifier_hash else {}),
-                            summary='region drawn manually using [[d:User:Lucas Werkmeister/Wikidata Image Positions|Wikidata Image Positions tool]]',
-                            token=token)
-    if response['success'] != 1:
-        return str(response), 500
+    try:
+        response = session.post(action='wbsetqualifier', claim=statement_id, property='P2677',
+                                snaktype='value', value=('"' + iiif_region + '"'),
+                                **({'snakhash': qualifier_hash} if qualifier_hash else {}),
+                                summary='region drawn manually using [[d:User:Lucas Werkmeister/Wikidata Image Positions|Wikidata Image Positions tool]]',
+                                token=token)
+    except mwapi.errors.APIError as error:
+        if error.code == 'no-such-qualifier':
+            return 'This region does not exist (anymore) – it may have been edited in the meantime. Please try reloading the page.', 500
+        return str(error), 500
     # find hash of qualifier
     for qualifier in response['claim']['qualifiers']['P2677']:
         if qualifier['snaktype'] == 'value' and qualifier['datavalue']['value'] == iiif_region:
