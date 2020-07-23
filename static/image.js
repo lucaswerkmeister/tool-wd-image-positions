@@ -163,6 +163,8 @@ function setup() {
                 message = 'You are not logged in. ';
             }
             message += 'Copy the new region to the clipboard (in QuickStatements syntax)?';
+            message += '\n\nIf you are using this QuickStatements mode, please leave a message on User:Lucas Werkmeister’s talk page.';
+            message += ' If I don’t hear from users using it, I plan to remove this feature to simplify the code.';
             if (window.confirm(message)) {
                 navigator.clipboard.writeText(quickStatements);
             } else {
