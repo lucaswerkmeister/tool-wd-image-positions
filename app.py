@@ -201,7 +201,7 @@ def iiif_region(iiif_region):
 def iiif_region_and_property(iiif_region, property_id):
     query = 'SELECT DISTINCT ?item WHERE { ?item p:P180/pq:P2677 "' + iiif_region.replace('\\', '\\\\').replace('"', '\\"') + '". }'
     with urllib.request.urlopen('https://query.wikidata.org/sparql?format=json&query=' + urllib.parse.quote(query)) as request:
-        query_results = json.loads(request.read().decode())
+        query_results = json.load(request)
 
     items = []
     items_without_image = []
