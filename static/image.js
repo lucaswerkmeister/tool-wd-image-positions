@@ -11,7 +11,8 @@ function setup() {
     function addEditButton(element) {
         const entity = element.closest('.wd-image-positions--entity'),
               depictedId = element.firstChild.dataset.entityId,
-              image = entity.querySelector('.wd-image-positions--image');
+              image = entity.querySelector('.wd-image-positions--image'),
+              img = image.querySelector('img');
 
         if (depictedId === undefined && csrfTokenElement === null) {
             // editing somevalue/novalue not supported in QuickStatements mode
@@ -27,12 +28,14 @@ function setup() {
         element.append(button);
 
         let cropper = null;
+        let doneCallback = null;
 
         function onClick() {
             if (cropper === null) {
                 button.textContent = 'loading...';
                 image.classList.add('wd-image-positions--active');
                 button.classList.add('wd-image-positions--active');
+                doneCallback = ensureImgCroppable(img);
                 cropper = new Cropper(image.firstElementChild, {
                     viewMode: 2,
                     movable: false,
@@ -75,7 +78,7 @@ function setup() {
                     function() {
                         element.remove();
                     },
-                );
+                ).then(doneCallback);
                 cropper = null;
             }
             function onKeyDown(eKey) {
@@ -84,12 +87,35 @@ function setup() {
                 }
                 cropper.destroy();
                 cropper = null;
+                doneCallback();
                 image.classList.remove('wd-image-positions--active');
                 document.removeEventListener('keydown', onKeyDown);
                 button.textContent = 'add region';
                 button.classList.remove('wd-image-positions--active');
             }
         }
+    }
+
+    /**
+     * Ensure that the image element is suitable for cropper.js,
+     * by temporarily changing its src to the last (presumed highest-resolution) srcset entry.
+     * The srcset is assumed to contain PNG/JPG thumbs,
+     * whereas the src may be in an unsupported image format, such as TIFF.
+     *
+     * @param {HTMLImageElement} img The <img> (*not* the .wd-image-positions--image)
+     * @return {function} Callback to restore the image to its original src,
+     * to be called after the cropper has been destroyed.
+     */
+    function ensureImgCroppable(img) {
+        const originalSrc = img.src;
+
+        if (!/\.(?:jpe?g|png|gif)$/i.test(originalSrc)) {
+            img.src = img.srcset.split(' ').slice(-2)[0];
+        }
+
+        return function() {
+            img.src = originalSrc;
+        };
     }
 
     /**
@@ -186,7 +212,8 @@ function setup() {
         if (csrfTokenElement === null || loginElement !== null) {
             return;
         }
-        const image = entityElement.querySelector('.wd-image-positions--image');
+        const image = entityElement.querySelector('.wd-image-positions--image'),
+              img = image.querySelector('img');
         if (!image.querySelector('.wd-image-positions--depicted')) {
             return;
         }
@@ -221,6 +248,7 @@ function setup() {
             }
             const depicted = event.target.closest('.wd-image-positions--depicted');
             document.addEventListener('keydown', cancelEditRegion);
+            const doneCallback = ensureImgCroppable(img);
             const cropper = new Cropper(image.firstElementChild, {
                 viewMode: 2,
                 movable: false,
@@ -256,7 +284,7 @@ function setup() {
                         button.classList.remove('wd-image-positions--active');
                         button.addEventListener('click', addEditRegionListeners);
                     },
-                );
+                ).then(doneCallback);
             }
 
             function cancelEditRegion(eKey) {
@@ -264,6 +292,7 @@ function setup() {
                     return;
                 }
                 cropper.destroy();
+                doneCallback();
                 image.classList.remove('wd-image-positions--active');
                 button.removeEventListener('click', doEditRegion);
                 button.textContent = 'Edit a region';
