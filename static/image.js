@@ -11,8 +11,7 @@ function setup() {
     function addEditButton(element) {
         const entity = element.closest('.wd-image-positions--entity'),
               depictedId = element.firstChild.dataset.entityId,
-              image = entity.querySelector('.wd-image-positions--image'),
-              img = image.querySelector('img');
+              image = entity.querySelector('.wd-image-positions--image');
 
         if (depictedId === undefined && csrfTokenElement === null) {
             // editing somevalue/novalue not supported in QuickStatements mode
@@ -35,7 +34,7 @@ function setup() {
                 button.textContent = 'loading...';
                 image.classList.add('wd-image-positions--active');
                 button.classList.add('wd-image-positions--active');
-                doneCallback = ensureImgCroppable(img);
+                doneCallback = ensureImageCroppable(image);
                 cropper = new Cropper(image.firstElementChild, {
                     viewMode: 2,
                     movable: false,
@@ -102,12 +101,14 @@ function setup() {
      * The srcset is assumed to contain PNG/JPG thumbs,
      * whereas the src may be in an unsupported image format, such as TIFF.
      *
-     * @param {HTMLImageElement} img The <img> (*not* the .wd-image-positions--image)
+     * @param {HTMLElement} image The .wd-image-positions--image containing the <img>
+     * (*not* the <img> itself)
      * @return {function} Callback to restore the image to its original src,
      * to be called after the cropper has been destroyed.
      */
-    function ensureImgCroppable(img) {
-        const originalSrc = img.src;
+    function ensureImageCroppable(image) {
+        const img = image.querySelector('img'),
+              originalSrc = img.src;
 
         if (!/\.(?:jpe?g|png|gif)$/i.test(originalSrc)) {
             img.src = img.srcset.split(' ').slice(-2)[0];
@@ -212,8 +213,7 @@ function setup() {
         if (csrfTokenElement === null || loginElement !== null) {
             return;
         }
-        const image = entityElement.querySelector('.wd-image-positions--image'),
-              img = image.querySelector('img');
+        const image = entityElement.querySelector('.wd-image-positions--image');
         if (!image.querySelector('.wd-image-positions--depicted')) {
             return;
         }
@@ -248,7 +248,7 @@ function setup() {
             }
             const depicted = event.target.closest('.wd-image-positions--depicted');
             document.addEventListener('keydown', cancelEditRegion);
-            const doneCallback = ensureImgCroppable(img);
+            const doneCallback = ensureImageCroppable(image);
             const cropper = new Cropper(image.firstElementChild, {
                 viewMode: 2,
                 movable: false,
