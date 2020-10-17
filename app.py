@@ -116,6 +116,11 @@ def oauth_callback():
                 flask.Markup.escape(flask.url_for('login')) +
                 flask.Markup(r'">login</a></p><p>You can also try deleting the session cookie, if you know how to do that.</p></html>'))
 
+@app.route('/logout')
+def logout():
+    flask.session.pop('oauth_request_token', None)
+    return flask.redirect(flask.url_for('index'))
+
 @app.route('/item/<item_id>')
 def item(item_id):
     return item_and_property(item_id, property_id=default_property)
