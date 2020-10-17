@@ -108,6 +108,7 @@ def oauth_callback():
     try:
         access_token = mwoauth.complete('https://www.wikidata.org/w/index.php', consumer_token, mwoauth.RequestToken(**flask.session.pop('oauth_request_token')), flask.request.query_string, user_agent=user_agent)
         flask.session['oauth_access_token'] = dict(zip(access_token._fields, access_token))
+        flask.session.pop('_csrf_token', None)
         return flask.redirect(flask.url_for('index'))
     except KeyError:
         # no oauth_request_token in the session; try to wipe it and hope it works on retry?
@@ -406,8 +407,10 @@ def authentication_area():
                 flask.Markup.escape(flask.url_for('login')) +
                 flask.Markup(r'">Log in</a>'))
 
-    csrf_token = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(64))
-    flask.session['_csrf_token'] = csrf_token
+    csrf_token = flask.session.get('_csrf_token')
+    if not csrf_token:
+        csrf_token = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(64))
+        flask.session['_csrf_token'] = csrf_token
 
     return (flask.Markup(r'<span class="navbar-text">Logged in as ') +
             user_link(identity['username']) +
