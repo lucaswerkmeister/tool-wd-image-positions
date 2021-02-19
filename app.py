@@ -390,19 +390,22 @@ def authentication_area():
     if 'oauth' not in app.config:
         return flask.Markup()
 
-    if 'oauth_access_token' not in flask.session:
-        return (flask.Markup(r'<a id="login" class="navbar-text" href="') +
-                flask.Markup.escape(flask.url_for('login')) +
-                flask.Markup(r'">Log in</a>'))
+    session = authenticated_session('www.wikidata.org')
+    if session is None:
+        userinfo = None
+    else:
+        try:
+            userinfo = session.get(action='query',
+                                   meta='userinfo')['query']['userinfo']
+        except mwapi.errors.APIError as e:
+            if e.code == 'mwoauth-invalid-authorization':
+                # e. g. consumer version updated, treat as not logged in
+                flask.session.pop('oauth_access_token')
+                userinfo = None
+            else:
+                raise e
 
-    access_token = mwoauth.AccessToken(**flask.session['oauth_access_token'])
-    try:
-        identity = mwoauth.identify('https://www.wikidata.org/w/index.php',
-                                    consumer_token,
-                                    access_token)
-    except mwoauth.OAuthException:
-        # invalid access token, e. g. consumer version updated
-        flask.session.pop('oauth_access_token')
+    if userinfo is None:
         return (flask.Markup(r'<a id="login" class="navbar-text" href="') +
                 flask.Markup.escape(flask.url_for('login')) +
                 flask.Markup(r'">Log in</a>'))
@@ -413,7 +416,7 @@ def authentication_area():
         flask.session['_csrf_token'] = csrf_token
 
     return (flask.Markup(r'<span class="navbar-text">Logged in as ') +
-            user_link(identity['username']) +
+            user_link(userinfo['name']) +
             flask.Markup(r'</span><span id="csrf_token" style="display: none;">') +
             flask.Markup.escape(csrf_token) +
             flask.Markup(r'</span>'))
