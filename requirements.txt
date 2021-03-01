@@ -4,6 +4,7 @@ flask
 iiif-prezi
 mwapi
 mwoauth
+pytest
 pyyaml
 requests_oauthlib
 toolforge
