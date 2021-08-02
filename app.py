@@ -150,20 +150,20 @@ def iiif_manifest(item_id):
     return flask.redirect(flask.url_for('iiif_manifest_with_property', item_id=item_id, property_id=default_property))
 
 @app.route('/iiif/<item_id>/<property_id>/manifest.json')
+@enableCORS
 def iiif_manifest_with_property(item_id, property_id):
     item = load_item_and_property(item_id, property_id, include_description=True, include_metadata=True)
     if 'image_title' not in item:
         return '', 404
     manifest = build_manifest(item)
-    resp = flask.jsonify(manifest.toJSON(top=True))
-    resp.headers['Access-Control-Allow-Origin'] = '*'
-    return resp
+    return flask.jsonify(manifest.toJSON(top=True))
 
 @app.route('/iiif/<item_id>/list/annotations.json')
 def iiif_annotations(item_id):
     return iiif_annotations_with_property(item_id, property_id=default_property)
 
 @app.route('/iiif/<item_id>/<property_id>/list/annotations.json')
+@enableCORS
 def iiif_annotations_with_property(item_id, property_id):
     item = load_item_and_property(item_id, property_id, include_depicteds=True)
     # Although the pct canvas is OK for the image API, we need to target
@@ -207,9 +207,7 @@ def iiif_annotations_with_property(item_id, property_id):
             h = int(float(parts[3])*height/100)
             anno['on'] = anno['on'] + '#xywh=' + ','.join(str(d) for d in [x,y,w,h])
         annolist['resources'].append(anno)
-    resp = flask.jsonify(annolist)
-    resp.headers['Access-Control-Allow-Origin'] = '*'
-    return resp
+    return flask.jsonify(annolist)
 
 @app.route('/iiif_region/<iiif_region>')
 def iiif_region(iiif_region):
