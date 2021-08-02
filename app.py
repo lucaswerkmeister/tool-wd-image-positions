@@ -141,8 +141,8 @@ def item(item_id):
 @app.route('/item/<item_id>/<property_id>')
 def item_and_property(item_id, property_id):
     item = load_item_and_property(item_id, property_id, include_depicteds=True)
-    if item is None:
-        return flask.render_template('item-without-image.html',)
+    if 'image_title' not in item:
+        return flask.render_template('item-without-image.html', **item)
     return flask.render_template('item.html', **item)
 
 @app.route('/iiif/<item_id>/manifest.json')
@@ -152,7 +152,7 @@ def iiif_manifest(item_id):
 @app.route('/iiif/<item_id>/<property_id>/manifest.json')
 def iiif_manifest_with_property(item_id, property_id):
     item = load_item_and_property(item_id, property_id, include_description=True, include_metadata=True)
-    if item is None:
+    if 'image_title' not in item:
         return '', 404
     manifest = build_manifest(item)
     resp = flask.jsonify(manifest.toJSON(top=True))
@@ -226,7 +226,7 @@ def iiif_region_and_property(iiif_region, property_id):
     for result in query_results['results']['bindings']:
         item_id = result['item']['value'][len('http://www.wikidata.org/entity/'):]
         item = load_item_and_property(item_id, property_id, include_depicteds=True)
-        if item is None:
+        if 'image_title' not in item:
             items_without_image.append(item_id)
         else:
             items.append(item)
@@ -473,19 +473,18 @@ def load_item_and_property(item_id, property_id,
         item['description'] = description
 
     image_datavalue = best_value(item_data, property_id)
-    if image_datavalue is None:
-        return None
-    if image_datavalue['type'] != 'string':
-        raise WrongDataValueType(expected_data_value_type='string', actual_data_value_type=image_datavalue['type'])
-    image_title = image_datavalue['value']
-    item['image_title'] = image_title
+    if image_datavalue is not None:
+        if image_datavalue['type'] != 'string':
+            raise WrongDataValueType(expected_data_value_type='string', actual_data_value_type=image_datavalue['type'])
+        image_title = image_datavalue['value']
+        item['image_title'] = image_title
 
-    info_params = query_default_params()
-    image_attribution_query_add_params(info_params, image_title, language_codes[0])
-    image_url_query_add_params(info_params, image_title)
-    info_response = session.get(**info_params)
-    item['image_attribution'] = image_attribution_query_process_response(info_response, image_title, language_codes[0])
-    item['image_url'] = image_url_query_process_response(info_response, image_title)
+        info_params = query_default_params()
+        image_attribution_query_add_params(info_params, image_title, language_codes[0])
+        image_url_query_add_params(info_params, image_title)
+        info_response = session.get(**info_params)
+        item['image_attribution'] = image_attribution_query_process_response(info_response, image_title, language_codes[0])
+        item['image_url'] = image_url_query_process_response(info_response, image_title)
 
     if include_depicteds:
         depicteds = depicted_items(item_data)
