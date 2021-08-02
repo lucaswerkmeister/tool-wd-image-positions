@@ -166,10 +166,6 @@ def iiif_annotations(item_id):
 @enableCORS
 def iiif_annotations_with_property(item_id, property_id):
     item = load_item_and_property(item_id, property_id, include_depicteds=True)
-    # Although the pct canvas is OK for the image API, we need to target
-    # canvas coordinates with the annotations, so we need the w,h
-    image_info = load_image_info(item['image_title'])
-    width, height = int(image_info['thumbwidth']), int(image_info['thumbheight'])
 
     url = flask.url_for('iiif_annotations_with_property',
                 item_id=item_id, property_id=property_id, _external=True,
@@ -180,7 +176,16 @@ def iiif_annotations_with_property(item_id, property_id):
         'label': 'Annotations for ' + item['label']['value'],
         'resources': []
     }
+
+    if 'image_title' not in item:
+        return flask.jsonify(annolist)
+
     canvas_url = url[:-len('list/annotations.json')] + 'canvas/c0.json'
+    # Although the pct canvas is OK for the image API, we need to target
+    # canvas coordinates with the annotations, so we need the w,h
+    image_info = load_image_info(item['image_title'])
+    width, height = int(image_info['thumbwidth']), int(image_info['thumbheight'])
+
     for depicted in item['depicteds']:
         if 'item_id' not in depicted:
             continue # somevalue/novalue not supported for now
