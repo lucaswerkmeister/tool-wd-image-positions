@@ -1,5 +1,6 @@
 {% from "image.html" import image %}
 {% extends "images.html" %}
+{% block title %}{{ label.value }} – {{ super() }}{% endblock title %}
 {% block main %}
 <div class="wd-image-positions--entity" data-entity-id="{{ entity_id }}" data-entity-domain="www.wikidata.org">
   <h1>{{ item_link(entity_id, label) }}</h1>
