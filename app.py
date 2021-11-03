@@ -494,7 +494,7 @@ def load_item_and_property(item_id, property_id,
                 entity_ids.append(depicted['item_id'])
 
     if include_metadata:
-        metadata = item_metadata(item_data)
+        metadata = entity_metadata(item_data)
         entity_ids += metadata.keys()
 
     labels = load_labels(entity_ids, language_codes)
@@ -652,11 +652,11 @@ def request_language_codes():
 
     return language_codes
 
-def best_value(item_data, property_id):
-    if property_id not in item_data['claims']:
+def best_value(entity_data, property_id):
+    if property_id not in entity_data['claims']:
         return None
 
-    statements = item_data['claims'][property_id]
+    statements = entity_data['claims'][property_id]
     normal_value = None
     deprecated_value = None
 
@@ -674,11 +674,11 @@ def best_value(item_data, property_id):
 
     return normal_value or deprecated_value
 
-def best_values(item_data, property_id):
-    if property_id not in item_data['claims']:
+def best_values(entity_data, property_id):
+    if property_id not in entity_data['claims']:
         return []
 
-    statements = item_data['claims'][property_id]
+    statements = entity_data['claims'][property_id]
     preferred_values = []
     normal_values = []
     deprecated_values = []
@@ -722,7 +722,7 @@ def depicted_items(entity_data):
         depicteds.append(depicted)
     return depicteds
 
-def item_metadata(item_data):
+def entity_metadata(entity_data):
     # property IDs based on https://www.wikidata.org/wiki/Wikidata:WikiProject_Visual_arts/Item_structure#Describing_individual_objects
     property_ids = [
         'P170', # creator
@@ -751,7 +751,7 @@ def item_metadata(item_data):
 
     session = anonymous_session('www.wikidata.org')
     for property_id in property_ids:
-        for value in best_values(item_data, property_id):
+        for value in best_values(entity_data, property_id):
             response = session.get(action='wbformatvalue',
                                    generate='text/html',
                                    datavalue=json.dumps(value),
