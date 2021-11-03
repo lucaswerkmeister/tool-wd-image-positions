@@ -502,14 +502,7 @@ def load_item_and_property(item_id, property_id,
 
     if include_depicteds:
         for depicted in depicteds:
-            if 'item_id' in depicted:
-                depicted['label'] = labels[depicted['item_id']]
-            elif depicted['snaktype'] == 'somevalue':
-                depicted['label'] = messages.somevalue(language_codes[0])
-            elif depicted['snaktype'] == 'novalue':
-                depicted['label'] = messages.novalue(language_codes[0])
-            else:
-                raise ValueError('depicted has neither item ID nor somevalue/novalue snaktype')
+            depicted['label'] = depicted_label(depicted, labels, language_codes)
         item['depicteds'] = depicteds
 
     if include_metadata:
@@ -559,17 +552,20 @@ def load_file(image_title):
     labels = load_labels(entity_ids, language_codes)
 
     for depicted in depicteds:
-        if 'item_id' in depicted:
-            depicted['label'] = labels[depicted['item_id']]
-        elif depicted['snaktype'] == 'somevalue':
-            depicted['label'] = messages.somevalue(language_codes[0])
-        elif depicted['snaktype'] == 'novalue':
-            depicted['label'] = messages.novalue(language_codes[0])
-        else:
-            raise ValueError('depicted has neither item ID nor somevalue/novalue snaktype')
+        depicted['label'] = depicted_label(depicted, labels, language_codes)
     file['depicteds'] = depicteds
 
     return file
+
+def depicted_label(depicted, labels, language_codes):
+    if 'item_id' in depicted:
+        return labels[depicted['item_id']]
+    elif depicted['snaktype'] == 'somevalue':
+        return messages.somevalue(language_codes[0])
+    elif depicted['snaktype'] == 'novalue':
+        return messages.novalue(language_codes[0])
+    else:
+        raise ValueError('depicted has neither item ID nor somevalue/novalue snaktype')
 
 def load_image_info(image_title):
     file_title = 'File:' + image_title.replace(' ', '_')
