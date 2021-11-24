@@ -592,9 +592,14 @@ def build_manifest(item):
     fac.set_base_prezi_uri(base_url)
     fac.set_debug('error')
 
+    iiif_item_label = language_string_wikibase_to_iiif(item['label'])
+    iiif_item_description = language_string_wikibase_to_iiif(item['description'])
+
     manifest = fac.manifest(ident='manifest.json')
-    manifest.label = language_string_wikibase_to_iiif(item['label'])
-    manifest.description = language_string_wikibase_to_iiif(item['description'])
+    if iiif_item_label is not None:
+        manifest.label = iiif_item_label
+    if iiif_item_description is not None:
+        manifest.description = iiif_item_description
     attribution = image_attribution(item['image_title'], request_language_codes()[0])
     if attribution is not None:
         manifest.attribution = attribution['attribution_text']
@@ -606,7 +611,8 @@ def build_manifest(item):
         })
     sequence = manifest.sequence(ident='normal', label='default order')
     canvas = sequence.canvas(ident='c0')
-    canvas.label = language_string_wikibase_to_iiif(item['label'])
+    if iiif_item_label is not None:
+        canvas.label = iiif_item_label
     annolist = fac.annotationList(ident='annotations', label='Things depicted on this canvas')
     canvas.add_annotationList(annolist)
     populate_canvas(canvas, item, fac)
