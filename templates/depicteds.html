@@ -1,10 +1,6 @@
+{% from "depicted.html" import depicted_div %}
 {% for depicted in depicteds %}
 {% if depicted.iiif_region %}
-<div class="wd-image-positions--depicted"
-     style="{{ depicted.iiif_region | iiif_region_to_style }}"
-     data-statement-id="{{ depicted.statement_id }}"
-     data-qualifier-hash="{{ depicted.qualifier_hash }}">
-  {{ depicted | depicted_item_link }}
-</div>
+{{ depicted_div(depicted) }}
 {% endif %}
 {% endfor %}

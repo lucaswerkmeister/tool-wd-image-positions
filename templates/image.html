@@ -1,3 +1,4 @@
+{% from "depicted.html" import depicted_div %}
 {% macro image(image_title, image_attribution, image_url, depicteds, heading="h2") %}
 {% set image_title_ = image_title.replace(' ', '_') %}
 <{{ heading }}><a href="https://commons.wikimedia.org/wiki/File:{{ image_title_ }}">{{ image_title }}</a></{{ heading }}>
@@ -20,13 +21,7 @@
   {% set depicteds_without_region = [] %}
   {% for depicted in depicteds %}
   {% if depicted.iiif_region %}
-  <div class="wd-image-positions--depicted"
-       title="{{ depicted.label.value }}{% if 'item_id' in depicted %} ({{ depicted.item_id }}){% endif %}"
-       style="{{ depicted.iiif_region | iiif_region_to_style }}"
-       data-statement-id="{{ depicted.statement_id }}"
-       data-qualifier-hash="{{ depicted.qualifier_hash }}">
-    {{ depicted | depicted_item_link }}
-  </div>
+  {{ depicted_div(depicted) }}
   {% else %}
   {% do depicteds_without_region.append(depicted) %}
   {% endif %}
