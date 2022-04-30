@@ -10,3 +10,4 @@
 {% endif %}
 <script src="{{ url_for('static', filename='image.js') }}" defer></script>
 {% endblock head %}
+{% block main_tag_attributes %}{{ super() }} data-depicted-properties='{{ depicted_properties() | tojson }}'{% endblock main_tag_attributes %}

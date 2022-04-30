@@ -23,6 +23,13 @@
     outline-color: gold;
 }
 
+.wd-image-positions--depicted__P9664 {
+    /*
+     * named place on map (P9664): fuchsia
+     */
+    outline-color: fuchsia;
+}
+
 .wd-image-positions--depicted:hover {
     /*
      * make the “active” area even more visible – many overlapping areas can be hard to distinguish

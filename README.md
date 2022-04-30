@@ -4,6 +4,8 @@
 [relative position within image](https://www.wikidata.org/wiki/Property:P2677) qualifiers
 of [depicts](https://www.wikidata.org/wiki/Property:P180) statements on [Wikidata](https://www.wikidata.org/) items
 as areas on the item’s [image](https://www.wikidata.org/wiki/Property:P18) (or other property).
+It also supports [Wikimedia Commons](https://commons.wikimedia.org/) files,
+where the [named place on map](https://www.wikidata.org/wiki/Property:P9664) property is used in a similar way.
 
 Examples:
 

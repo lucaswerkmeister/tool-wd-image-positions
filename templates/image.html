@@ -1,4 +1,15 @@
 {% from "depicted.html" import depicted_div %}
+{% macro _depicteds_without_region(depicteds_without_region, property_id, property_label) %}
+<!-- the following HTML (modulo whitespace) is also synthesized by static/image.js, keep in sync -->
+<div class="wd-image-positions--depicteds-without-region wd-image-positions--depicteds-without-region__{{ property_id }}">
+  {{ property_label }} with no region specified:
+  <ul>
+    {% for depicted in depicteds_without_region %}
+    <li class="wd-image-positions--depicted-without-region" data-statement-id="{{ depicted.statement_id }}">{{ depicted | depicted_item_link }}</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endmacro %}
 {% macro image(image_title, image_attribution, image_url, depicteds, heading="h2") %}
 {% set image_title_ = image_title.replace(' ', '_') %}
 <{{ heading }}><a href="https://commons.wikimedia.org/wiki/File:{{ image_title_ }}">{{ image_title }}</a></{{ heading }}>
@@ -18,24 +29,24 @@
                https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ }}?width=1920 1920w,
                https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ }}?width=2560 2560w,
                https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ }}?width=2880 2880w">
-  {% set depicteds_without_region = [] %}
+  {% set depicteds_without_region_by_property_id = {} %}
   {% for depicted in depicteds %}
   {% if depicted.iiif_region %}
   {{ depicted_div(depicted) }}
   {% else %}
-  {% do depicteds_without_region.append(depicted) %}
+  {% do depicteds_without_region_by_property_id.setdefault(depicted.property_id, []).append(depicted) %}
   {% endif %}
   {% endfor %}
 </div>
-{% if depicteds_without_region %}
-<!-- the following HTML (modulo whitespace) is also synthesized by static/image.js, keep in sync -->
-<div class="wd-image-positions--depicteds-without-region">
-  Depicted, but with no region specified:
-  <ul>
-    {% for depicted in depicteds_without_region %}
-    <li class="wd-image-positions--depicted-without-region" data-statement-id="{{ depicted.statement_id }}">{{ depicted | depicted_item_link }}</li>
-    {% endfor %}
-  </ul>
-</div>
+<!-- add the depicteds without region: first, the ones for well-known properties with a label -->
+{% for property_id, property_label in depicted_properties().items() %}
+{% if depicteds_without_region_by_property_id[property_id] %}
+{% set depicteds_without_region = depicteds_without_region_by_property_id.pop(property_id) %}
+{{ _depicteds_without_region(depicteds_without_region, property_id, property_label) }}
 {% endif %}
+{% endfor %}
+<!-- and then the remaining ones (that weren’t popped off the dict above), just in case -->
+{% for property_id, depicteds_without_region in depicteds_without_region_by_property_id %}
+{{ _depicteds_without_region(depicteds_without_region, property_id, property_id) }}
+{% endfor %}
 {% endmacro %}

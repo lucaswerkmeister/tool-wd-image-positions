@@ -33,6 +33,15 @@ requests_session.headers.update({
 
 default_property = 'P18'
 
+depicted_properties = {
+    # labels are used in image.html with “… with no region specified” before a list
+    'P180': 'Depicted',
+    'P9664': 'Named places on map',
+    # note: currently, these must be item-type properties;
+    # support for other data types (e.g. P1684 inscription) needs more work
+}
+app.add_template_global(lambda: depicted_properties, 'depicted_properties')
+
 @decorator.decorator
 def read_private(func, *args, **kwargs):
     try:
@@ -221,11 +230,14 @@ def iiif_region(iiif_region):
 
 @app.route('/iiif_region/<iiif_region>/<property_id>')
 def iiif_region_and_property(iiif_region, property_id):
+    iiif_region_string = '"' + iiif_region.replace('\\', '\\\\').replace('"', '\\"') + '"'
+    property_claim_predicates = ' '.join(f'p:{property_id}' for property_id in depicted_properties)
     query = '''
       SELECT DISTINCT ?item WHERE {
-        ?item p:P180/pq:P2677 "%s".
+        VALUES ?p { %s }
+        ?item ?p [ pq:P2677 %s ].
       }
-    ''' % iiif_region.replace('\\', '\\\\').replace('"', '\\"')
+    ''' % (property_claim_predicates, iiif_region_string)
     query_results = requests_session.get('https://query.wikidata.org/sparql',
                                          params={'query': query}).json()
 
@@ -717,24 +729,25 @@ def depicted_items(entity_data):
     statements = entity_data.get('claims', entity_data.get('statements', {}))
     if statements == []:
         statements = {} # T222159
-    for statement in statements.get('P180', []):
-        snaktype = statement['mainsnak']['snaktype']
-        depicted = {
-            'snaktype': snaktype,
-            'statement_id': statement['id'],
-            'property_id': 'P180',
-        }
-        if snaktype == 'value':
-            depicted['item_id'] = statement['mainsnak']['datavalue']['value']['id']
+    for property_id in depicted_properties:
+        for statement in statements.get(property_id, []):
+            snaktype = statement['mainsnak']['snaktype']
+            depicted = {
+                'snaktype': snaktype,
+                'statement_id': statement['id'],
+                'property_id': property_id,
+            }
+            if snaktype == 'value':
+                depicted['item_id'] = statement['mainsnak']['datavalue']['value']['id']
 
-        for qualifier in statement.get('qualifiers', {}).get('P2677', []):
-            if qualifier['snaktype'] != 'value':
-                continue
-            depicted['iiif_region'] = qualifier['datavalue']['value']
-            depicted['qualifier_hash'] = qualifier['hash']
-            break
+            for qualifier in statement.get('qualifiers', {}).get('P2677', []):
+                if qualifier['snaktype'] != 'value':
+                    continue
+                depicted['iiif_region'] = qualifier['datavalue']['value']
+                depicted['qualifier_hash'] = qualifier['hash']
+                break
 
-        depicteds.append(depicted)
+            depicteds.append(depicted)
     return depicteds
 
 def entity_metadata(entity_data):

@@ -1,7 +1,8 @@
 function setup() {
     const baseUrl = document.querySelector('link[rel=index]').href.replace(/\/$/, ''),
           loginElement = document.getElementById('login'),
-          csrfTokenElement = document.getElementById('csrf_token');
+          csrfTokenElement = document.getElementById('csrf_token'),
+          depictedProperties = JSON.parse(document.getElementsByTagName('main')[0].dataset.depictedProperties);
     let EntityInputWidget; // loaded in addNewDepictedForms
 
     function addEditButtons() {
@@ -392,6 +393,7 @@ function setup() {
             setAllDisabled(true);
             formData.append('entity_id', subjectId);
             formData.append('_csrf_token', csrfTokenElement.textContent);
+            const propertyId = 'P180';
             fetch(`${baseUrl}/api/v1/add_statement/${subjectDomain}`, {
                 method: 'POST',
                 body: formData,
@@ -400,15 +402,17 @@ function setup() {
                 if (response.ok) {
                     return response.json().then(json => {
                         const statementId = json.depicted.statement_id;
-                        const previousElement = layoutElement.previousElementSibling;
-                        let depictedsWithoutRegionList;
-                        if (previousElement.classList.contains('wd-image-positions--depicteds-without-region')) {
-                            depictedsWithoutRegionList = previousElement.children[0];
-                        } else {
+                        let depictedsWithoutRegionList = entityElement.querySelector(
+                            `.wd-image-positions--depicteds-without-region__${propertyId} ul`,
+                        );
+                        if (!depictedsWithoutRegionList) {
                             const depictedsWithoutRegionDiv = document.createElement('div'),
-                                  depictedsWithoutRegionText = document.createTextNode('Depicted, but with no region specified:');
+                                  depictedsWithoutRegionText = document.createTextNode(
+                                      `${depictedProperties[propertyId] || propertyId} with no region specified:`,
+                                  );
                             depictedsWithoutRegionList = document.createElement('ul');
                             depictedsWithoutRegionDiv.classList.add('wd-image-positions--depicteds-without-region');
+                            depictedsWithoutRegionDiv.classList.add(`wd-image-positions--depicteds-without-region__${propertyId}`);
                             depictedsWithoutRegionDiv.append(depictedsWithoutRegionText, depictedsWithoutRegionList);
                             layoutElement.insertAdjacentElement('beforebegin', depictedsWithoutRegionDiv);
                         }
