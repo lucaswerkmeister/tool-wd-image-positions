@@ -221,7 +221,11 @@ def iiif_region(iiif_region):
 
 @app.route('/iiif_region/<iiif_region>/<property_id>')
 def iiif_region_and_property(iiif_region, property_id):
-    query = 'SELECT DISTINCT ?item WHERE { ?item p:P180/pq:P2677 "' + iiif_region.replace('\\', '\\\\').replace('"', '\\"') + '". }'
+    query = '''
+      SELECT DISTINCT ?item WHERE {
+        ?item p:P180/pq:P2677 "%s".
+      }
+    ''' % iiif_region.replace('\\', '\\\\').replace('"', '\\"')
     query_results = requests_session.get('https://query.wikidata.org/sparql',
                                          params={'query': query}).json()
 
