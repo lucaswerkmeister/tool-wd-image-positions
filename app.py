@@ -9,7 +9,6 @@ import mwapi
 import mwoauth
 import os
 import random
-import requests
 import requests_oauthlib
 import stat
 import string
@@ -25,8 +24,7 @@ import messages
 app = flask.Flask(__name__)
 app.jinja_env.add_extension('jinja2.ext.do')
 
-toolforge.set_user_agent('lexeme-forms', email='mail@lucaswerkmeister.de')
-user_agent = requests.utils.default_user_agent()
+user_agent = toolforge.set_user_agent('lexeme-forms', email='mail@lucaswerkmeister.de')
 
 default_property = 'P18'
 

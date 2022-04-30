@@ -7,4 +7,4 @@ mwoauth
 pytest
 pyyaml
 requests_oauthlib
-toolforge
+toolforge >= 4.2.0
