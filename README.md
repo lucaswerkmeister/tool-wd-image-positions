@@ -25,18 +25,23 @@ If the web service is not running for some reason, run the following command:
 webservice start
 ```
 If it’s acting up, try the same command with `restart` instead of `start`.
-Both should pull their config from the `service.template` file,
-which is symlinked from the source code directory into the tool home directory.
+Both should pull their config from the `service.template` file in the source code directory.
 
 To update the service, run the following commands after becoming the tool account:
 ```
-source ~/www/python/venv/bin/activate
 cd ~/www/python/src
 git fetch
 git diff @ @{u} # inspect changes
 git merge --ff-only @{u}
-pip3 install -r requirements.txt
 webservice restart
+```
+
+If there were new changes in the Python environment (e.g. new dependencies),
+add the following steps before the `webservice restart`:
+```
+webservice shell
+source ~/www/python/venv/bin/activate
+pip-sync ~/www/python/src/requirements.txt
 ```
 
 ## Local development setup
@@ -48,7 +53,7 @@ You can also run the tool locally, which is much more convenient for development
 git clone https://phabricator.wikimedia.org/source/tool-wd-image-positions.git
 cd tool-wd-image-positions
 pip3 install -r requirements.txt
-FLASK_APP=app.py FLASK_ENV=development flask run
+FLASK_ENV=development flask run
 ```
 
 If you want, you can do this inside some virtualenv too.
