@@ -287,6 +287,7 @@ def api_add_statement(domain):
     token = session.get(action='query', meta='tokens', type='csrf')['query']['tokens']['csrftoken']
     depicted = {
         'snaktype': snaktype,
+        'property_id': 'P180',
     }
     if snaktype == 'value':
         value = json.dumps({'entity-type': 'item', 'id': item_id})
@@ -717,6 +718,7 @@ def depicted_items(entity_data):
         depicted = {
             'snaktype': snaktype,
             'statement_id': statement['id'],
+            'property_id': 'P180',
         }
         if snaktype == 'value':
             depicted['item_id'] = statement['mainsnak']['datavalue']['value']['id']

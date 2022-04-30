@@ -7,12 +7,20 @@
     position: absolute;
     /*
      * make the full area visible – this is what this tool is used for, after all
+     * (default outline color overridden per property below)
      */
-    outline: solid gold 2px;
+    outline: solid white 2px;
     /*
      * if the text doesn’t fit, cut it off rather than enlarging the outline
      */
     overflow: hidden;
+}
+
+.wd-image-positions--depicted__P180 {
+    /*
+     * depicts (P180): gold
+     */
+    outline-color: gold;
 }
 
 .wd-image-positions--depicted:hover {

@@ -1,5 +1,5 @@
 {% macro depicted_div(depicted) %}
-<div class="wd-image-positions--depicted"
+<div class="wd-image-positions--depicted wd-image-positions--depicted__{{ depicted.property_id }}"
      title="{{ depicted.label.value }}{% if 'item_id' in depicted %} ({{ depicted.item_id }}){% endif %}"
      style="{{ depicted.iiif_region | iiif_region_to_style }}"
      data-statement-id="{{ depicted.statement_id }}"
