@@ -68,6 +68,7 @@ pyyaml==6.0
     # via -r requirements.in
 requests==2.27.1
     # via
+    #   -r requirements.in
     #   mwapi
     #   mwoauth
     #   requests-oauthlib

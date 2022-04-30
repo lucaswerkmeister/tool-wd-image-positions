@@ -9,12 +9,11 @@ import mwapi
 import mwoauth
 import os
 import random
+import requests
 import requests_oauthlib
 import stat
 import string
 import toolforge
-import urllib.parse
-import urllib.request
 import yaml
 
 from exceptions import *
@@ -25,6 +24,12 @@ app = flask.Flask(__name__)
 app.jinja_env.add_extension('jinja2.ext.do')
 
 user_agent = toolforge.set_user_agent('lexeme-forms', email='mail@lucaswerkmeister.de')
+
+requests_session = requests.Session()
+requests_session.headers.update({
+    'Accept': 'application/json',
+    'User-Agent': user_agent,
+})
 
 default_property = 'P18'
 
@@ -217,8 +222,8 @@ def iiif_region(iiif_region):
 @app.route('/iiif_region/<iiif_region>/<property_id>')
 def iiif_region_and_property(iiif_region, property_id):
     query = 'SELECT DISTINCT ?item WHERE { ?item p:P180/pq:P2677 "' + iiif_region.replace('\\', '\\\\').replace('"', '\\"') + '". }'
-    with urllib.request.urlopen('https://query.wikidata.org/sparql?format=json&query=' + urllib.parse.quote(query)) as request:
-        query_results = json.load(request)
+    query_results = requests_session.get('https://query.wikidata.org/sparql',
+                                         params={'query': query}).json()
 
     items = []
     items_without_image = []

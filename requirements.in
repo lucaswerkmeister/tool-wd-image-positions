@@ -6,5 +6,6 @@ mwapi
 mwoauth
 pytest
 pyyaml
+requests
 requests_oauthlib
 toolforge >= 4.2.0
