@@ -1,7 +1,11 @@
 function setup() {
+    const csrfTokenElement = document.getElementById('csrf_token');
+    if (csrfTokenElement === null) {
+        // everything in this file requires being logged in
+        return;
+    }
+
     const baseUrl = document.querySelector('link[rel=index]').href.replace(/\/$/, ''),
-          loginElement = document.getElementById('login'),
-          csrfTokenElement = document.getElementById('csrf_token'),
           depictedProperties = JSON.parse(document.getElementsByTagName('main')[0].dataset.depictedProperties);
     let EntityInputWidget; // loaded in addNewDepictedForms
 
@@ -13,11 +17,6 @@ function setup() {
         const entity = element.closest('.wd-image-positions--entity'),
               depictedId = element.firstChild.dataset.entityId,
               image = entity.querySelector('.wd-image-positions--image');
-
-        if (depictedId === undefined && csrfTokenElement === null) {
-            // editing somevalue/novalue not supported in QuickStatements mode
-            return;
-        }
 
         const button = document.createElement('button');
         button.type = 'button';
@@ -150,70 +149,41 @@ function setup() {
         function pct(name) {
             return depicted.style[name].replace('%', '');
         }
-        const iiifRegion = `pct:${pct('left')},${pct('top')},${pct('width')},${pct('height')}`,
-              quickStatements = `${subject.id}\tP180\t${depicted.dataset.entityId}\tP2677\t"${iiifRegion}"`;
+        const iiifRegion = `pct:${pct('left')},${pct('top')},${pct('width')},${pct('height')}`;
 
-        if (csrfTokenElement !== null) {
-            const statementId = depicted.dataset.statementId,
-                  qualifierHash = depicted.dataset.qualifierHash,
-                  csrfToken = csrfTokenElement.textContent,
-                  formData = new FormData();
-            formData.append('statement_id', statementId);
-            if (qualifierHash) {
-                formData.append('qualifier_hash', qualifierHash);
-            }
-            formData.append('iiif_region', iiifRegion);
-            formData.append('_csrf_token', csrfToken);
-            return fetch(`${baseUrl}/api/v2/add_qualifier/${subject.domain}`, {
-                method: 'POST',
-                body: formData,
-                credentials: 'include',
-            }).then(response => {
-                if (response.ok) {
-                    return response.json().then(json => {
-                        depicted.dataset.qualifierHash = json.qualifier_hash;
-                    });
-                } else {
-                    return response.text().then(text => {
-                        let message = `An error occurred:\n\n${text}`;
-                        if (depicted.dataset.entityId !== undefined) {
-                            // we’re not in an event handler, we can’t write to the clipboard directly
-                            message += `\n\nHere is the new region in QuickStatements syntax:\n\n${quickStatements}`;
-                        }
-                        window.alert(message);
-                        throw new Error('Saving failed');
-                    });
-                }
-            });
-        } else if (depicted.dataset.qualifierHash !== 'undefined') {
-            let message = '';
-            if (loginElement !== null) {
-                message = 'You are not logged in. ';
-            }
-            message += 'Copy the new region to the clipboard (in QuickStatements syntax)?';
-            message += '\n\nIf you are using this QuickStatements mode, please leave a message on User:Lucas Werkmeister’s talk page.';
-            message += ' If I don’t hear from users using it, I plan to remove this feature to simplify the code.';
-            if (window.confirm(message)) {
-                navigator.clipboard.writeText(quickStatements);
-            } else {
-                depicted.remove();
-            }
-            return Promise.resolve();
-        } else {
-            throw new Error('Editing region without being logged in is not supported!');
+        const statementId = depicted.dataset.statementId,
+              qualifierHash = depicted.dataset.qualifierHash,
+              csrfToken = csrfTokenElement.textContent,
+              formData = new FormData();
+        formData.append('statement_id', statementId);
+        if (qualifierHash) {
+            formData.append('qualifier_hash', qualifierHash);
         }
+        formData.append('iiif_region', iiifRegion);
+        formData.append('_csrf_token', csrfToken);
+        return fetch(`${baseUrl}/api/v2/add_qualifier/${subject.domain}`, {
+            method: 'POST',
+            body: formData,
+            credentials: 'include',
+        }).then(response => {
+            if (response.ok) {
+                return response.json().then(json => {
+                    depicted.dataset.qualifierHash = json.qualifier_hash;
+                });
+            } else {
+                return response.text().then(text => {
+                    window.alert(`An error occurred:\n\n${text}\n\nThe region drawn is ${iiifRegion}, if you want to add it manually.`);
+                    throw new Error('Saving failed');
+                });
+            }
+        });
     }
 
     function addEditRegionButtons() {
-        if (csrfTokenElement !== null && loginElement === null) {
-            document.querySelectorAll('.wd-image-positions--entity').forEach(addEditRegionButton);
-        }
+        document.querySelectorAll('.wd-image-positions--entity').forEach(addEditRegionButton);
     }
 
     function addEditRegionButton(entityElement) {
-        if (csrfTokenElement === null || loginElement !== null) {
-            return;
-        }
         const image = entityElement.querySelector('.wd-image-positions--image');
         if (!image.querySelector('.wd-image-positions--depicted')) {
             return;
@@ -448,14 +418,12 @@ function setup() {
     }
 
     function addNewDepictedForms() {
-        if (csrfTokenElement !== null && loginElement === null) {
-            fixMediaWiki().then(() => {
-                mediaWiki.loader.using('wikibase.mediainfo.statements', require => {
-                    EntityInputWidget = require('wikibase.mediainfo.statements').inputs.EntityInputWidget;
-                    document.querySelectorAll('.wd-image-positions--entity').forEach(addNewDepictedForm);
-                });
-            }, console.error);
-        }
+        fixMediaWiki().then(() => {
+            mediaWiki.loader.using('wikibase.mediainfo.statements', require => {
+                EntityInputWidget = require('wikibase.mediainfo.statements').inputs.EntityInputWidget;
+                document.querySelectorAll('.wd-image-positions--entity').forEach(addNewDepictedForm);
+            });
+        }, console.error);
     }
 
     function fixMediaWiki() {
