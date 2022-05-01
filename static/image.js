@@ -1,4 +1,6 @@
 function setup() {
+    'use strict';
+
     const csrfTokenElement = document.getElementById('csrf_token');
     if (csrfTokenElement === null) {
         // everything in this file requires being logged in
