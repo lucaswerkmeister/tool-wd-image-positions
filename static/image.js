@@ -321,6 +321,15 @@ function setup() {
         const entity = entityElement.closest('.wd-image-positions--entity'),
               subjectId = entity.dataset.entityId,
               subjectDomain = entity.dataset.entityDomain,
+              propertyIdInput = new OO.ui.DropdownInputWidget({
+                  options: Object.entries(depictedProperties).map(entry => ({
+                      data: entry[0],
+                      label: entry[1][0],
+                  })),
+                  // for some reason, the propertyIdInput.getInputElement()[0] is not the node in the DOM,
+                  // so assign an ID so we can access the actual value in addItemId() below
+                  id: 'propertyIdWidget',
+              }),
               itemIdInput = new EntityInputWidget({
                   name: 'item_id',
                   required: true,
@@ -337,6 +346,9 @@ function setup() {
               }),
               layout = new OO.ui.FieldsetLayout({
                   items: [
+                      new OO.ui.FieldLayout(
+                          propertyIdInput,
+                      ),
                       new OO.ui.ActionFieldLayout(
                           itemIdInput,
                           itemIdButton,
@@ -354,7 +366,7 @@ function setup() {
                           }),
                       ),
                   ],
-                  label: 'Add more “depicted” statements:',
+                  label: 'Add more statements:',
               }),
               layoutElement = layout.$element[0];
         itemIdInput.on('enter', addItemId);
@@ -373,6 +385,7 @@ function setup() {
         function addItemId() {
             const formData = new FormData();
             formData.append('snaktype', 'value');
+            formData.append('property_id', document.querySelector('#propertyIdWidget select').value);
             formData.append('item_id', itemIdInput.getData().getSerialization());
             addStatement(formData);
         }
@@ -393,7 +406,6 @@ function setup() {
             setAllDisabled(true);
             formData.append('entity_id', subjectId);
             formData.append('_csrf_token', csrfTokenElement.textContent);
-            const propertyId = 'P180';
             fetch(`${baseUrl}/api/v1/add_statement/${subjectDomain}`, {
                 method: 'POST',
                 body: formData,
@@ -402,13 +414,14 @@ function setup() {
                 if (response.ok) {
                     return response.json().then(json => {
                         const statementId = json.depicted.statement_id;
+                        const propertyId = json.depicted.property_id;
                         let depictedsWithoutRegionList = entityElement.querySelector(
                             `.wd-image-positions--depicteds-without-region__${propertyId} ul`,
                         );
                         if (!depictedsWithoutRegionList) {
                             const depictedsWithoutRegionDiv = document.createElement('div'),
                                   depictedsWithoutRegionText = document.createTextNode(
-                                      `${depictedProperties[propertyId] || propertyId} with no region specified:`,
+                                      `${depictedProperties[propertyId]?.[1] || propertyId} with no region specified:`,
                                   );
                             depictedsWithoutRegionList = document.createElement('ul');
                             depictedsWithoutRegionDiv.classList.add('wd-image-positions--depicteds-without-region');

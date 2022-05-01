@@ -34,9 +34,10 @@ requests_session.headers.update({
 default_property = 'P18'
 
 depicted_properties = {
-    # labels are used in image.html with “… with no region specified” before a list
-    'P180': 'Depicted',
-    'P9664': 'Named places on map',
+    # first label is used in dropdown,
+    # second forms “… with no region specified” list label
+    'P180': ['depicts', 'Depicted'],
+    'P9664': ['named place on map', 'Named places on map'],
     # note: currently, these must be item-type properties;
     # support for other data types (e.g. P1684 inscription) needs more work
 }
@@ -279,6 +280,7 @@ def api_add_statement(domain):
     entity_id = flask.request.form.get('entity_id')
     snaktype = flask.request.form.get('snaktype')
     item_id = flask.request.form.get('item_id')
+    property_id = flask.request.form.get('property_id', 'P180')
     csrf_token = flask.request.form.get('_csrf_token')
     if not entity_id or not snaktype or not csrf_token:
         return 'Incomplete form data', 400
@@ -286,6 +288,8 @@ def api_add_statement(domain):
         return 'Inconsistent form data', 400
     if snaktype not in {'value', 'somevalue', 'novalue'}:
         return 'Bad snaktype', 400
+    if property_id not in depicted_properties:
+        return 'Bad property ID', 400
 
     if csrf_token != flask.session['_csrf_token']:
         return 'Wrong CSRF token (try reloading the page).', 403
@@ -303,7 +307,7 @@ def api_add_statement(domain):
     token = session.get(action='query', meta='tokens', type='csrf')['query']['tokens']['csrftoken']
     depicted = {
         'snaktype': snaktype,
-        'property_id': 'P180',
+        'property_id': property_id,
     }
     if snaktype == 'value':
         value = json.dumps({'entity-type': 'item', 'id': item_id})
@@ -322,7 +326,7 @@ def api_add_statement(domain):
         response = session.post(action='wbcreateclaim',
                                 entity=entity_id,
                                 snaktype=snaktype,
-                                property='P180',
+                                property=property_id,
                                 value=value,
                                 token=token)
     except mwapi.errors.APIError as error:

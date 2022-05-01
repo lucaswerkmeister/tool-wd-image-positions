@@ -39,10 +39,10 @@
   {% endfor %}
 </div>
 <!-- add the depicteds without region: first, the ones for well-known properties with a label -->
-{% for property_id, property_label in depicted_properties().items() %}
+{% for property_id, property_labels in depicted_properties().items() %}
 {% if depicteds_without_region_by_property_id[property_id] %}
 {% set depicteds_without_region = depicteds_without_region_by_property_id.pop(property_id) %}
-{{ _depicteds_without_region(depicteds_without_region, property_id, property_label) }}
+{{ _depicteds_without_region(depicteds_without_region, property_id, property_labels[1]) }}
 {% endif %}
 {% endfor %}
 <!-- and then the remaining ones (that weren’t popped off the dict above), just in case -->
