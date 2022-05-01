@@ -348,6 +348,13 @@ function setup() {
         layout.$header.addClass('col-form-label-sm'); // Bootstrap makes OOUI’s <legend> too large by default
         entityElement.append(layoutElement);
 
+        // itemIdInput.getData().getSerialization() can return the wrong item ID after losing focus;
+        // only trust item IDs that we get out of the change event instead
+        let itemId = undefined;
+        itemIdInput.on('change', entity => {
+            itemId = entity?.id;
+        } );
+
         function setAllDisabled(disabled) {
             for (const widget of [itemIdInput, itemIdButton, somevalueButton, novalueButton]) {
                 widget.setDisabled(disabled);
@@ -355,10 +362,13 @@ function setup() {
         }
 
         function addItemId() {
+            if (!itemId) {
+                return;
+            }
             const formData = new FormData();
             formData.append('snaktype', 'value');
             formData.append('property_id', document.querySelector('#propertyIdWidget select').value);
-            formData.append('item_id', itemIdInput.getData().getSerialization());
+            formData.append('item_id', itemId);
             addStatement(formData);
         }
 
