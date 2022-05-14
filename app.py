@@ -502,14 +502,7 @@ def load_item_and_property(item_id, property_id,
         if image_datavalue['type'] != 'string':
             raise WrongDataValueType(expected_data_value_type='string', actual_data_value_type=image_datavalue['type'])
         image_title = image_datavalue['value']
-        item['image_title'] = image_title
-
-        info_params = query_default_params()
-        image_attribution_query_add_params(info_params, image_title, language_codes[0])
-        image_url_query_add_params(info_params, image_title)
-        info_response = session.get(**info_params)
-        item['image_attribution'] = image_attribution_query_process_response(info_response, image_title, language_codes[0])
-        item['image_url'] = image_url_query_process_response(info_response, image_title)
+        item.update(load_image(image_title, language_codes))
 
     if include_depicteds:
         depicteds = depicted_items(item_data)
@@ -543,25 +536,18 @@ def load_item_and_property(item_id, property_id,
 def load_file(image_title):
     language_codes = request_language_codes()
 
-    session = anonymous_session('commons.wikimedia.org')
-    query_params = query_default_params()
-    query_params.setdefault('titles', set()).update(['File:' + image_title])
-    image_attribution_query_add_params(query_params, image_title, language_codes[0])
-    image_url_query_add_params(query_params, image_title)
-    query_response = session.get(**query_params)
-    page = query_response_page(query_response, 'File:' + image_title)
-    if page.get('missing', False) or page.get('invalid', False):
+    image = load_image(image_title, language_codes)
+    if image is None:
         return None
-    page_id = page['pageid']
-    entity_id = 'M' + str(page_id)
+
+    entity_id = 'M' + str(image['image_page_id'])
     file = {
         'entity_id': entity_id,
-        'image_title': image_title,
-        'image_attribution': image_attribution_query_process_response(query_response, image_title, language_codes[0]),
-        'image_url': image_url_query_process_response(query_response, image_title),
+        **image,
     }
     entity_ids = []
 
+    session = anonymous_session('commons.wikimedia.org')
     api_response = session.get(action='wbgetentities',
                                props=['claims'],
                                ids=[entity_id],
@@ -580,6 +566,28 @@ def load_file(image_title):
     file['depicteds'] = depicteds
 
     return file
+
+def load_image(image_title, language_codes):
+    """Load the metadata of an image file on Commons, without structured data."""
+    session = anonymous_session('commons.wikimedia.org')
+
+    query_params = query_default_params()
+    query_params.setdefault('titles', set()).update(['File:' + image_title])
+    image_attribution_query_add_params(query_params, image_title, language_codes[0])
+    image_url_query_add_params(query_params, image_title)
+
+    query_response = session.get(**query_params)
+    page = query_response_page(query_response, 'File:' + image_title)
+    if page.get('missing', False) or page.get('invalid', False):
+        return None
+
+    page_id = page['pageid']
+    return {
+        'image_page_id': page_id,
+        'image_title': image_title,
+        'image_attribution': image_attribution_query_process_response(query_response, image_title, language_codes[0]),
+        'image_url': image_url_query_process_response(query_response, image_title),
+    }
 
 def depicted_label(depicted, labels, language_codes):
     if 'item_id' in depicted:
