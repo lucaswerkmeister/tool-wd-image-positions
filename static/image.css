@@ -11,6 +11,12 @@
     display: inline-block;
 }
 
+.wd-image-positions--scale[value="1"]:checked ~ .wd-image-positions--image { --scale: 1; }
+.wd-image-positions--scale[value="2"]:checked ~ .wd-image-positions--image { --scale: 2; }
+.wd-image-positions--scale[value="3"]:checked ~ .wd-image-positions--image { --scale: 3; }
+.wd-image-positions--scale[value="4"]:checked ~ .wd-image-positions--image { --scale: 4; }
+.wd-image-positions--scale[value="5"]:checked ~ .wd-image-positions--image { --scale: 5; }
+
 .wd-image-positions--image .wd-image-positions--depicted {
     /* 
      * don’t show this element by default (unless the user hovers over the image, see below)
@@ -34,10 +40,19 @@
 
 .wd-image-positions--image img {
     /*
-     * ensure the image is not larger than its container (e. g. the surrounding Bootstrap container)
+     * make the image at most as wide as its container
+     * (which we have to recalculate from 100vw - padding),
+     * optionally multiplied by the scale factor,
+     * and at least as wide as its own width times the scale;
+     * because min-width trumps max-width, the actual min-width value needs to repeat the max-width expression
      */
-    max-width: 100%;
-    max-height: 100%;
+    --padding: 15px; /* Bootstrap, on the <main> */
+    --scaled-image-width: calc(var(--width) * var(--scale));
+    --scaled-container-width: calc(100vw * var(--scale) - 2 * var(--padding));
+    max-width: var(--scaled-container-width);
+    min-width: min(var(--scaled-image-width), var(--scaled-container-width));
+    height: auto; /* correct aspect ratio */
+    /* attr(width px) would be nicer than var(--width) but isn’t supported anywhere */
 }
 
 .wd-image-positions--image.wd-image-positions--active ~ * button:not(.wd-image-positions--active) {

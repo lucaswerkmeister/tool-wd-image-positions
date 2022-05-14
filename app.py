@@ -575,6 +575,7 @@ def load_image(image_title, language_codes):
     query_params.setdefault('titles', set()).update(['File:' + image_title])
     image_attribution_query_add_params(query_params, image_title, language_codes[0])
     image_url_query_add_params(query_params, image_title)
+    image_size_query_add_params(query_params, image_title)
 
     query_response = session.get(**query_params)
     page = query_response_page(query_response, 'File:' + image_title)
@@ -582,11 +583,16 @@ def load_image(image_title, language_codes):
         return None
 
     page_id = page['pageid']
+    attribution = image_attribution_query_process_response(query_response, image_title, language_codes[0])
+    url = image_url_query_process_response(query_response, image_title)
+    width, height = image_size_query_process_response(query_response, image_title)
     return {
         'image_page_id': page_id,
         'image_title': image_title,
-        'image_attribution': image_attribution_query_process_response(query_response, image_title, language_codes[0]),
-        'image_url': image_url_query_process_response(query_response, image_title),
+        'image_attribution': attribution,
+        'image_url': url,
+        'image_width': width,
+        'image_height': height,
     }
 
 def depicted_label(depicted, labels, language_codes):
@@ -880,6 +886,26 @@ def image_url_query_process_response(response, image_title):
     url = imageinfo['url']
 
     return url
+
+def image_size(image_title):
+    params = query_default_params()
+    image_size_query_add_params(params, image_title)
+    session = anonymous_session('commons.wikimedia.org')
+    response = session.get(**params)
+    return image_size_query_process_response(response, image_title)
+
+def image_size_query_add_params(params, image_title):
+    params.setdefault('prop', set()).update(['imageinfo'])
+    params.setdefault('iiprop', set()).update(['size'])
+    params.setdefault('titles', set()).update(['File:' + image_title])
+
+def image_size_query_process_response(response, image_title):
+    page = query_response_page(response, 'File:' + image_title)
+    imageinfo = page['imageinfo'][0]
+    width = imageinfo['width']
+    height = imageinfo['height']
+
+    return width, height
 
 def query_default_params():
     return {'action': 'query', 'formatversion': 2}

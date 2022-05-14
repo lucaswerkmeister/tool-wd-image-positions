@@ -4,7 +4,7 @@
 {% for item in items %}
 <div class="entity" data-entity-id="{{ item.entity_id }}" data-entity-domain="www.wikidata.org">
   <h1>{{ item_link(item.entity_id, item.label) }}</h1>
-  {{ image(item.image_title, item.image_attribution, item.image_url, item.depicteds) }}
+  {{ image(item.image_title, item.image_attribution, item.image_url, item.image_width, item.image_height, item.depicteds) }}
 </div>
 {% endfor %}
 {% for item in items_without_image %}
