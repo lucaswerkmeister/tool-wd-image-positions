@@ -9,6 +9,19 @@
      * most likely the inner <img>, rather than occupying the full width of its container
      */
     display: inline-block;
+    /*
+     * fallback scale so the calculations of the image size don’t collapse to 0;
+     * real scale set via the inputs selected below (without JS),
+     * or via JS based on a range input
+     */
+    --scale: 1;
+}
+
+label > .wd-image-positions--scale {
+    /*
+     * make the JS version of this input look roughly okay relative to the label
+     */
+    vertical-align: middle;
 }
 
 .wd-image-positions--scale[value="1"]:checked ~ .wd-image-positions--image { --scale: 1; }

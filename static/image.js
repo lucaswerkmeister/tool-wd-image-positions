@@ -1,15 +1,54 @@
 function setup() {
     'use strict';
 
-    const csrfTokenElement = document.getElementById('csrf_token');
-    if (csrfTokenElement === null) {
-        // everything in this file requires being logged in
-        return;
-    }
-
-    const baseUrl = document.querySelector('link[rel=index]').href.replace(/\/$/, ''),
+    const csrfTokenElement = document.getElementById('csrf_token'),
+          baseUrl = document.querySelector('link[rel=index]').href.replace(/\/$/, ''),
           depictedProperties = JSON.parse(document.getElementsByTagName('main')[0].dataset.depictedProperties);
     let EntityInputWidget; // loaded in addNewDepictedForms
+
+    function addScaleInputs() {
+        document.querySelectorAll('.wd-image-positions--image').forEach(addScaleInput);
+    }
+
+    function addScaleInput(image) {
+        // remove the no-JS inputs, labels, and <br> before the image
+        const nodesToRemove = new Set(['#text', 'BR', 'LABEL', 'INPUT']);
+        let node, value = 1;
+        while (nodesToRemove.has((node = image.previousSibling).nodeName)) {
+            if (node.checked) {
+                value = node.value;
+            }
+            node.remove();
+        }
+        // create JS input (can be wrapped in a div, unlike the no-JS ones,
+        // which must be direct siblings of the image for the CSS to work)
+        const div = document.createElement('div');
+        const label = document.createElement('label');
+        label.textContent = 'Image scale: ';
+        const input = document.createElement('input');
+        input.type = 'range';
+        input.value = value;
+        input.min = 0;
+        input.max = 5; // arbitrary
+        input.step = 'any';
+        input.classList.add('wd-image-positions--scale');
+        label.append(input);
+        div.append(label);
+        image.before(div);
+
+        const updateScale = () => {
+            image.style.setProperty('--scale', input.value);
+        };
+        input.addEventListener('input', updateScale);
+        updateScale();
+    }
+
+    function disableScaleInputs() {
+        // TODO nah, really we should only toggle the input belonging to the currently edited image
+        document.querySelectorAll('.wd-image-positions--scale').forEach((input) => {
+            input.disabled = true;
+        });
+    }
 
     function addEditButtons() {
         document.querySelectorAll('.wd-image-positions--depicted-without-region').forEach(addEditButton);
@@ -18,6 +57,7 @@ function setup() {
     function addEditButton(element) {
         const entity = element.closest('.wd-image-positions--entity'),
               depictedId = element.firstChild.dataset.entityId,
+              scaleInput = entity.querySelector('.wd-image-positions--scale'),
               image = entity.querySelector('.wd-image-positions--image');
 
         const button = document.createElement('button');
@@ -36,6 +76,7 @@ function setup() {
                 button.textContent = 'loading...';
                 image.classList.add('wd-image-positions--active');
                 button.classList.add('wd-image-positions--active');
+                scaleInput.disabled = true;
                 doneCallback = ensureImageCroppable(image);
                 cropper = new Cropper(image.firstElementChild, {
                     viewMode: 2,
@@ -79,7 +120,9 @@ function setup() {
                     function() {
                         element.remove();
                     },
-                ).then(doneCallback);
+                ).then(doneCallback).finally(() => {
+                    scaleInput.disabled = false;
+                });
                 cropper = null;
             }
             function onKeyDown(eKey) {
@@ -93,6 +136,7 @@ function setup() {
                 document.removeEventListener('keydown', onKeyDown);
                 button.textContent = 'add region';
                 button.classList.remove('wd-image-positions--active');
+                scaleInput.disabled = false;
             }
         }
     }
@@ -190,6 +234,7 @@ function setup() {
         if (!image.querySelector('.wd-image-positions--depicted')) {
             return;
         }
+        const scaleInput = entityElement.querySelector('.wd-image-positions--scale');
         const button = document.createElement('button');
         button.type = 'button';
         button.classList.add('btn', 'btn-secondary');
@@ -216,6 +261,7 @@ function setup() {
         function editRegion(event) {
             event.preventDefault();
             image.classList.add('wd-image-positions--active');
+            scaleInput.disabled = true;
             for (const depicted of entityElement.querySelectorAll('.wd-image-positions--depicted')) {
                 depicted.removeEventListener('click', editRegion);
             }
@@ -257,7 +303,9 @@ function setup() {
                         button.classList.remove('wd-image-positions--active');
                         button.addEventListener('click', addEditRegionListeners);
                     },
-                ).then(doneCallback);
+                ).then(doneCallback).finally(() => {
+                    scaleInput.disabled = false;
+                });
             }
 
             function cancelEditRegion(eKey) {
@@ -272,6 +320,7 @@ function setup() {
                 button.addEventListener('click', addEditRegionListeners);
                 button.classList.remove('wd-image-positions--active');
                 document.removeEventListener('keydown', cancelEditRegion);
+                scaleInput.disabled = false;
             }
         }
 
@@ -480,9 +529,12 @@ function setup() {
         });
     }
 
-    addEditButtons();
-    addEditRegionButtons();
-    addNewDepictedForms();
+    addScaleInputs();
+    if (csrfTokenElement !== null) {
+        addEditButtons();
+        addEditRegionButtons();
+        addNewDepictedForms();
+    }
 }
 
 if (document.readyState === 'loading') {
