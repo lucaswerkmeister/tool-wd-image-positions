@@ -39,16 +39,9 @@ Image scale:
        width="{{ image_width }}"
        height="{{ image_height }}"
        style="--width: {{ image_width }}px; --height: {{ image_height }}px; --aspect-ratio: {{ image_width }} / {{ image_height }};"
-       srcset="https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ }}?width=220 220w,
-               https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ }}?width=320 320w,
-               https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ }}?width=640 640w,
-               https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ }}?width=800 800w,
-               https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ }}?width=1024 1024w,
-               https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ }}?width=1280 1280w,
-               https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ }}?width=1920 1920w,
-               https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ }}?width=2560 2560w,
-               https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ }}?width=2880 2880w,
-               https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ }}?width={{ image_width }} {{ image_width }}w">
+       srcset="{% for width in [220, 320, 640, 800, 1024, 1280, 1920, 2560, 2880, image_width] | select('<=', image_width) | unique %}
+               https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ }}?width={{ width }} {{ width }}w{% if not loop.last %},{% endif %}
+               {% endfor %}">
   {% set depicteds_without_region_by_property_id = {} %}
   {% for depicted in depicteds %}
   {% if depicted.iiif_region %}
