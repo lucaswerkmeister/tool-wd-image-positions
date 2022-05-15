@@ -47,7 +47,8 @@ Image scale:
                https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ }}?width=1280 1280w,
                https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ }}?width=1920 1920w,
                https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ }}?width=2560 2560w,
-               https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ }}?width=2880 2880w">
+               https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ }}?width=2880 2880w,
+               https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ }}?width={{ image_width }} {{ image_width }}w">
   {% set depicteds_without_region_by_property_id = {} %}
   {% for depicted in depicteds %}
   {% if depicted.iiif_region %}
