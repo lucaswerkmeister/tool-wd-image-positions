@@ -38,7 +38,7 @@ Image scale:
   <img src="{{ image_url }}"
        width="{{ image_width }}"
        height="{{ image_height }}"
-       style="--width: {{ image_width }}px; --height: {{ image_height }}px;"
+       style="--width: {{ image_width }}px; --height: {{ image_height }}px; --aspect-ratio: {{ image_width }} / {{ image_height }};"
        srcset="https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ }}?width=220 220w,
                https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ }}?width=320 320w,
                https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ }}?width=640 640w,

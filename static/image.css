@@ -55,17 +55,26 @@ label > .wd-image-positions--scale {
     /*
      * make the image at most as wide as its container
      * (which we have to recalculate from 100vw - padding),
-     * optionally multiplied by the scale factor,
-     * and at least as wide as its own width times the scale;
+     * and also at most as high as the viewport (100vh),
+     * both multiplied by the scale factor,
+     * and within those bounds at least as wide as its own width times the scale;
      * because min-width trumps max-width, the actual min-width value needs to repeat the max-width expression
      */
+    /*
+     * variables like the following are set in HTML, because attr() outside content is not widely supported:
+     * --width: 123px; // attr(width px)
+     * --height: 456px; // attr(height px)
+     * --aspect-ratio: 123 / 456; // attr(width) / attr(height)
+     */
     --padding: 15px; /* Bootstrap, on the <main> */
-    --scaled-image-width: calc(var(--width) * var(--scale));
     --scaled-container-width: calc(100vw * var(--scale) - 2 * var(--padding));
-    max-width: var(--scaled-container-width);
-    min-width: min(var(--scaled-image-width), var(--scaled-container-width));
-    height: auto; /* correct aspect ratio */
-    /* attr(width px) would be nicer than var(--width) but isn’t supported anywhere */
+    --scaled-container-height: calc(100vh * var(--scale));
+    --max-width: min(var(--scaled-container-width), var(--scaled-container-height) * var(--aspect-ratio));
+    --scaled-image-width: calc(var(--width) * var(--scale));
+    --min-width: var(--scaled-image-width);
+    max-width: var(--max-width);
+    min-width: min(var(--min-width), var(--max-width));
+    height: auto; /* browser picks correct aspect ratio based on width and height */
 }
 
 .wd-image-positions--image.wd-image-positions--active ~ * button:not(.wd-image-positions--active) {
