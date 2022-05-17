@@ -1,4 +1,5 @@
 {% from "image.html" import image %}
+{% from "edit-info.html" import edit_info %}
 {% extends "images.html" %}
 {% block main %}
 {% for item in items %}
@@ -10,4 +11,5 @@
 {% for item in items_without_image %}
 <p>Item {{ item }} has no image.</p>
 {% endfor %}
+{{ edit_info(user_logged_in()) }}
 {% endblock main %}

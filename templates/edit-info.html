@@ -1,0 +1,17 @@
+{% macro edit_info(user_logged_in) %}
+{% if not user_logged_in %}
+<div class="alert alert-info"> <!-- no role="alert", does not require immediate attention -->
+  You are not logged in<noscript> and JavaScript is disabled</noscript>,
+  so you can only view existing regions and statements.
+  To add new statements or regions or edit existing ones,
+  <a href="{{ url_for('login') }}">log in</a><noscript> and enable JavaScript</noscript>.
+</div>
+{% else %}
+<noscript>
+  <div class="alert alert-info">
+    JavaScript is disabled, so you can only view existing regions and statements.
+    To add new statements or regions or edit existing ones, enable JavaScript.
+  </div>
+</noscript>
+{% endif %}
+{% endmacro %}

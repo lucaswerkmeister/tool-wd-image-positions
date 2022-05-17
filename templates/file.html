@@ -1,8 +1,10 @@
 {% from "image.html" import image %}
+{% from "edit-info.html" import edit_info %}
 {% extends "images.html" %}
 {% block title %}{{ image_title }} – {{ super() }}{% endblock title %}
 {% block main %}
 <div class="wd-image-positions--entity" data-entity-id="{{ entity_id }}" data-entity-domain="commons.wikimedia.org">
   {{ image(image_title, image_attribution, image_url, image_width, image_height, depicteds, heading="h1") }}
 </div>
+{{ edit_info(user_logged_in()) }}
 {% endblock main %}
