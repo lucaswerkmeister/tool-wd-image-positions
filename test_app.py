@@ -4,21 +4,6 @@ import pytest
 import app as wdip
 
 
-@pytest.mark.parametrize('image_title, expected', [
-    ('Foo Bar', 'Foo_Bar'),
-    ('File:Foo_Bar', 'Foo_Bar'),
-    ('File:Foo Bar', 'Foo_Bar'),
-])
-def test_file_redirect(image_title, expected):
-    with wdip.app.test_request_context():
-        response = flask.make_response(wdip.file(image_title))
-    assert str(response.status_code).startswith('3')
-    location = response.headers['Location']
-    assert location.startswith('/file/')
-    actual = location[len('/file/'):]
-    assert expected == actual
-
-
 @pytest.mark.parametrize('input, expected', [
     ('Q1231009', 'Q1231009'),
     ('http://www.wikidata.org/entity/Q1231009', 'Q1231009'),
@@ -33,4 +18,20 @@ def test_file_redirect(image_title, expected):
 ])
 def test_parse_item_id_input(input, expected):
     actual = wdip.parse_item_id_input(input)
+    assert expected == actual
+
+
+@pytest.mark.parametrize('input', [
+    'Vegetarian_Pizza.jpg',
+    'Vegetarian Pizza.jpg',
+    'File:Vegetarian Pizza.jpg',
+    'File:Vegetarian_Pizza.jpg',
+    'https://commons.wikimedia.org/wiki/File:Vegetarian_Pizza.jpg',
+    'https://commons.wikimedia.org/wiki/File:Vegetarian_Pizza.jpg#Summary',
+    'https://commons.wikimedia.org/wiki/Special:FilePath/Vegetarian_Pizza.jpg',
+    'https://commons.wikimedia.org/w/index.php?title=File:Vegetarian_Pizza.jpg&action=history',
+])
+def test_parse_image_title_input(input):
+    expected = 'Vegetarian_Pizza.jpg'
+    actual = wdip.parse_image_title_input(input)
     assert expected == actual

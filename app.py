@@ -117,10 +117,7 @@ def index():
             else:
                 return flask.redirect(flask.url_for('iiif_region', iiif_region=iiif_region))
         if 'image_title' in flask.request.form:
-            image_title = flask.request.form['image_title']
-            if image_title.startswith('File:'):
-                image_title = image_title[len('File:'):]
-            image_title = image_title.replace(' ', '_')
+            image_title = parse_image_title_input(flask.request.form['image_title'])
             return flask.redirect(flask.url_for('file', image_title=image_title))
     return flask.render_template('index.html')
 
@@ -156,6 +153,37 @@ def parse_item_id_input(input):
             return match.group(1)
 
     flask.abort(400, flask.Markup(r'Cannot parse an entity ID from <kbd>{}</kbd>.').format(input))
+
+def parse_image_title_input(input):
+    if '.' in input and ':' not in input:
+        return input.replace(" ", "_")
+
+    if input.startswith('File:'):
+        return input[len('File:'):].replace(' ', '_')
+
+    pattern = '''
+    (?: # URL prefix
+    https://commons\.wikimedia\.org/wiki/File: |
+    https://commons\.wikimedia\.org/wiki/Special:FilePath/
+    )
+    ( # the file name itself, without File:
+    [^/?#]* # very lenient :)
+    )
+    (?: # optional remaining URL parts
+    [?#].*
+    )?
+    '''
+    if match := re.fullmatch(pattern, input, re.VERBOSE):
+        return match.group(1)
+
+    url = urllib.parse.urlparse(input)
+    if url.scheme == 'https' and url.hostname == 'commons.wikimedia.org' and url.path == '/w/index.php':
+        query = urllib.parse.parse_qs(url.query)
+        title = query.get('title', [''])[-1]
+        if title.startswith('File:'):
+            return title[len('File:'):]
+
+    flask.abort(400, flask.Markup(r'Cannot parse a file name from <kbd>{}</kbd>.').format(input))
 
 @app.route('/login')
 def login():
