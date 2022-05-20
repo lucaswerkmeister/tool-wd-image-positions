@@ -113,14 +113,9 @@ function setup() {
                 const subject = { id: entity.dataset.entityId, domain: entity.dataset.entityDomain };
                 saveCropper(subject, image, depicted, cropper).then(
                     function() {
-                        if (depicted.parentElement) {
-                            element.remove();
-                            if (image.querySelectorAll('.wd-image-positions--depicted').length === 1) {
-                                addEditRegionButton(entity);
-                            }
-                        } else {
-                            button.textContent = 'add region';
-                            button.classList.remove('wd-image-positions--active');
+                        element.remove();
+                        if (image.querySelectorAll('.wd-image-positions--depicted').length === 1) {
+                            addEditRegionButton(entity);
                         }
                     },
                     function() {
@@ -179,9 +174,7 @@ function setup() {
      * @param {HTMLElement} depicted The .wd-image-positions--depicted,
      * with a dataset containing a statementId, optional entityId and optional qualifierHash
      * @param {Cropper} cropper The cropper (will be destroyed)
-     * @return {Promise} Rejects in case of error.
-     * If it resolves, either the statement was saved successfully,
-     * or the user declined to save (in which case the depicted is removed from its parent).
+     * @return {Promise}
      */
     function saveCropper(subject, image, depicted, cropper) {
         const wrapper = image.parentElement;
