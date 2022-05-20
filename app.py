@@ -183,6 +183,24 @@ def parse_image_title_input(input):
         if title.startswith('File:'):
             return title[len('File:'):]
 
+    pattern = '''
+    (?: # can begin with an sdc: or sdcdata: URL prefix
+    https://commons\.wikimedia\.org/entity/ |
+    https://commons\.wikimedia\.org/wiki/Special:EntityData/
+    )?
+    ( # the entity ID itself
+    M[1-9][0-9]*
+    )
+    '''
+    if match := re.fullmatch(pattern, input, re.VERBOSE):
+        entity_id = match.group(1)
+        session = anonymous_session('commons.wikimedia.org')
+        title = session.get(action='query',
+                            pageids=[entity_id[1:]],
+                            redirects=True,
+                            formatversion=2)['query']['pages'][0]['title']
+        return title[len('File:'):].replace(' ', '_')
+
     flask.abort(400, flask.Markup(r'Cannot parse a file name from <kbd>{}</kbd>.').format(input))
 
 @app.route('/login')

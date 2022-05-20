@@ -30,6 +30,9 @@ def test_parse_item_id_input(input, expected):
     'https://commons.wikimedia.org/wiki/File:Vegetarian_Pizza.jpg#Summary',
     'https://commons.wikimedia.org/wiki/Special:FilePath/Vegetarian_Pizza.jpg',
     'https://commons.wikimedia.org/w/index.php?title=File:Vegetarian_Pizza.jpg&action=history',
+    'M106092414',
+    'https://commons.wikimedia.org/entity/M106092414',
+    'https://commons.wikimedia.org/wiki/Special:EntityData/M106092414',
 ])
 def test_parse_image_title_input(input):
     expected = 'Vegetarian_Pizza.jpg'
