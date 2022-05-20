@@ -75,6 +75,7 @@ function setup() {
         let cropper = null;
         let doneCallback = null;
         const onKeyDown = onEscape(cancelEditing);
+        let cancelButton = null;
 
         function onClick() {
             if (cropper === null) {
@@ -93,6 +94,14 @@ function setup() {
                     checkCrossOrigin: false,
                     ready: function() {
                         button.textContent = 'use this region';
+
+                        cancelButton = document.createElement('button');
+                        cancelButton.type = 'button';
+                        cancelButton.classList.add('btn', 'btn-secondary', 'btn-sm', 'wd-image-positions--active');
+                        cancelButton.textContent = 'cancel';
+                        cancelButton.addEventListener('click', cancelEditing);
+                        element.append(document.createTextNode(' '));
+                        element.append(cancelButton);
                     },
                 });
                 document.addEventListener('keydown', onKeyDown);
@@ -139,6 +148,10 @@ function setup() {
             button.textContent = 'add region';
             button.classList.remove('wd-image-positions--active');
             scaleInput.disabled = false;
+            if (cancelButton !== null) {
+                cancelButton.remove();
+                cancelButton = null;
+            }
         }
     }
 
@@ -242,8 +255,13 @@ function setup() {
         button.classList.add('btn', 'btn-secondary');
         button.textContent = 'Edit a region';
         button.addEventListener('click', addEditRegionListeners);
+        const cancelButton = document.createElement('button');
+        cancelButton.type = 'button';
+        cancelButton.classList.add('btn', 'btn-secondary', 'wd-image-positions--active');
+        cancelButton.textContent = 'cancel';
         const buttonWrapper = document.createElement('div');
         buttonWrapper.append(button);
+        // cancelButton is not appended yet
         entityElement.append(buttonWrapper);
         const fieldSet = entityElement.querySelector('fieldset');
         if (fieldSet) {
@@ -260,6 +278,8 @@ function setup() {
             button.removeEventListener('click', addEditRegionListeners);
             onKeyDown = onEscape(cancelSelectRegion);
             document.addEventListener('keydown', onKeyDown);
+            buttonWrapper.append(cancelButton);
+            cancelButton.addEventListener('click', cancelSelectRegion);
         }
 
         function editRegion(event) {
@@ -272,8 +292,10 @@ function setup() {
             }
             const depicted = event.target.closest('.wd-image-positions--depicted');
             document.removeEventListener('keydown', onKeyDown);
+            cancelButton.removeEventListener('click', cancelSelectRegion);
             onKeyDown = onEscape(cancelEditRegion);
             document.addEventListener('keydown', onKeyDown);
+            cancelButton.addEventListener('click', cancelEditRegion);
             const doneCallback = ensureImageCroppable(image);
             const cropper = new Cropper(image.firstElementChild, {
                 viewMode: 2,
@@ -313,6 +335,7 @@ function setup() {
                 ).then(doneCallback).finally(() => {
                     document.removeEventListener('keydown', onKeyDown);
                     scaleInput.disabled = false;
+                    cancelButton.remove();
                 });
             }
 
@@ -327,6 +350,7 @@ function setup() {
                 button.classList.remove('wd-image-positions--active');
                 document.removeEventListener('keydown', onKeyDown);
                 scaleInput.disabled = false;
+                cancelButton.remove();
             }
         }
 
@@ -338,6 +362,7 @@ function setup() {
             button.addEventListener('click', addEditRegionListeners);
             button.classList.remove('wd-image-positions--active');
             document.removeEventListener('keydown', onKeyDown);
+            cancelButton.remove();
         }
     }
 
