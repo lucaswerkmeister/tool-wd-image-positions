@@ -9,11 +9,13 @@ import mwapi
 import mwoauth
 import os
 import random
+import re
 import requests
 import requests_oauthlib
 import stat
 import string
 import toolforge
+import urllib.parse
 import yaml
 
 from exceptions import *
@@ -92,7 +94,7 @@ def enableCORS(func, *args, **kwargs):
 def index():
     if flask.request.method == 'POST':
         if 'item_id' in flask.request.form:
-            item_id = flask.request.form['item_id']
+            item_id = parse_item_id_input(flask.request.form['item_id'])
             property_id = flask.request.form.get('property_id')
             if 'manifest' in flask.request.form or 'preview' in flask.request.form:
                 manifest_url = full_url('iiif_manifest_with_property', item_id=item_id, property_id=property_id or default_property)
@@ -121,6 +123,39 @@ def index():
             image_title = image_title.replace(' ', '_')
             return flask.redirect(flask.url_for('file', image_title=image_title))
     return flask.render_template('index.html')
+
+def parse_item_id_input(input):
+    # note: “item” here (and elsewhere in the tool, though not sure if *everywhere* else) refers to any non-MediaInfo entity type
+    pattern = '''
+    (?: # can begin with a wd:, data:, or entity page URL prefix
+    http://www\.wikidata\.org/entity/ |
+    https://www\.wikidata\.org/wiki/Special:EntityData/ |
+    https://www\.wikidata\.org/wiki/
+    )?
+    ( # the entity ID itself
+    [QPL][1-9][0-9]* |
+    L[1-9][0-9]*-[FS][1-9][0-9]*
+    )
+    (?: # optional remaining URL parts
+    [?#].*
+    )?
+    '''
+    if match := re.fullmatch(pattern, input, re.VERBOSE):
+        return match.group(1)
+
+    url = urllib.parse.urlparse(input)
+    if url.scheme == 'https' and url.hostname == 'www.wikidata.org' and url.path == '/w/index.php':
+        query = urllib.parse.parse_qs(url.query)
+        title = query.get('title', [''])[-1]
+        pattern = '''
+        (Q[1-9][0-9]*) |
+        Property:(P[1-9][0-9]*) |
+        Lexeme:(L[1-9][0-9]*)
+        '''
+        if match := re.fullmatch(pattern, title, re.VERBOSE):
+            return match.group(1)
+
+    flask.abort(400, flask.Markup(r'Cannot parse an entity ID from <kbd>{}</kbd>.').format(input))
 
 @app.route('/login')
 def login():
