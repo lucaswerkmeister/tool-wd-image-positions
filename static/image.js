@@ -6,6 +6,15 @@ function setup() {
           depictedProperties = JSON.parse(document.getElementsByTagName('main')[0].dataset.depictedProperties);
     let EntityInputWidget; // loaded in addNewDepictedForms
 
+    /** Make a key event handler that calls the given callback when Esc is pressed. */
+    function onEscape(callback) {
+        return function(eKey) {
+            if (eKey.key === 'Escape') {
+                return callback.apply(this, arguments);
+            }
+        };
+    }
+
     function addScaleInputs() {
         document.querySelectorAll('.wd-image-positions--wrapper').forEach(addScaleInput);
     }
@@ -65,6 +74,7 @@ function setup() {
 
         let cropper = null;
         let doneCallback = null;
+        const onKeyDown = onEscape(cancelEditing);
 
         function onClick() {
             if (cropper === null) {
@@ -117,24 +127,23 @@ function setup() {
                         element.remove();
                     },
                 ).then(doneCallback).finally(() => {
+                    document.removeEventListener('keydown', onKeyDown);
                     scaleInput.disabled = false;
                 });
                 cropper = null;
             }
-            function onKeyDown(eKey) {
-                if (eKey.key !== 'Escape') {
-                    return;
-                }
-                cropper.destroy();
-                cropper = null;
-                doneCallback();
-                wrapper.classList.remove('wd-image-positions--active');
-                image.classList.remove('wd-image-positions--active');
-                document.removeEventListener('keydown', onKeyDown);
-                button.textContent = 'add region';
-                button.classList.remove('wd-image-positions--active');
-                scaleInput.disabled = false;
-            }
+        }
+
+        function cancelEditing() {
+            cropper.destroy();
+            cropper = null;
+            doneCallback();
+            wrapper.classList.remove('wd-image-positions--active');
+            image.classList.remove('wd-image-positions--active');
+            document.removeEventListener('keydown', onKeyDown);
+            button.textContent = 'add region';
+            button.classList.remove('wd-image-positions--active');
+            scaleInput.disabled = false;
         }
     }
 
@@ -247,6 +256,7 @@ function setup() {
         if (fieldSet) {
             entityElement.append(fieldSet); // move after buttonWrapper
         }
+        let onKeyDown = null;
 
         function addEditRegionListeners() {
             button.textContent = 'Select a region to edit';
@@ -255,7 +265,8 @@ function setup() {
                 depicted.addEventListener('click', editRegion);
             }
             button.removeEventListener('click', addEditRegionListeners);
-            document.addEventListener('keydown', cancelSelectRegion);
+            onKeyDown = onEscape(cancelSelectRegion);
+            document.addEventListener('keydown', onKeyDown);
         }
 
         function editRegion(event) {
@@ -267,7 +278,9 @@ function setup() {
                 depicted.removeEventListener('click', editRegion);
             }
             const depicted = event.target.closest('.wd-image-positions--depicted');
-            document.addEventListener('keydown', cancelEditRegion);
+            document.removeEventListener('keydown', onKeyDown);
+            onKeyDown = onEscape(cancelEditRegion);
+            document.addEventListener('keydown', onKeyDown);
             const doneCallback = ensureImageCroppable(image);
             const cropper = new Cropper(image.firstElementChild, {
                 viewMode: 2,
@@ -305,14 +318,12 @@ function setup() {
                         button.addEventListener('click', addEditRegionListeners);
                     },
                 ).then(doneCallback).finally(() => {
+                    document.removeEventListener('keydown', onKeyDown);
                     scaleInput.disabled = false;
                 });
             }
 
-            function cancelEditRegion(eKey) {
-                if (eKey.key !== 'Escape') {
-                    return;
-                }
+            function cancelEditRegion() {
                 cropper.destroy();
                 doneCallback();
                 wrapper.classList.remove('wd-image-positions--active');
@@ -321,22 +332,19 @@ function setup() {
                 button.textContent = 'Edit a region';
                 button.addEventListener('click', addEditRegionListeners);
                 button.classList.remove('wd-image-positions--active');
-                document.removeEventListener('keydown', cancelEditRegion);
+                document.removeEventListener('keydown', onKeyDown);
                 scaleInput.disabled = false;
             }
         }
 
-        function cancelSelectRegion(eKey) {
-            if (eKey.key !== 'Escape') {
-                return;
-            }
+        function cancelSelectRegion() {
             for (const depicted of entityElement.querySelectorAll('.wd-image-positions--depicted')) {
                 depicted.removeEventListener('click', editRegion);
             }
             button.textContent = 'Edit a region';
             button.addEventListener('click', addEditRegionListeners);
             button.classList.remove('wd-image-positions--active');
-            document.removeEventListener('keydown', cancelSelectRegion);
+            document.removeEventListener('keydown', onKeyDown);
         }
     }
 
