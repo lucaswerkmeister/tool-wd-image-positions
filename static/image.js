@@ -7,21 +7,21 @@ function setup() {
     let EntityInputWidget; // loaded in addNewDepictedForms
 
     function addScaleInputs() {
-        document.querySelectorAll('.wd-image-positions--image').forEach(addScaleInput);
+        document.querySelectorAll('.wd-image-positions--wrapper').forEach(addScaleInput);
     }
 
-    function addScaleInput(image) {
-        // remove the no-JS inputs, labels, and <br> before the image
+    function addScaleInput(wrapper) {
+        // remove the no-JS inputs, labels, and <br> before the wrapper
         const nodesToRemove = new Set(['#text', 'BR', 'LABEL', 'INPUT']);
         let node, value = 1;
-        while (nodesToRemove.has((node = image.previousSibling).nodeName)) {
+        while (nodesToRemove.has((node = wrapper.previousSibling).nodeName)) {
             if (node.checked) {
                 value = node.value;
             }
             node.remove();
         }
         // create JS input (can be wrapped in a div, unlike the no-JS ones,
-        // which must be direct siblings of the image for the CSS to work)
+        // which must be direct siblings of the wrapper for the CSS to work)
         const div = document.createElement('div');
         const label = document.createElement('label');
         label.textContent = 'Image scale: ';
@@ -34,8 +34,9 @@ function setup() {
         input.classList.add('wd-image-positions--scale');
         label.append(input);
         div.append(label);
-        image.before(div);
+        wrapper.before(div);
 
+        const image = wrapper.firstElementChild;
         const updateScale = () => {
             image.style.setProperty('--scale', input.value);
         };
@@ -58,7 +59,8 @@ function setup() {
         const entity = element.closest('.wd-image-positions--entity'),
               depictedId = element.firstChild.dataset.entityId,
               scaleInput = entity.querySelector('.wd-image-positions--scale'),
-              image = entity.querySelector('.wd-image-positions--image');
+              wrapper = entity.querySelector('.wd-image-positions--wrapper'),
+              image = wrapper.firstElementChild;
 
         const button = document.createElement('button');
         button.type = 'button';
@@ -74,6 +76,7 @@ function setup() {
         function onClick() {
             if (cropper === null) {
                 button.textContent = 'loading...';
+                wrapper.classList.add('wd-image-positions--active');
                 image.classList.add('wd-image-positions--active');
                 button.classList.add('wd-image-positions--active');
                 scaleInput.disabled = true;
@@ -132,6 +135,7 @@ function setup() {
                 cropper.destroy();
                 cropper = null;
                 doneCallback();
+                wrapper.classList.remove('wd-image-positions--active');
                 image.classList.remove('wd-image-positions--active');
                 document.removeEventListener('keydown', onKeyDown);
                 button.textContent = 'add region';
@@ -178,6 +182,8 @@ function setup() {
      * or the user declined to save (in which case the depicted is removed from its parent).
      */
     function saveCropper(subject, image, depicted, cropper) {
+        const wrapper = image.parentElement;
+        wrapper.classList.remove('wd-image-positions--active');
         image.classList.remove('wd-image-positions--active');
         const cropData = cropper.getData(),
               canvasData = cropper.getCanvasData(),
@@ -230,7 +236,8 @@ function setup() {
     }
 
     function addEditRegionButton(entityElement) {
-        const image = entityElement.querySelector('.wd-image-positions--image');
+        const wrapper = entityElement.querySelector('.wd-image-positions--wrapper'),
+              image = wrapper.firstElementChild;
         if (!image.querySelector('.wd-image-positions--depicted')) {
             return;
         }
@@ -260,6 +267,7 @@ function setup() {
 
         function editRegion(event) {
             event.preventDefault();
+            wrapper.classList.add('wd-image-positions--active');
             image.classList.add('wd-image-positions--active');
             scaleInput.disabled = true;
             for (const depicted of entityElement.querySelectorAll('.wd-image-positions--depicted')) {
@@ -314,6 +322,7 @@ function setup() {
                 }
                 cropper.destroy();
                 doneCallback();
+                wrapper.classList.remove('wd-image-positions--active');
                 image.classList.remove('wd-image-positions--active');
                 button.removeEventListener('click', doEditRegion);
                 button.textContent = 'Edit a region';

@@ -1,3 +1,12 @@
+.wd-image-positions--wrapper {
+    /*
+     * when the image is scaled up beyond the viewport size,
+     * scroll only this wrapper so that the rest of the UI remains visible
+     */
+    overflow: auto;
+    max-height: 100vh;
+}
+
 .wd-image-positions--image {
     /*
      * ensure that this element is the containing block of the inner .depicted elements,
@@ -24,11 +33,11 @@ label > .wd-image-positions--scale {
     vertical-align: middle;
 }
 
-.wd-image-positions--scale[value="1"]:checked ~ .wd-image-positions--image { --scale: 1; }
-.wd-image-positions--scale[value="2"]:checked ~ .wd-image-positions--image { --scale: 2; }
-.wd-image-positions--scale[value="3"]:checked ~ .wd-image-positions--image { --scale: 3; }
-.wd-image-positions--scale[value="4"]:checked ~ .wd-image-positions--image { --scale: 4; }
-.wd-image-positions--scale[value="5"]:checked ~ .wd-image-positions--image { --scale: 5; }
+.wd-image-positions--scale[value="1"]:checked ~ .wd-image-positions--wrapper > .wd-image-positions--image { --scale: 1; }
+.wd-image-positions--scale[value="2"]:checked ~ .wd-image-positions--wrapper > .wd-image-positions--image { --scale: 2; }
+.wd-image-positions--scale[value="3"]:checked ~ .wd-image-positions--wrapper > .wd-image-positions--image { --scale: 3; }
+.wd-image-positions--scale[value="4"]:checked ~ .wd-image-positions--wrapper > .wd-image-positions--image { --scale: 4; }
+.wd-image-positions--scale[value="5"]:checked ~ .wd-image-positions--wrapper > .wd-image-positions--image { --scale: 5; }
 
 .wd-image-positions--image .wd-image-positions--depicted {
     /* 
@@ -77,7 +86,7 @@ label > .wd-image-positions--scale {
     height: auto; /* browser picks correct aspect ratio based on width and height */
 }
 
-.wd-image-positions--image.wd-image-positions--active ~ * button:not(.wd-image-positions--active) {
+.wd-image-positions--wrapper.wd-image-positions--active ~ * button:not(.wd-image-positions--active) {
     /*
      * hide other buttons when defining a new depicted
      */

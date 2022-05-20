@@ -34,22 +34,24 @@ Image scale:
 {{ _scale_radio(image_title, scale) }}
 {% endfor %}
 <br>
-<div class="wd-image-positions--image" data-width="{{ image_width }}" data-height="{{ image_height }}">
-  <img src="{{ image_url }}"
-       width="{{ image_width }}"
-       height="{{ image_height }}"
-       style="--width: {{ image_width }}px; --height: {{ image_height }}px; --aspect-ratio: {{ image_width }} / {{ image_height }};"
-       srcset="{% for width in [220, 320, 640, 800, 1024, 1280, 1920, 2560, 2880, image_width] | select('<=', image_width) | unique %}
-               https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ }}?width={{ width }} {{ width }}w{% if not loop.last %},{% endif %}
-               {% endfor %}">
-  {% set depicteds_without_region_by_property_id = {} %}
-  {% for depicted in depicteds %}
-  {% if depicted.iiif_region %}
-  {{ depicted_div(depicted) }}
-  {% else %}
-  {% do depicteds_without_region_by_property_id.setdefault(depicted.property_id, []).append(depicted) %}
-  {% endif %}
-  {% endfor %}
+<div class="wd-image-positions--wrapper"> <!-- scrollable wrapper; note: CSS + JS assume image is first direct child element of wrapper -->
+  <div class="wd-image-positions--image" data-width="{{ image_width }}" data-height="{{ image_height }}">
+    <img src="{{ image_url }}"
+         width="{{ image_width }}"
+         height="{{ image_height }}"
+         style="--width: {{ image_width }}px; --height: {{ image_height }}px; --aspect-ratio: {{ image_width }} / {{ image_height }};"
+         srcset="{% for width in [220, 320, 640, 800, 1024, 1280, 1920, 2560, 2880, image_width] | select('<=', image_width) | unique %}
+                 https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ }}?width={{ width }} {{ width }}w{% if not loop.last %},{% endif %}
+                 {% endfor %}">
+    {% set depicteds_without_region_by_property_id = {} %}
+    {% for depicted in depicteds %}
+    {% if depicted.iiif_region %}
+    {{ depicted_div(depicted) }}
+    {% else %}
+    {% do depicteds_without_region_by_property_id.setdefault(depicted.property_id, []).append(depicted) %}
+    {% endif %}
+    {% endfor %}
+  </div>
 </div>
 <!-- add the depicteds without region: first, the ones for well-known properties with a label -->
 {% for property_id, property_labels in depicted_properties().items() %}
