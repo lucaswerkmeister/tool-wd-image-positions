@@ -10,7 +10,7 @@
      */
     --padding: 15px; /* Bootstrap */
     --wrapper-max-width: calc(100vw - 2 * var(--padding));
-    --wrapper-max-height: 100vh;
+    --wrapper-max-height: max(100vh - 150px, 100px);
     max-width: var(--wrapper-max-width);
     max-height: var(--wrapper-max-height);
 }
