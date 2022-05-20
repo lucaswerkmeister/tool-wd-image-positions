@@ -4,7 +4,15 @@
      * scroll only this wrapper so that the rest of the UI remains visible
      */
     overflow: auto;
-    max-height: 100vh;
+    /*
+     * limit the wrapper dimensions (width is effectively 100% but must be calculated absolutely),
+     * these variables are used in the img size calculations below
+     */
+    --padding: 15px; /* Bootstrap */
+    --wrapper-max-width: calc(100vw - 2 * var(--padding));
+    --wrapper-max-height: 100vh;
+    max-width: var(--wrapper-max-width);
+    max-height: var(--wrapper-max-height);
 }
 
 .wd-image-positions--image {
@@ -62,11 +70,9 @@ label > .wd-image-positions--scale {
 
 .wd-image-positions--image img {
     /*
-     * make the image at most as wide as its container
-     * (which we have to recalculate from 100vw - padding),
-     * and also at most as high as the viewport (100vh),
-     * both multiplied by the scale factor,
-     * and within those bounds at least as wide as its own width times the scale;
+     * make the image at most as wide and high as its wrapper,
+     * both multiplied by the scale factor (may overflow / scroll within the wrapper),
+     * and within those bounds at least as wide as its own width times the scale (magnify smaller images);
      * because min-width trumps max-width, the actual min-width value needs to repeat the max-width expression
      */
     /*
@@ -75,10 +81,9 @@ label > .wd-image-positions--scale {
      * --height: 456px; // attr(height px)
      * --aspect-ratio: 123 / 456; // attr(width) / attr(height)
      */
-    --padding: 15px; /* Bootstrap, on the <main> */
-    --scaled-container-width: calc(100vw * var(--scale) - 2 * var(--padding));
-    --scaled-container-height: calc(100vh * var(--scale));
-    --max-width: min(var(--scaled-container-width), var(--scaled-container-height) * var(--aspect-ratio));
+    --scaled-wrapper-max-width: calc(var(--wrapper-max-width) * var(--scale));
+    --scaled-wrapper-max-height: calc(var(--wrapper-max-height) * var(--scale));
+    --max-width: min(var(--scaled-wrapper-max-width), var(--scaled-wrapper-max-height) * var(--aspect-ratio));
     --scaled-image-width: calc(var(--width) * var(--scale));
     --min-width: var(--scaled-image-width);
     max-width: var(--max-width);
