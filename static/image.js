@@ -66,10 +66,9 @@ function setup() {
 
         const button = document.createElement('button');
         button.type = 'button';
-        button.classList.add('btn', 'btn-secondary', 'btn-sm');
+        button.classList.add('btn', 'btn-secondary', 'btn-sm', 'ml-2');
         button.textContent = 'add region';
         button.addEventListener('click', onClick);
-        element.append(document.createTextNode(' '));
         element.append(button);
 
         let cropper = null;
@@ -97,10 +96,9 @@ function setup() {
 
                         cancelButton = document.createElement('button');
                         cancelButton.type = 'button';
-                        cancelButton.classList.add('btn', 'btn-secondary', 'btn-sm', 'wd-image-positions--active');
+                        cancelButton.classList.add('btn', 'btn-secondary', 'btn-sm', 'wd-image-positions--active', 'ml-2');
                         cancelButton.textContent = 'cancel';
                         cancelButton.addEventListener('click', cancelEditing);
-                        element.append(document.createTextNode(' '));
                         element.append(cancelButton);
                     },
                 });
@@ -257,7 +255,7 @@ function setup() {
         button.addEventListener('click', addEditRegionListeners);
         const cancelButton = document.createElement('button');
         cancelButton.type = 'button';
-        cancelButton.classList.add('btn', 'btn-secondary', 'wd-image-positions--active');
+        cancelButton.classList.add('btn', 'btn-secondary', 'wd-image-positions--active', 'ml-2');
         cancelButton.textContent = 'cancel';
         const buttonWrapper = document.createElement('div');
         buttonWrapper.append(button);
