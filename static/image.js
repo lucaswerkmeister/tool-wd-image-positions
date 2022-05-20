@@ -44,13 +44,6 @@ function setup() {
         updateScale();
     }
 
-    function disableScaleInputs() {
-        // TODO nah, really we should only toggle the input belonging to the currently edited image
-        document.querySelectorAll('.wd-image-positions--scale').forEach((input) => {
-            input.disabled = true;
-        });
-    }
-
     function addEditButtons() {
         document.querySelectorAll('.wd-image-positions--depicted-without-region').forEach(addEditButton);
     }
