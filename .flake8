@@ -16,10 +16,6 @@ ignore =
     E305 # after functions and classes
     # line too long
     E501
-    # import * used; unable to detect undefined names
-    F403
-    # may be undefined, or defined from star imports
-    F405
     # line break after binary operator
     W504
     # invalid escape sequence

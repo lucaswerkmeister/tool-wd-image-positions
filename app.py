@@ -18,7 +18,7 @@ import toolforge
 import urllib.parse
 import yaml
 
-from exceptions import *
+from exceptions import WrongDataValueType
 import messages
 
 
