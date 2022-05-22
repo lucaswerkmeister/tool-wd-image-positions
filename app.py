@@ -302,7 +302,7 @@ def iiif_annotations_with_property(item_id, property_id):
             y = int(float(parts[1])*height/100)
             w = int(float(parts[2])*width/100)
             h = int(float(parts[3])*height/100)
-            anno['on'] = anno['on'] + '#xywh=' + ','.join(str(d) for d in [x,y,w,h])
+            anno['on'] = anno['on'] + '#xywh=' + ','.join(str(d) for d in [x, y, w, h])
         annolist['resources'].append(anno)
     return flask.jsonify(annolist)
 
