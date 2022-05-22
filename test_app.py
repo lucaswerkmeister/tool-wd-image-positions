@@ -1,4 +1,3 @@
-import flask
 import pytest
 
 import app as wdip
