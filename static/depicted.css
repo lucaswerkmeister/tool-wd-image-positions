@@ -6,10 +6,21 @@
      */
     position: absolute;
     /*
-     * make the full area visible – this is what this tool is used for, after all
-     * (default outline color overridden per property below)
+     * color for the area, overridden per property below;
+     * specified as a full color and as an RGB tuple –
+     * only the second one has an effect (can be used as var in rgb() or rgba()),
+     * the first one is just to have a preview of the color
      */
-    outline: solid white 2px;
+    --color: rgb(255, 255, 255);
+    --color: 255, 255, 255;
+    /*
+     * make the full area visible – this is what this tool is used for, after all
+     */
+    outline: solid rgb(var(--color)) 2px;
+    /*
+     * alternative or additional suggestion:
+     * background: rgba(var(--color), 0.15);
+     */
     /*
      * if the text doesn’t fit, cut it off rather than enlarging the outline
      */
@@ -20,14 +31,16 @@
     /*
      * depicts (P180): gold
      */
-    outline-color: gold;
+    --color: rgb(255, 215, 0);
+    --color: 255, 215, 0;
 }
 
 .wd-image-positions--depicted__P9664 {
     /*
      * named place on map (P9664): fuchsia
      */
-    outline-color: fuchsia;
+    --color: rgb(255, 0, 255);
+    --color: 255, 0, 255;
 }
 
 .wd-image-positions--depicted:hover {
