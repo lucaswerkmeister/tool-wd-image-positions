@@ -460,15 +460,18 @@ def api_add_qualifier(domain):
 # https://iiif.io/api/image/2.0/#region
 @app.template_filter()
 def iiif_region_to_style(iiif_region):
-    if iiif_region == 'full':
-        return 'left: 0px; top: 0px; width: 100%; height: 100%;'
-    if iiif_region.startswith('pct:'):
-        left, top, width, height = iiif_region[len('pct:'):].split(',')
-        z_index = int(1_000_000 / (float(width)*float(height)))
-        return 'left: %s%%; top: %s%%; width: %s%%; height: %s%%; z-index: %s;' % (left, top, width, height, z_index)
-    left, top, width, height = iiif_region.split(',')
-    z_index = int(1_000_000_000 / (int(width)*int(height)))
-    return 'left: %spx; top: %spx; width: %spx; height: %spx; z-index: %s;' % (left, top, width, height, z_index)
+    try:
+        if iiif_region == 'full':
+            return 'left: 0px; top: 0px; width: 100%; height: 100%;'
+        if iiif_region.startswith('pct:'):
+            left, top, width, height = iiif_region[len('pct:'):].split(',')
+            z_index = int(1_000_000 / (float(width)*float(height)))
+            return 'left: %s%%; top: %s%%; width: %s%%; height: %s%%; z-index: %s;' % (left, top, width, height, z_index)
+        left, top, width, height = iiif_region.split(',')
+        z_index = int(1_000_000_000 / (int(width)*int(height)))
+        return 'left: %spx; top: %spx; width: %spx; height: %spx; z-index: %s;' % (left, top, width, height, z_index)
+    except ValueError:
+        flask.abort(400, flask.Markup('Invalid IIIF region <kbd>{}</kbd> encountered. Remove the invalid qualifier on Wikidata, then reload.').format(iiif_region))
 
 @app.template_filter()
 def user_link(user_name):
