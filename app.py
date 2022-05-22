@@ -471,7 +471,7 @@ def iiif_region_to_style(iiif_region):
         z_index = int(1_000_000_000 / (int(width)*int(height)))
         return 'left: %spx; top: %spx; width: %spx; height: %spx; z-index: %s;' % (left, top, width, height, z_index)
     except ValueError:
-        flask.abort(400, flask.Markup('Invalid IIIF region <kbd>{}</kbd> encountered. Remove the invalid qualifier on Wikidata, then reload.').format(iiif_region))
+        flask.abort(400, flask.Markup('Invalid IIIF region <kbd>{}</kbd> encountered. Remove the invalid qualifier manually, then reload.').format(iiif_region))
 
 @app.template_filter()
 def user_link(user_name):
