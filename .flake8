@@ -9,8 +9,6 @@ ignore =
     E226
     # missing whitespace after ','
     E231
-    # at least two spaces before inline comment
-    E261
     # expected 2 blank lines
     E302 # between functions and classes
     E305 # after functions and classes

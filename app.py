@@ -280,7 +280,7 @@ def iiif_annotations_with_property(item_id, property_id):
 
     for depicted in item['depicteds']:
         if 'item_id' not in depicted:
-            continue # somevalue/novalue not supported for now
+            continue  # somevalue/novalue not supported for now
         link = 'http://www.wikidata.org/entity/' + flask.Markup.escape(depicted['item_id'])
         label = depicted['label']['value']
         # We can put a lot more in here, but minimum for now, and ensure works in Mirador
@@ -422,7 +422,7 @@ def api_add_qualifier(domain):
     statement_id = flask.request.form.get('statement_id')
     iiif_region = flask.request.form.get('iiif_region')
     csrf_token = flask.request.form.get('_csrf_token')
-    qualifier_hash = flask.request.form.get('qualifier_hash') # optional
+    qualifier_hash = flask.request.form.get('qualifier_hash')  # optional
     if not statement_id or not iiif_region or not csrf_token:
         return 'Incomplete form data', 400
 
@@ -830,7 +830,7 @@ def depicted_items(entity_data):
 
     statements = entity_data.get('claims', entity_data.get('statements', {}))
     if statements == []:
-        statements = {} # T222159
+        statements = {}  # T222159
     for property_id in depicted_properties:
         for statement in statements.get(property_id, []):
             snaktype = statement['mainsnak']['snaktype']
@@ -855,27 +855,27 @@ def depicted_items(entity_data):
 def entity_metadata(entity_data):
     # property IDs based on https://www.wikidata.org/wiki/Wikidata:WikiProject_Visual_arts/Item_structure#Describing_individual_objects
     property_ids = [
-        'P170', # creator
-        'P1476', # title
-        'P571', # inception
-        'P186', # material used
-        'P2079', # fabrication method
-        'P2048', # height
-        'P2049', # width
-        'P2610', # thickness
-        'P88', # commissioned by
-        'P1071', # location of final assembly
-        'P127', # owned by
-        'P1259', # coordinates of the point of view
-        'P195', # collection
-        'P276', # location
-        'P635', # coordinate location
-        'P1684', # inscription
-        'P136', # genre
-        'P135', # movement
-        'P921', # main subject
-        'P144', # based on
-        'P941', # inspired by
+        'P170',  # creator
+        'P1476',  # title
+        'P571',  # inception
+        'P186',  # material used
+        'P2079',  # fabrication method
+        'P2048',  # height
+        'P2049',  # width
+        'P2610',  # thickness
+        'P88',  # commissioned by
+        'P1071',  # location of final assembly
+        'P127',  # owned by
+        'P1259',  # coordinates of the point of view
+        'P195',  # collection
+        'P276',  # location
+        'P635',  # coordinate location
+        'P1684',  # inscription
+        'P136',  # genre
+        'P135',  # movement
+        'P921',  # main subject
+        'P144',  # based on
+        'P941',  # inspired by
     ]
     metadata = collections.defaultdict(list)
 
