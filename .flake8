@@ -18,5 +18,3 @@ ignore =
     E501
     # line break after binary operator
     W504
-    # invalid escape sequence
-    W605

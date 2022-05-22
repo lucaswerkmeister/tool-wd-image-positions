@@ -123,7 +123,7 @@ def index():
 
 def parse_item_id_input(input):
     # note: “item” here (and elsewhere in the tool, though not sure if *everywhere* else) refers to any non-MediaInfo entity type
-    pattern = '''
+    pattern = r'''
     (?: # can begin with a wd:, data:, or entity page URL prefix
     http://www\.wikidata\.org/entity/ |
     https://www\.wikidata\.org/wiki/Special:EntityData/ |
@@ -144,7 +144,7 @@ def parse_item_id_input(input):
     if url.scheme == 'https' and url.hostname == 'www.wikidata.org' and url.path == '/w/index.php':
         query = urllib.parse.parse_qs(url.query)
         title = query.get('title', [''])[-1]
-        pattern = '''
+        pattern = r'''
         (Q[1-9][0-9]*) |
         Property:(P[1-9][0-9]*) |
         Lexeme:(L[1-9][0-9]*)
@@ -161,7 +161,7 @@ def parse_image_title_input(input):
     if input.startswith('File:'):
         return input[len('File:'):].replace(' ', '_')
 
-    pattern = '''
+    pattern = r'''
     (?: # URL prefix
     https://commons\.wikimedia\.org/wiki/File: |
     https://commons\.wikimedia\.org/wiki/Special:FilePath/
@@ -183,7 +183,7 @@ def parse_image_title_input(input):
         if title.startswith('File:'):
             return title[len('File:'):]
 
-    pattern = '''
+    pattern = r'''
     (?: # can begin with an sdc: or sdcdata: URL prefix
     https://commons\.wikimedia\.org/entity/ |
     https://commons\.wikimedia\.org/wiki/Special:EntityData/
