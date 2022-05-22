@@ -300,10 +300,10 @@ def iiif_annotations_with_property(item_id, property_id):
         iiif_region = depicted.get('iiif_region', None)
         if iiif_region:
             parts = iiif_region.replace('pct:', '').split(',')
-            x = int(float(parts[0])*width/100)
-            y = int(float(parts[1])*height/100)
-            w = int(float(parts[2])*width/100)
-            h = int(float(parts[3])*height/100)
+            x = int(float(parts[0]) * width / 100)
+            y = int(float(parts[1]) * height / 100)
+            w = int(float(parts[2]) * width / 100)
+            h = int(float(parts[3]) * height / 100)
             anno['on'] = anno['on'] + '#xywh=' + ','.join(str(d) for d in [x, y, w, h])
         annolist['resources'].append(anno)
     return flask.jsonify(annolist)
@@ -467,10 +467,10 @@ def iiif_region_to_style(iiif_region):
             return 'left: 0px; top: 0px; width: 100%; height: 100%;'
         if iiif_region.startswith('pct:'):
             left, top, width, height = iiif_region[len('pct:'):].split(',')
-            z_index = int(1_000_000 / (float(width)*float(height)))
+            z_index = int(1_000_000 / (float(width) * float(height)))
             return 'left: %s%%; top: %s%%; width: %s%%; height: %s%%; z-index: %s;' % (left, top, width, height, z_index)
         left, top, width, height = iiif_region.split(',')
-        z_index = int(1_000_000_000 / (int(width)*int(height)))
+        z_index = int(1_000_000_000 / (int(width) * int(height)))
         return 'left: %spx; top: %spx; width: %spx; height: %spx; z-index: %s;' % (left, top, width, height, z_index)
     except ValueError:
         flask.abort(400, flask.Markup('Invalid IIIF region <kbd>{}</kbd> encountered. Remove the invalid qualifier manually, then reload.').format(iiif_region))
@@ -757,7 +757,7 @@ def populate_canvas(canvas, item, fac):
     thumb_400 = thumbs_path + '/400px-' + item['image_title']
     canvas.thumbnail = fac.image(ident=thumb_400)
     canvas.thumbnail.format = image_info['mime']
-    thumbwidth, thumbheight = 400, int(height*(400/width))
+    thumbwidth, thumbheight = 400, int(height * (400 / width))
     canvas.thumbnail.set_hw(thumbheight, thumbwidth)
 
 def request_language_codes():
@@ -896,7 +896,7 @@ def load_labels(entity_ids, language_codes):
     entity_ids = list(set(entity_ids))
     labels = {}
     session = anonymous_session('www.wikidata.org')
-    for chunk in [entity_ids[i:i+50] for i in range(0, len(entity_ids), 50)]:
+    for chunk in [entity_ids[i:i + 50] for i in range(0, len(entity_ids), 50)]:
         items_data = session.get(action='wbgetentities', props='labels', languages=language_codes, ids=chunk)['entities']
         for entity_id, item_data in items_data.items():
             labels[entity_id] = {'language': 'zxx', 'value': entity_id}

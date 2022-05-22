@@ -3,7 +3,7 @@ import mwapi
 import threading
 
 
-_messages_cache = cachetools.TTLCache(maxsize=1024, ttl=24*60*60)
+_messages_cache = cachetools.TTLCache(maxsize=1024, ttl=24 * 60 * 60)
 _messages_cache_lock = threading.RLock()
 
 
