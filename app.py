@@ -260,8 +260,10 @@ def iiif_annotations_with_property(item_id, property_id):
     item = load_item_and_property(item_id, property_id, include_depicteds=True)
 
     url = flask.url_for('iiif_annotations_with_property',
-                item_id=item_id, property_id=property_id, _external=True,
-                _scheme=flask.request.headers.get('X-Forwarded-Proto', 'http'))
+                        item_id=item_id,
+                        property_id=property_id,
+                        _external=True,
+                        _scheme=flask.request.headers.get('X-Forwarded-Proto', 'http'))
     annolist = {
         '@id': url,
         '@type': 'sc:AnnotationList',

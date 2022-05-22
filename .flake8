@@ -3,8 +3,6 @@
 exclude =
     venv
 ignore =
-    # continuation line under-indented for visual indent
-    E128
     # missing whitespace around arithmetic operator
     E226
     # expected 2 blank lines
