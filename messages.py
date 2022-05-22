@@ -3,7 +3,7 @@ import mwapi
 import threading
 
 
-_messages_cache = cachetools.TTLCache(maxsize=1024, ttl=24*60*60)
+_messages_cache = cachetools.TTLCache(maxsize=1024, ttl=24 * 60 * 60)
 _messages_cache_lock = threading.RLock()
 
 
@@ -20,7 +20,7 @@ def _load_messages(language):
     messages = {}
     for message in response['query']['allmessages']:
         messages[message['name']] = {
-            'language': language, # the API doesn’t tell us which language it actually used :(
+            'language': language,  # the API doesn’t tell us which language it actually used :(
             'value': message['content'],
         }
     return messages

@@ -18,7 +18,7 @@ import toolforge
 import urllib.parse
 import yaml
 
-from exceptions import *
+from exceptions import WrongDataValueType
 import messages
 
 
@@ -123,7 +123,7 @@ def index():
 
 def parse_item_id_input(input):
     # note: “item” here (and elsewhere in the tool, though not sure if *everywhere* else) refers to any non-MediaInfo entity type
-    pattern = '''
+    pattern = r'''
     (?: # can begin with a wd:, data:, or entity page URL prefix
     http://www\.wikidata\.org/entity/ |
     https://www\.wikidata\.org/wiki/Special:EntityData/ |
@@ -144,7 +144,7 @@ def parse_item_id_input(input):
     if url.scheme == 'https' and url.hostname == 'www.wikidata.org' and url.path == '/w/index.php':
         query = urllib.parse.parse_qs(url.query)
         title = query.get('title', [''])[-1]
-        pattern = '''
+        pattern = r'''
         (Q[1-9][0-9]*) |
         Property:(P[1-9][0-9]*) |
         Lexeme:(L[1-9][0-9]*)
@@ -161,7 +161,7 @@ def parse_image_title_input(input):
     if input.startswith('File:'):
         return input[len('File:'):].replace(' ', '_')
 
-    pattern = '''
+    pattern = r'''
     (?: # URL prefix
     https://commons\.wikimedia\.org/wiki/File: |
     https://commons\.wikimedia\.org/wiki/Special:FilePath/
@@ -183,7 +183,7 @@ def parse_image_title_input(input):
         if title.startswith('File:'):
             return title[len('File:'):]
 
-    pattern = '''
+    pattern = r'''
     (?: # can begin with an sdc: or sdcdata: URL prefix
     https://commons\.wikimedia\.org/entity/ |
     https://commons\.wikimedia\.org/wiki/Special:EntityData/
@@ -260,8 +260,10 @@ def iiif_annotations_with_property(item_id, property_id):
     item = load_item_and_property(item_id, property_id, include_depicteds=True)
 
     url = flask.url_for('iiif_annotations_with_property',
-                item_id=item_id, property_id=property_id, _external=True,
-                _scheme=flask.request.headers.get('X-Forwarded-Proto', 'http'))
+                        item_id=item_id,
+                        property_id=property_id,
+                        _external=True,
+                        _scheme=flask.request.headers.get('X-Forwarded-Proto', 'http'))
     annolist = {
         '@id': url,
         '@type': 'sc:AnnotationList',
@@ -280,7 +282,7 @@ def iiif_annotations_with_property(item_id, property_id):
 
     for depicted in item['depicteds']:
         if 'item_id' not in depicted:
-            continue # somevalue/novalue not supported for now
+            continue  # somevalue/novalue not supported for now
         link = 'http://www.wikidata.org/entity/' + flask.Markup.escape(depicted['item_id'])
         label = depicted['label']['value']
         # We can put a lot more in here, but minimum for now, and ensure works in Mirador
@@ -298,11 +300,11 @@ def iiif_annotations_with_property(item_id, property_id):
         iiif_region = depicted.get('iiif_region', None)
         if iiif_region:
             parts = iiif_region.replace('pct:', '').split(',')
-            x = int(float(parts[0])*width/100)
-            y = int(float(parts[1])*height/100)
-            w = int(float(parts[2])*width/100)
-            h = int(float(parts[3])*height/100)
-            anno['on'] = anno['on'] + '#xywh=' + ','.join(str(d) for d in [x,y,w,h])
+            x = int(float(parts[0]) * width / 100)
+            y = int(float(parts[1]) * height / 100)
+            w = int(float(parts[2]) * width / 100)
+            h = int(float(parts[3]) * height / 100)
+            anno['on'] = anno['on'] + '#xywh=' + ','.join(str(d) for d in [x, y, w, h])
         annolist['resources'].append(anno)
     return flask.jsonify(annolist)
 
@@ -422,7 +424,7 @@ def api_add_qualifier(domain):
     statement_id = flask.request.form.get('statement_id')
     iiif_region = flask.request.form.get('iiif_region')
     csrf_token = flask.request.form.get('_csrf_token')
-    qualifier_hash = flask.request.form.get('qualifier_hash') # optional
+    qualifier_hash = flask.request.form.get('qualifier_hash')  # optional
     if not statement_id or not iiif_region or not csrf_token:
         return 'Incomplete form data', 400
 
@@ -465,10 +467,10 @@ def iiif_region_to_style(iiif_region):
             return 'left: 0px; top: 0px; width: 100%; height: 100%;'
         if iiif_region.startswith('pct:'):
             left, top, width, height = iiif_region[len('pct:'):].split(',')
-            z_index = int(1_000_000 / (float(width)*float(height)))
+            z_index = int(1_000_000 / (float(width) * float(height)))
             return 'left: %s%%; top: %s%%; width: %s%%; height: %s%%; z-index: %s;' % (left, top, width, height, z_index)
         left, top, width, height = iiif_region.split(',')
-        z_index = int(1_000_000_000 / (int(width)*int(height)))
+        z_index = int(1_000_000_000 / (int(width) * int(height)))
         return 'left: %spx; top: %spx; width: %spx; height: %spx; z-index: %s;' % (left, top, width, height, z_index)
     except ValueError:
         flask.abort(400, flask.Markup('Invalid IIIF region <kbd>{}</kbd> encountered. Remove the invalid qualifier manually, then reload.').format(iiif_region))
@@ -755,7 +757,7 @@ def populate_canvas(canvas, item, fac):
     thumb_400 = thumbs_path + '/400px-' + item['image_title']
     canvas.thumbnail = fac.image(ident=thumb_400)
     canvas.thumbnail.format = image_info['mime']
-    thumbwidth, thumbheight = 400, int(height*(400/width))
+    thumbwidth, thumbheight = 400, int(height * (400 / width))
     canvas.thumbnail.set_hw(thumbheight, thumbwidth)
 
 def request_language_codes():
@@ -830,7 +832,7 @@ def depicted_items(entity_data):
 
     statements = entity_data.get('claims', entity_data.get('statements', {}))
     if statements == []:
-        statements = {} # T222159
+        statements = {}  # T222159
     for property_id in depicted_properties:
         for statement in statements.get(property_id, []):
             snaktype = statement['mainsnak']['snaktype']
@@ -855,27 +857,27 @@ def depicted_items(entity_data):
 def entity_metadata(entity_data):
     # property IDs based on https://www.wikidata.org/wiki/Wikidata:WikiProject_Visual_arts/Item_structure#Describing_individual_objects
     property_ids = [
-        'P170', # creator
-        'P1476', # title
-        'P571', # inception
-        'P186', # material used
-        'P2079', # fabrication method
-        'P2048', # height
-        'P2049', # width
-        'P2610', # thickness
-        'P88', # commissioned by
-        'P1071', # location of final assembly
-        'P127', # owned by
-        'P1259', # coordinates of the point of view
-        'P195', # collection
-        'P276', # location
-        'P635', # coordinate location
-        'P1684', # inscription
-        'P136', # genre
-        'P135', # movement
-        'P921', # main subject
-        'P144', # based on
-        'P941', # inspired by
+        'P170',  # creator
+        'P1476',  # title
+        'P571',  # inception
+        'P186',  # material used
+        'P2079',  # fabrication method
+        'P2048',  # height
+        'P2049',  # width
+        'P2610',  # thickness
+        'P88',  # commissioned by
+        'P1071',  # location of final assembly
+        'P127',  # owned by
+        'P1259',  # coordinates of the point of view
+        'P195',  # collection
+        'P276',  # location
+        'P635',  # coordinate location
+        'P1684',  # inscription
+        'P136',  # genre
+        'P135',  # movement
+        'P921',  # main subject
+        'P144',  # based on
+        'P941',  # inspired by
     ]
     metadata = collections.defaultdict(list)
 
@@ -894,7 +896,7 @@ def load_labels(entity_ids, language_codes):
     entity_ids = list(set(entity_ids))
     labels = {}
     session = anonymous_session('www.wikidata.org')
-    for chunk in [entity_ids[i:i+50] for i in range(0, len(entity_ids), 50)]:
+    for chunk in [entity_ids[i:i + 50] for i in range(0, len(entity_ids), 50)]:
         items_data = session.get(action='wbgetentities', props='labels', languages=language_codes, ids=chunk)['entities']
         for entity_id, item_data in items_data.items():
             labels[entity_id] = {'language': 'zxx', 'value': entity_id}
