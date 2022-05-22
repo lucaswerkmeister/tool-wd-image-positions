@@ -6,11 +6,11 @@
 #
 attrs==21.4.0
     # via pytest
-cachetools==5.0.0
+cachetools==5.1.0
     # via
     #   -r requirements.in
     #   pyld
-certifi==2021.10.8
+certifi==2022.5.18.1
     # via requests
 charset-normalizer==2.0.12
     # via requests
@@ -52,7 +52,7 @@ oauthlib==3.2.0
     #   requests-oauthlib
 packaging==21.3
     # via pytest
-pillow==9.1.0
+pillow==9.1.1
     # via iiif-prezi
 pluggy==1.0.0
     # via pytest
@@ -68,7 +68,7 @@ pyld==2.0.3
     # via iiif-prezi
 pymysql==1.0.2
     # via toolforge
-pyparsing==3.0.8
+pyparsing==3.0.9
     # via packaging
 pytest==7.1.2
     # via -r requirements.in
