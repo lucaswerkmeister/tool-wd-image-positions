@@ -18,11 +18,11 @@
 <h2 class="mt-4">By item and property</h2>
 <form method="post">
   <div class="mb-3">
-    <label for="item_id">Item ID</label>
+    <label for="item_id" class="form-label">Item ID</label>
     <input type="text" id="item_id" name="item_id" class="form-control" required placeholder="Q1231009 or https://www.wikidata/org/wiki/Q1231009 or similar">
   </div>
   <div class="mb-3">
-    <label for="item_property_id">Property ID <small>(optional)</small></label>
+    <label for="item_property_id" class="form-label">Property ID <small>(optional)</small></label>
     <input type="text" id="item_property_id" name="property_id" class="form-control" placeholder="P18" pattern="P[1-9][0-9]*">
   </div>
   <button type="submit" class="btn btn-primary">Load</button>
@@ -32,7 +32,7 @@
 <h2 class="mt-4">By file</h2>
 <form method="post">
   <div class="mb-3">
-    <label for="image_title">File title</label>
+    <label for="image_title" class="form-label">File title</label>
     <input type="text" id="image_title" name="image_title" class="form-control" required placeholder="Test.png or M56855503 or https://commons.wikimedia.org/wiki/File:Test.png or similar">
   </div>
   <button type="submit" class="btn btn-primary">Load</button>
@@ -40,11 +40,11 @@
 <h2 class="mt-4">By IIIF region and property</h2>
 <form method="post">
   <div class="mb-3">
-    <label for="iiif_region"><a href="https://iiif.io/api/image/2.0/#region"><abbr title="International Image Interoperability Framework">IIIF</abbr> region</a></label>
+    <label for="iiif_region" class="form-label"><a href="https://iiif.io/api/image/2.0/#region"><abbr title="International Image Interoperability Framework">IIIF</abbr> region</a></label>
     <input type="text" id="iiif_region" name="iiif_region" class="form-control" required placeholder="pct:27.2,30,13.1,21.6" pattern="pct:((100|[1-9]?\d(\.\d+)?),){3}(100|[1-9]?\d(\.\d+)?)">
   </div>
   <div class="mb-3">
-    <label for="iiif_property_id">Property ID <small>(optional)</small></label>
+    <label for="iiif_property_id" class="form-label">Property ID <small>(optional)</small></label>
     <input type="text" id="iiif_property_id" name="property_id" class="form-control" placeholder="P18" pattern="P[1-9][0-9]*">
   </div>
   <button type="submit" class="btn btn-primary">Load</button>
