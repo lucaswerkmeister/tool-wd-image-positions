@@ -47,23 +47,16 @@ label > .wd-image-positions--scale {
 .wd-image-positions--scale[value="4"]:checked ~ .wd-image-positions--wrapper > .wd-image-positions--image { --scale: 4; }
 .wd-image-positions--scale[value="5"]:checked ~ .wd-image-positions--wrapper > .wd-image-positions--image { --scale: 5; }
 
-.wd-image-positions--image .wd-image-positions--depicted {
-    /* 
-     * don’t show this element by default (unless the user hovers over the image, see below)
+.wd-image-positions--image:not(:hover) .wd-image-positions--depicted {
+    /*
+     * don’t show this element unless the user hovers over the image
      */
     visibility: hidden;
 }
 
-.wd-image-positions--image:hover .wd-image-positions--depicted {
-    /*
-     * do show this element if the image is hovered
-     */
-    visibility: visible;
-}
-
 .wd-image-positions--image.wd-image-positions--active .wd-image-positions--depicted {
     /*
-     * but not while the area for another depicted is being defined
+     * nor while the area for another depicted is being defined
      */
     visibility: hidden;
 }
