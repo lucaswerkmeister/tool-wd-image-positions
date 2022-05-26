@@ -97,3 +97,17 @@ label > .wd-image-positions--scale {
      */
     display: none;
 }
+
+/*
+ * note: most depicted styles are in depicted.css;
+ * the ones here are specific to the tool
+ * (depicted.css is also used by the user script on-wiki)
+ */
+
+.wd-image-positions--image .wd-image-positions--depicted a:not(:hover, :focus) {
+    /*
+     * disable link underline unless hovered/focused
+     * (matches similar styles in MediaWiki elements.less)
+     */
+    text-decoration: none;
+}
