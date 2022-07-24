@@ -138,7 +138,7 @@ def parse_item_id_input(input):
     )?
     '''
     if match := re.fullmatch(pattern, input, re.VERBOSE):
-        return match.group(1)
+        return match.group(1)  # unquote() not needed, group 1 cannot contain % characters
 
     url = urllib.parse.urlparse(input)
     if url.scheme == 'https' and url.hostname == 'www.wikidata.org' and url.path == '/w/index.php':
@@ -174,7 +174,7 @@ def parse_image_title_input(input):
     )?
     '''
     if match := re.fullmatch(pattern, input, re.VERBOSE):
-        return match.group(1)
+        return urllib.parse.unquote(match.group(1))
 
     url = urllib.parse.urlparse(input)
     if url.scheme == 'https' and url.hostname == 'commons.wikimedia.org' and url.path == '/w/index.php':
@@ -193,7 +193,7 @@ def parse_image_title_input(input):
     )
     '''
     if match := re.fullmatch(pattern, input, re.VERBOSE):
-        entity_id = match.group(1)
+        entity_id = match.group(1)  # unquote() not needed, group 1 cannot contain % characters
         session = anonymous_session('commons.wikimedia.org')
         title = session.get(action='query',
                             pageids=[entity_id[1:]],
