@@ -41,7 +41,7 @@ Image scale:
          height="{{ image_height }}"
          style="--width: {{ image_width }}px; --height: {{ image_height }}px; --aspect-ratio: {{ image_width }} / {{ image_height }};"
          srcset="{% for width in [220, 320, 640, 800, 1024, 1280, 1920, 2560, 2880, image_width] | select('<=', image_width) | unique %}
-                 https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ }}?width={{ width }} {{ width }}w{% if not loop.last %},{% endif %}
+                 https://commons.wikimedia.org/wiki/Special:FilePath/{{ image_title_ | urlencode }}?width={{ width }} {{ width }}w{% if not loop.last %},{% endif %}
                  {% endfor %}">
     {% set depicteds_without_region_by_property_id = {} %}
     {% for depicted in depicteds %}
