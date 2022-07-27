@@ -38,7 +38,7 @@ git merge --ff-only @{u}
 webservice restart
 ```
 
-If there were new changes in the Python environment (e.g. new dependencies),
+If there were any changes in the Python environment (e.g. new dependencies),
 add the following steps before the `webservice restart`:
 ```
 webservice shell
