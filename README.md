@@ -64,7 +64,7 @@ If you want, you can do this inside some virtualenv too.
 
 To send a patch, you can submit a
 [pull request on GitHub](https://github.com/lucaswerkmeister/tool-wd-image-positions) or a
-[merge request on GitLab](https://gitlab.wikimedia.org/toolforge-repos/wd-image-positions/-/merge_requests).
+[merge request on GitLab](https://gitlab.wikimedia.org/toolforge-repos/wd-image-positions).
 (E-mail / patch-based workflows are also acceptable.)
 
 ## License
