@@ -52,7 +52,7 @@ You can also run the tool locally, which is much more convenient for development
 (for example, Flask will automatically reload the application any time you save a file).
 
 ```
-git clone https://gitlab.wikimedia.org/lucaswerkmeister/tool-wd-image-positions.git
+git clone https://gitlab.wikimedia.org/toolforge-repos/wd-image-positions.git
 cd tool-wd-image-positions
 pip3 install -r requirements.txt
 FLASK_ENV=development flask run
@@ -62,18 +62,10 @@ If you want, you can do this inside some virtualenv too.
 
 ## Contributing
 
-To send a patch, you can use any of the following methods:
-
-* [Submit a pull request on GitHub.](https://github.com/lucaswerkmeister/tool-wd-image-positions)
-* [Submit a pull request on Wikimedia GitLab.](https://gitlab.wikimedia.org/lucaswerkmeister/tool-wd-image-positions)
-* Use `git send-email`.
-  (Send the patch(es) to the email address from the Git commit history.)
-* Upload the changes to a repository of your own and use `git request-pull` (same email address).
-* Upload a diff on [GitHub Gist](https://gist.github.com/)
-  and send the link to the tool’s maintainer(s) via email, Twitter, on-wiki message, or whatever.
-
-They’re listed in the maintainer(s)’ order of preference, from most to least preferred,
-but feel free to use any of these methods as it best suits you.
+To send a patch, you can submit a
+[pull request on GitHub](https://github.com/lucaswerkmeister/tool-wd-image-positions) or a
+[merge request on GitLab](https://gitlab.wikimedia.org/toolforge-repos/wd-image-positions/-/merge_requests).
+(E-mail / patch-based workflows are also acceptable.)
 
 ## License
 
