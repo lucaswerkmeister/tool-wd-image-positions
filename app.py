@@ -5,6 +5,7 @@ import decorator
 import flask
 import iiif_prezi.factory
 import json
+from markupsafe import Markup
 import mwapi
 import mwoauth
 import os
@@ -152,7 +153,7 @@ def parse_item_id_input(input):
         if match := re.fullmatch(pattern, title, re.VERBOSE):
             return match.group(1)
 
-    flask.abort(400, flask.Markup(r'Cannot parse an entity ID from <kbd>{}</kbd>.').format(input))
+    flask.abort(400, Markup(r'Cannot parse an entity ID from <kbd>{}</kbd>.').format(input))
 
 def parse_image_title_input(input):
     if '.' in input and ':' not in input:
@@ -201,7 +202,7 @@ def parse_image_title_input(input):
                             formatversion=2)['query']['pages'][0]['title']
         return title[len('File:'):].replace(' ', '_')
 
-    flask.abort(400, flask.Markup(r'Cannot parse a file name from <kbd>{}</kbd>.').format(input))
+    flask.abort(400, Markup(r'Cannot parse a file name from <kbd>{}</kbd>.').format(input))
 
 @app.route('/login')
 def login():
@@ -283,7 +284,7 @@ def iiif_annotations_with_property(item_id, property_id):
     for depicted in item['depicteds']:
         if 'item_id' not in depicted:
             continue  # somevalue/novalue not supported for now
-        link = 'http://www.wikidata.org/entity/' + flask.Markup.escape(depicted['item_id'])
+        link = 'http://www.wikidata.org/entity/' + Markup.escape(depicted['item_id'])
         label = depicted['label']['value']
         # We can put a lot more in here, but minimum for now, and ensure works in Mirador
         anno = {
@@ -473,45 +474,45 @@ def iiif_region_to_style(iiif_region):
         z_index = int(1_000_000_000 / (int(width) * int(height)))
         return 'left: %spx; top: %spx; width: %spx; height: %spx; z-index: %s;' % (left, top, width, height, z_index)
     except ValueError:
-        flask.abort(400, flask.Markup('Invalid IIIF region <kbd>{}</kbd> encountered. Remove the invalid qualifier manually, then reload.').format(iiif_region))
+        flask.abort(400, Markup('Invalid IIIF region <kbd>{}</kbd> encountered. Remove the invalid qualifier manually, then reload.').format(iiif_region))
 
 @app.template_filter()
 def user_link(user_name):
-    return (flask.Markup(r'<a href="https://www.wikidata.org/wiki/User:') +
-            flask.Markup.escape(user_name.replace(' ', '_')) +
-            flask.Markup(r'">') +
-            flask.Markup(r'<bdi>') +
-            flask.Markup.escape(user_name) +
-            flask.Markup(r'</bdi>') +
-            flask.Markup(r'</a>'))
+    return (Markup(r'<a href="https://www.wikidata.org/wiki/User:') +
+            Markup.escape(user_name.replace(' ', '_')) +
+            Markup(r'">') +
+            Markup(r'<bdi>') +
+            Markup.escape(user_name) +
+            Markup(r'</bdi>') +
+            Markup(r'</a>'))
 
 @app.template_global()
 def item_link(item_id, label):
-    return (flask.Markup(r'<a href="http://www.wikidata.org/entity/') +
-            flask.Markup.escape(item_id) +
-            flask.Markup(r'" lang="') +
-            flask.Markup.escape(label['language']) +
-            flask.Markup(r'" data-entity-id="') +
-            flask.Markup.escape(item_id) +
-            flask.Markup(r'">') +
-            flask.Markup.escape(label['value']) +
-            flask.Markup(r'</a>'))
+    return (Markup(r'<a href="http://www.wikidata.org/entity/') +
+            Markup.escape(item_id) +
+            Markup(r'" lang="') +
+            Markup.escape(label['language']) +
+            Markup(r'" data-entity-id="') +
+            Markup.escape(item_id) +
+            Markup(r'">') +
+            Markup.escape(label['value']) +
+            Markup(r'</a>'))
 
 @app.template_filter()
 def depicted_item_link(depicted):
     if 'item_id' in depicted:
         return item_link(depicted['item_id'], depicted['label'])
     else:
-        return (flask.Markup(r'<span class="wd-image-positions--snaktype-not-value" lang="') +
-                flask.Markup.escape(depicted['label']['language']) +
-                flask.Markup(r'">') +
-                flask.Markup.escape(depicted['label']['value']) +
-                flask.Markup(r'</span>'))
+        return (Markup(r'<span class="wd-image-positions--snaktype-not-value" lang="') +
+                Markup.escape(depicted['label']['language']) +
+                Markup(r'">') +
+                Markup.escape(depicted['label']['value']) +
+                Markup(r'</span>'))
 
 @app.template_global()
 def authentication_area():
     if 'OAUTH' not in app.config:
-        return flask.Markup()
+        return Markup()
 
     session = authenticated_session('www.wikidata.org')
     if session is None:
@@ -529,20 +530,20 @@ def authentication_area():
                 raise e
 
     if userinfo is None:
-        return (flask.Markup(r'<a id="login" class="navbar-text" href="') +
-                flask.Markup.escape(flask.url_for('login')) +
-                flask.Markup(r'">Log in</a>'))
+        return (Markup(r'<a id="login" class="navbar-text" href="') +
+                Markup.escape(flask.url_for('login')) +
+                Markup(r'">Log in</a>'))
 
     csrf_token = flask.session.get('_csrf_token')
     if not csrf_token:
         csrf_token = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(64))
         flask.session['_csrf_token'] = csrf_token
 
-    return (flask.Markup(r'<span class="navbar-text">Logged in as ') +
+    return (Markup(r'<span class="navbar-text">Logged in as ') +
             user_link(userinfo['name']) +
-            flask.Markup(r'</span><span id="csrf_token" style="display: none;">') +
-            flask.Markup.escape(csrf_token) +
-            flask.Markup(r'</span>'))
+            Markup(r'</span><span id="csrf_token" style="display: none;">') +
+            Markup.escape(csrf_token) +
+            Markup(r'</span>'))
 
 @app.template_global()
 def user_logged_in():
@@ -929,22 +930,22 @@ def image_attribution_query_process_response(response, image_title, language_cod
     if attribution_required != 'true':
         return None
 
-    attribution = flask.Markup()
+    attribution = Markup()
 
     artist = metadata.get('Artist', no_value)['value']
     if artist:
-        attribution += flask.Markup(r', ') + flask.Markup(artist)
+        attribution += Markup(r', ') + Markup(artist)
 
     license_short_name = metadata.get('LicenseShortName', no_value)['value']
     license_url = metadata.get('LicenseUrl', no_value)['value']
     if license_short_name and license_url:
-        attribution += (flask.Markup(r', <a href="') + flask.Markup.escape(license_url) + flask.Markup(r'">') +
-                        flask.Markup.escape(license_short_name) +
-                        flask.Markup(r'</a>'))
+        attribution += (Markup(r', <a href="') + Markup.escape(license_url) + Markup(r'">') +
+                        Markup.escape(license_short_name) +
+                        Markup(r'</a>'))
 
     credit = metadata.get('Credit', no_value)['value']
     if credit:
-        attribution += flask.Markup(r' (') + flask.Markup(credit) + flask.Markup(r')')
+        attribution += Markup(r' (') + Markup(credit) + Markup(r')')
 
     attribution = attribution[len(', '):]
 
