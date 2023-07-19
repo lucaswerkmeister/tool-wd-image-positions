@@ -1,10 +1,14 @@
+import { createApp } from 'vue';
+import * as codex from 'codex';
+import * as codexIcons from 'codex-icons';
+import Session, { set } from 'm3api/browser.js';
+
 function setup() {
     'use strict';
 
     const csrfTokenElement = document.getElementById('csrf_token'),
           baseUrl = document.querySelector('link[rel=index]').href.replace(/\/$/, ''),
           depictedProperties = JSON.parse(document.getElementsByTagName('main')[0].dataset.depictedProperties);
-    let EntityInputWidget; // loaded in addNewDepictedForms
 
     /** Make a key event handler that calls the given callback when Esc is pressed. */
     function onEscape(callback) {
@@ -365,193 +369,199 @@ function setup() {
     }
 
     function addNewDepictedForm(entityElement) {
+        const session = new Session( 'www.wikidata.org', {
+            formatversion: 2,
+            origin: '*',
+        }, {
+            userAgent: 'Wikidata-Image-Positions (https://wd-image-positions.toolforge.org/)',
+        } );
         const entity = entityElement.closest('.wd-image-positions--entity'),
               subjectId = entity.dataset.entityId,
               subjectDomain = entity.dataset.entityDomain,
-              propertyIdInput = new OO.ui.DropdownInputWidget({
-                  options: Object.entries(depictedProperties).map(entry => ({
-                      data: entry[0],
-                      label: entry[1][0],
-                  })),
-                  // for some reason, the propertyIdInput.getInputElement()[0] is not the node in the DOM,
-                  // so assign an ID so we can access the actual value in addItemId() below
-                  id: 'propertyIdWidget',
-              }),
-              itemIdInput = new EntityInputWidget({
-                  name: 'item_id',
-                  required: true,
-                  placeholder: 'Q42',
-              }),
-              itemIdButton = new OO.ui.ButtonWidget({
-                  label: 'Add',
-              }),
-              somevalueButton = new OO.ui.ButtonWidget({
-                  label: 'Unknown value',
-              }),
-              novalueButton = new OO.ui.ButtonWidget({
-                  label: 'No value',
-              }),
-              layout = new OO.ui.FieldsetLayout({
-                  items: [
-                      new OO.ui.FieldLayout(
-                          propertyIdInput,
-                      ),
-                      new OO.ui.ActionFieldLayout(
-                          itemIdInput,
-                          itemIdButton,
-                          {
-                              label: 'Item ID',
-                              invisibleLabel: true,
-                          },
-                      ),
-                      new OO.ui.FieldLayout(
-                          new OO.ui.ButtonGroupWidget({
-                              items: [
-                                  somevalueButton,
-                                  // novalueButton, // there’s no technical reason not to implement this, but it’s not really useful
-                              ],
-                          }),
-                      ),
-                  ],
-                  label: 'Add more statements:',
-              }),
-              layoutElement = layout.$element[0];
-        itemIdInput.on('enter', addItemId);
-        itemIdButton.on('click', addItemId);
-        somevalueButton.on('click', addSomevalue);
-        novalueButton.on('click', addNovalue);
-        layout.$header.addClass('col-form-label-sm'); // Bootstrap makes OOUI’s <legend> too large by default
-        entityElement.append(layoutElement);
+              newDepictedFormRoot = document.createElement('div');
+        entityElement.append(newDepictedFormRoot);
 
-        // itemIdInput.getData().getSerialization() can return the wrong item ID after losing focus;
-        // only trust item IDs that we get out of the change event instead
-        let itemId = undefined;
-        itemIdInput.on('change', entity => {
-            itemId = entity?.id;
-        } );
+        createApp({
+            template: `
+<form class="wd-image-positions--add-new-depicted-form">
+    <h3>Add more statements:</h3>
+    <div class="wd-image-positions--add-new-depicted-form-row">
+        <cdx-select
+            v-model:selected="selectedProperty"
+            :menu-items="properties"
+        />
+    </div>
+    <div class="wd-image-positions--add-new-depicted-form-row">
+        <cdx-lookup
+            v-model:selected="selectedItem"
+            :menu-items="searchResults"
+            :menu-config="{'visible-item-limit': searchLimit}"
+            :disabled="disabled"
+            @input="onSearchInput"
+            @load-more="onSearchLoadMore"
+        />
+        <cdx-button
+            :disabled="disabled"
+            @click.prevent="onAddItem"
+        >
+            <cdx-icon :icon="cdxIconAdd" />
+            Add statement
+        </cdx-button>
+    </div>
+    <div class="wd-image-positions--add-new-depicted-form-row">
+        <cdx-button
+            :disabled="disabled"
+            @click.prevent="onAddNonValue('somevalue')"
+        >
+            <cdx-icon :icon="cdxIconAdd" />
+            Add “unknown value” statement
+        </cdx-button>
+        <!-- there’s no technical reason not to implement this, but it’s not really useful
+        <cdx-button
+            :disabled="disabled"
+            @click.prevent="onAddNonValue('novalue')"
+        >
+            No value
+        </cdx-button>
+        -->
+    </div>
+</cdx-field>
+`,
+            components: codex,
+            data() {
+                const properties = Object.entries(depictedProperties).map(entry => ({
+                    value: entry[0],
+                    label: entry[1][0],
+                }));
+                return {
+                    disabled: false,
+                    properties,
+                    selectedProperty: properties[0].value,
+                    selectedItem: null,
+                    searchResults: [],
+                    searchValue: '',
+                    searchLimit: 5,
+                    searchOffset: 0,
+                    ...codexIcons,
+                };
+            },
+            methods: {
+                async onSearchInput(value) {
+                    this.searchValue = value;
+                    this.searchOffset = 0;
+                    if (!value) {
+                        this.searchResults = [];
+                        return;
+                    }
+                    const searchResults = await this.doSearch(value, this.searchOffset);
+                    if (this.searchValue !== value) {
+                        return; // changed during the request
+                    }
+                    this.searchResults = searchResults;
+                    this.searchOffset += this.searchLimit;
+                },
 
-        function setAllDisabled(disabled) {
-            for (const widget of [itemIdInput, itemIdButton, somevalueButton, novalueButton]) {
-                widget.setDisabled(disabled);
-            }
-        }
+                async onSearchLoadMore() {
+                    const value = this.searchValue;
+                    const moreResults = await this.doSearch(value, this.searchOffset);
+                    if (this.searchValue !== value) {
+                        return; // changed during the request
+                    }
+                    this.searchResults.push(...moreResults);
+                    this.searchOffset += this.searchLimit;
+                },
 
-        function addItemId() {
-            if (!itemId) {
-                return;
-            }
-            const formData = new FormData();
-            formData.append('snaktype', 'value');
-            formData.append('property_id', document.querySelector('#propertyIdWidget select').value);
-            formData.append('item_id', itemId);
-            addStatement(formData);
-        }
-
-        function addSomevalue() {
-            const formData = new FormData();
-            formData.append('snaktype', 'somevalue');
-            addStatement(formData);
-        }
-
-        function addNovalue() {
-            const formData = new FormData();
-            formData.append('snaktype', 'novalue');
-            addStatement(formData);
-        }
-
-        function addStatement(formData) {
-            setAllDisabled(true);
-            formData.append('entity_id', subjectId);
-            formData.append('_csrf_token', csrfTokenElement.textContent);
-            fetch(`${baseUrl}/api/v1/add_statement/${subjectDomain}`, {
-                method: 'POST',
-                body: formData,
-                credentials: 'include',
-            }).then(response => {
-                if (response.ok) {
-                    return response.json().then(json => {
-                        const statementId = json.depicted.statement_id;
-                        const propertyId = json.depicted.property_id;
-                        let depictedsWithoutRegionList = entityElement.querySelector(
-                            `.wd-image-positions--depicteds-without-region__${propertyId} ul`,
-                        );
-                        if (!depictedsWithoutRegionList) {
-                            const depictedsWithoutRegionDiv = document.createElement('div'),
-                                  depictedsWithoutRegionText = document.createTextNode(
-                                      `${depictedProperties[propertyId]?.[1] || propertyId} with no region specified:`,
-                                  );
-                            depictedsWithoutRegionList = document.createElement('ul');
-                            depictedsWithoutRegionDiv.classList.add('wd-image-positions--depicteds-without-region');
-                            depictedsWithoutRegionDiv.classList.add(`wd-image-positions--depicteds-without-region__${propertyId}`);
-                            depictedsWithoutRegionDiv.append(depictedsWithoutRegionText, depictedsWithoutRegionList);
-                            layoutElement.insertAdjacentElement('beforebegin', depictedsWithoutRegionDiv);
-                        }
-                        const depicted = document.createElement('li');
-                        depicted.classList.add('wd-image-positions--depicted-without-region');
-                        depicted.dataset.statementId = statementId;
-                        depicted.innerHTML = json.depicted_item_link;
-                        depictedsWithoutRegionList.append(depicted);
-                        addEditButton(depicted);
+                async doSearch(value, offset) {
+                    const response = await session.request({
+                        action: 'wbsearchentities',
+                        search: value,
+                        language: 'en',
+                        type: 'item',
+                        limit: this.searchLimit,
+                        continue: this.searchOffset,
+                        props: set(),
                     });
-                } else {
-                    return response.text().then(error => {
-                        window.alert(`An error occurred:\n\n${error}`);
+                    return response.search.map(result => ({
+                        value: result.id,
+                        label: result.display?.label?.value,
+                        description: result.display?.description?.value,
+                        match: result.match.type === 'alias' ? `(${result.match.text})` : '',
+                        language: {
+                            label: result.display?.label?.language,
+                            description: result.display?.description?.language,
+                            match: result.match.type === 'alias' ? result.match.language : undefined,
+                        },
+                    }));
+                },
+
+                onAddItem() {
+                    if (!this.selectedItem) {
+                        return;
+                    }
+                    const formData = new FormData();
+                    formData.append('snaktype', 'value');
+                    formData.append('property_id', this.selectedProperty);
+                    formData.append('item_id', this.selectedItem);
+                    this.addStatement(formData);
+                },
+
+                onAddNonValue(snakType) {
+                    const formData = new FormData();
+                    formData.append('snaktype', snakType);
+                    this.addStatement(formData);
+                },
+
+                addStatement(formData) {
+                    this.disabled = true;
+                    formData.append('entity_id', subjectId);
+                    formData.append('_csrf_token', csrfTokenElement.textContent);
+                    fetch(`${baseUrl}/api/v1/add_statement/${subjectDomain}`, {
+                        method: 'POST',
+                        body: formData,
+                        credentials: 'include',
+                    }).then(response => {
+                        if (response.ok) {
+                            return response.json().then(json => {
+                                const statementId = json.depicted.statement_id;
+                                const propertyId = json.depicted.property_id;
+                                let depictedsWithoutRegionList = entityElement.querySelector(
+                                    `.wd-image-positions--depicteds-without-region__${propertyId} ul`,
+                                );
+                                if (!depictedsWithoutRegionList) {
+                                    const depictedsWithoutRegionDiv = document.createElement('div'),
+                                          depictedsWithoutRegionText = document.createTextNode(
+                                              `${depictedProperties[propertyId]?.[1] || propertyId} with no region specified:`,
+                                          );
+                                    depictedsWithoutRegionList = document.createElement('ul');
+                                    depictedsWithoutRegionDiv.classList.add('wd-image-positions--depicteds-without-region');
+                                    depictedsWithoutRegionDiv.classList.add(`wd-image-positions--depicteds-without-region__${propertyId}`);
+                                    depictedsWithoutRegionDiv.append(depictedsWithoutRegionText, depictedsWithoutRegionList);
+                                    newDepictedFormRoot.insertAdjacentElement('beforebegin', depictedsWithoutRegionDiv);
+                                }
+                                const depicted = document.createElement('li');
+                                depicted.classList.add('wd-image-positions--depicted-without-region');
+                                depicted.dataset.statementId = statementId;
+                                depicted.innerHTML = json.depicted_item_link;
+                                depictedsWithoutRegionList.append(depicted);
+                                addEditButton(depicted);
+                            });
+                        } else {
+                            return response.text().then(error => {
+                                window.alert(`An error occurred:\n\n${error}`);
+                            });
+                        }
+                    }).finally(() => {
+                        this.disabled = false;
                     });
                 }
-            }).finally(() => {
-                setAllDisabled(false);
-            });
-        }
+
+            },
+        }).mount(newDepictedFormRoot);
     }
 
     function addNewDepictedForms() {
-        fixMediaWiki().then(() => {
-            mediaWiki.loader.using('wikibase.mediainfo.statements', require => {
-                EntityInputWidget = require('wikibase.mediainfo.statements').inputs.EntityInputWidget;
-                document.querySelectorAll('.wd-image-positions--entity').forEach(addNewDepictedForm);
-            });
-        }, console.error);
-    }
-
-    function fixMediaWiki() {
-        return new Promise((resolve, reject) => {
-            // rewrite 'local' source (/w/load.php) to one with explicit domain,
-            // and reset modules that could not be loaded from 'local'
-            mediaWiki.loader.addSource({
-                'commons': 'https://commons.wikimedia.org/w/load.php',
-            });
-            const needReload = [];
-            for (const [name, module] of Object.entries(mediaWiki.loader.moduleRegistry)) {
-                if (module.source === 'local') {
-                    module.source = 'commons';
-                }
-                if (module.state === 'loading') {
-                    module.state = 'registered';
-                    needReload.push(name);
-                }
-            }
-            // configure WikibaseMediaInfo
-            mediaWiki.config.set('wbmiExternalEntitySearchBaseUri', 'https://www.wikidata.org/w/api.php');
-            // remove private dependencies of modules
-            for (const module of Object.values(mediaWiki.loader.moduleRegistry)) {
-                const userOptionsDependencyIndex = module.dependencies.indexOf('user.options');
-                if (userOptionsDependencyIndex !== -1) {
-                    module.dependencies.splice(userOptionsDependencyIndex, 1); // user.options module is private, we can’t load it
-                }
-            }
-            // reload modules that could not be loaded from 'local'
-            mediaWiki.loader.enqueue(needReload, resolve, reject);
-        }).then(() => {
-            return mediaWiki.loader.using('wikibase.api.RepoApi').then(() => {
-                if ('getLocationAgnosticMwApi' in wikibase.api) { // used for EntityInputWidget’s search, but cf. T239518
-                    wikibase.api.getLocationAgnosticMwApi = function(apiEndpoint) {
-                        // original implementation isn’t anonymous, but we can only make anonymous requests
-                        return new mediaWiki.ForeignApi(apiEndpoint, { anonymous: true });
-                    };
-                } else {
-                    console.error('no getLocationAgnosticMwApi!');
-                }
-            });
+        document.querySelectorAll('.wd-image-positions--entity').forEach(entityElement => {
+            addNewDepictedForm(entityElement);
         });
     }
 
@@ -563,8 +573,4 @@ function setup() {
     }
 }
 
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', setup);
-} else {
-    setup();
-}
+setup();

@@ -104,3 +104,18 @@ label > .wd-image-positions--scale {
      */
     text-decoration: none;
 }
+
+/*
+ * styles for the “add new depicted” form (added in image.js, addNewDepictedForm())
+ */
+.wd-image-positions--add-new-depicted-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-100);
+}
+
+.wd-image-positions--add-new-depicted-form-row {
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-50);
+}

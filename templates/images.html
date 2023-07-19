@@ -5,9 +5,18 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='depicted.css') }}">
 <link rel="stylesheet" href="https://tools-static.wmflabs.org/cdnjs/ajax/libs/cropperjs/1.5.12/cropper.min.css">
 <script src="https://tools-static.wmflabs.org/cdnjs/ajax/libs/cropperjs/1.5.12/cropper.min.js" defer></script>
-{% if user_logged_in() %}
-<script src="https://commons.wikimedia.org/w/load.php?lang=en&modules=startup&only=scripts&raw=1&skin=vector" defer></script>
-{% endif %}
-<script src="{{ url_for('static', filename='image.js') }}" defer></script>
+<link rel="stylesheet" href="https://tools-static.wmflabs.org/cdnjs/ajax/libs/codex/0.15.0/codex.style.css">
+<link rel="stylesheet" href="https://tools-static.wmflabs.org/cdnjs/ajax/libs/codex-design-tokens/0.14.0/theme-wikimedia-ui.css">
+<script type="importmap">
+  {
+      "imports": {
+          "vue": "https://tools-static.wmflabs.org/cdnjs/ajax/libs/vue/3.3.4/vue.esm-browser.min.js",
+          "codex": "https://tools-static.wmflabs.org/cdnjs/ajax/libs/codex/0.15.0/codex.mjs",
+          "codex-icons": "https://tools-static.wmflabs.org/cdnjs/ajax/libs/codex-icons/0.15.0/codex-icons.mjs",
+          "m3api/": "{{ url_for('static', filename='node_modules/m3api/') }}"
+      }
+  }
+</script>
+<script src="{{ url_for('static', filename='image.js') }}" async type="module"></script>
 {% endblock head %}
 {% block main_tag_attributes %}{{ super() }} data-depicted-properties='{{ depicted_properties() | tojson }}'{% endblock main_tag_attributes %}
