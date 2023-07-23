@@ -76,6 +76,10 @@ function setup() {
 
                 const depicted = document.createElement('div');
                 depicted.classList.add('wd-image-positions--depicted')
+                const propertyId = [...element.closest('.wd-image-positions--depicteds-without-region').classList]
+                      .filter(klass => klass.startsWith('wd-image-positions--depicteds-without-region__'))
+                      .map(klass => klass.slice('wd-image-positions--depicteds-without-region__'.length))[0];
+                depicted.classList.add(`wd-image-positions--depicted__${propertyId}`)
                 if (depictedId !== undefined) {
                     depicted.dataset.entityId = depictedId;
                 }
