@@ -106,7 +106,7 @@ label > .wd-image-positions--scale {
 }
 
 /*
- * styles for the “add new depicted” form (added in image.js, addNewDepictedForm())
+ * styles for the “add new depicted” form (added in image-edit.js, addNewDepictedForm())
  */
 .wd-image-positions--add-new-depicted-form {
     display: flex;
