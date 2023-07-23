@@ -57,6 +57,7 @@ function setup() {
                     scalable: false,
                     zoomable: false,
                     checkCrossOrigin: false,
+                    autoCrop: false,
                     ready: function() {
                         button.textContent = 'use this region';
 
@@ -71,6 +72,11 @@ function setup() {
                 document.addEventListener('keydown', onKeyDown);
             } else {
                 if (button.textContent === 'loading...') {
+                    return;
+                }
+                const cropData = cropper.getData();
+                if (!cropData.width || !cropData.height) {
+                    window.alert('Please select a region first. (Drag the mouse across an area, then adjust as needed.)');
                     return;
                 }
 
