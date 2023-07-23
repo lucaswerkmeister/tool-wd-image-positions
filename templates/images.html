@@ -3,6 +3,8 @@
 {{ super() }}
 <link rel="stylesheet" href="{{ url_for('static', filename='image.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='depicted.css') }}">
+<script src="{{ url_for('static', filename='image.js') }}" defer></script>
+{% if user_logged_in() %}
 <link rel="stylesheet" href="https://tools-static.wmflabs.org/cdnjs/ajax/libs/cropperjs/1.5.12/cropper.min.css">
 <script src="https://tools-static.wmflabs.org/cdnjs/ajax/libs/cropperjs/1.5.12/cropper.min.js" defer></script>
 <link rel="stylesheet" href="https://tools-static.wmflabs.org/cdnjs/ajax/libs/codex/0.15.0/codex.style.css">
@@ -17,6 +19,7 @@
       }
   }
 </script>
-<script src="{{ url_for('static', filename='image.js') }}" defer type="module"></script>
+<script src="{{ url_for('static', filename='image-edit.js') }}" defer type="module"></script>
+{% endif %}
 {% endblock head %}
 {% block main_tag_attributes %}{{ super() }} data-depicted-properties='{{ depicted_properties() | tojson }}'{% endblock main_tag_attributes %}
