@@ -7,14 +7,14 @@
 {% if user_logged_in() %}
 <link rel="stylesheet" href="https://tools-static.wmflabs.org/cdnjs/ajax/libs/cropperjs/1.5.12/cropper.min.css">
 <script src="https://tools-static.wmflabs.org/cdnjs/ajax/libs/cropperjs/1.5.12/cropper.min.js" defer></script>
-<link rel="stylesheet" href="https://tools-static.wmflabs.org/cdnjs/ajax/libs/codex/0.15.0/codex.style.css">
-<link rel="stylesheet" href="https://tools-static.wmflabs.org/cdnjs/ajax/libs/codex-design-tokens/0.14.0/theme-wikimedia-ui.css">
+<link rel="stylesheet" href="https://tools-static.wmflabs.org/cdnjs/ajax/libs/codex/1.0.0/codex.style.css">
+<link rel="stylesheet" href="https://tools-static.wmflabs.org/cdnjs/ajax/libs/codex-design-tokens/1.0.0/theme-wikimedia-ui.css">
 <script type="importmap">
   {
       "imports": {
           "vue": "https://tools-static.wmflabs.org/cdnjs/ajax/libs/vue/3.3.4/vue.esm-browser.min.js",
-          "codex": "https://tools-static.wmflabs.org/cdnjs/ajax/libs/codex/0.15.0/codex.mjs",
-          "codex-icons": "https://tools-static.wmflabs.org/cdnjs/ajax/libs/codex-icons/0.15.0/codex-icons.mjs",
+          "codex": "https://tools-static.wmflabs.org/cdnjs/ajax/libs/codex/1.0.0/codex.mjs",
+          "codex-icons": "https://tools-static.wmflabs.org/cdnjs/ajax/libs/codex-icons/1.0.0/codex-icons.mjs",
           "m3api/": "{{ url_for('static', filename='node_modules/m3api/') }}"
       }
   }
