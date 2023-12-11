@@ -397,7 +397,7 @@ function setup() {
         </cdx-button>
         -->
     </div>
-</cdx-field>
+</form>
 `,
             components: codex,
             data() {
