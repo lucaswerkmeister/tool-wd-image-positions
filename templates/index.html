@@ -3,14 +3,14 @@
 {% block main %}
 <h1>Wikidata Image Positions</h1>
 <p>
-  This tool shows <a href="https://www.wikidata.org/wiki/Property:P2677">relative position within image</a> qualifiers
-  of <a href="https://www.wikidata.org/wiki/Property:P180">depicts</a> or
-  <a href="https://www.wikidata.org/wiki/Property:P9664">named place on map</a> statements
+  This tool shows {{ item_link('P2677', labels.P2677) }} qualifiers
+  of {{ item_link('P180', labels.P180) }} or
+  {{ item_link('P9664', labels.P9664) }} statements
   as areas on the relevant image.
 </p>
 <p>
   For statements on <a href="https://www.wikidata.org/">Wikidata</a> items,
-  they are shown on the item’s <a href="https://www.wikidata.org/wiki/Property:P18">image</a>
+  they are shown on the item’s {{ item_link('P18', labels.P18) }}
   (or other property).
   For statements on <a href="https://commons.wikimedia.org/wiki/Special:MyLanguage/Commons:Structured_data">Structured Data on Commons</a> files,
   they are shown on the file itself.

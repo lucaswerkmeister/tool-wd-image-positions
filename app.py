@@ -120,7 +120,8 @@ def index():
         if 'image_title' in flask.request.form:
             image_title = parse_image_title_input(flask.request.form['image_title'])
             return flask.redirect(flask.url_for('file', image_title=image_title))
-    return flask.render_template('index.html')
+    return flask.render_template('index.html',
+                                 labels=load_labels(['P2677', 'P180', 'P9664', 'P18'], request_language_codes()))
 
 def parse_item_id_input(input):
     # note: “item” here (and elsewhere in the tool, though not sure if *everywhere* else) refers to any non-MediaInfo entity type
