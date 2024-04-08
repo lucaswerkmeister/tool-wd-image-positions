@@ -220,12 +220,14 @@ def oauth_callback():
                                      query_string=flask.request.query_string.decode('utf8'))
     access_token = mwoauth.complete('https://www.wikidata.org/w/index.php', consumer_token, mwoauth.RequestToken(**oauth_request_token), flask.request.query_string, user_agent=user_agent)
     flask.session['oauth_access_token'] = dict(zip(access_token._fields, access_token))
+    flask.session.permanent = True
     flask.session.pop('_csrf_token', None)
     return flask.redirect(flask.url_for('index'))
 
 @app.route('/logout')
 def logout():
     flask.session.pop('oauth_request_token', None)
+    flask.session.permanent = False
     return flask.redirect(flask.url_for('index'))
 
 @app.route('/item/<item_id>')
