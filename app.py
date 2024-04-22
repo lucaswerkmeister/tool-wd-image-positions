@@ -20,11 +20,13 @@ import urllib.parse
 import yaml
 
 from exceptions import WrongDataValueType
+from toolforge_i18n.flask_things import ToolforgeI18n, message
 import messages
 
 
 app = flask.Flask(__name__)
 app.jinja_env.add_extension('jinja2.ext.do')
+i18n = ToolforgeI18n(app)
 
 user_agent = toolforge.set_user_agent('lexeme-forms', email='mail@lucaswerkmeister.de')
 
@@ -535,7 +537,9 @@ def authentication_area():
     if userinfo is None:
         return (Markup(r'<a id="login" class="navbar-text" href="') +
                 Markup.escape(flask.url_for('login')) +
-                Markup(r'">Log in</a>'))
+                Markup(r'">') +
+                message('nav-login') +
+                Markup(r'</a>'))
 
     csrf_token = flask.session.get('_csrf_token')
     if not csrf_token:

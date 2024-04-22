@@ -1,3 +1,5 @@
+babel
+beautifulsoup4
 cachetools
 decorator
 flake8
