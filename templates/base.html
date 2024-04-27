@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html {{ push_html_lang( g.interface_language_code ) }}>
   <head>
     {% block head %}
     <meta charset="utf-8">
@@ -27,4 +27,4 @@
       {% endblock main %}
     </main>
   </body>
-</html>
+</html{{ pop_html_lang( g.interface_language_code ) }}>

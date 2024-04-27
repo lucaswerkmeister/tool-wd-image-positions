@@ -20,7 +20,7 @@ import urllib.parse
 import yaml
 
 from exceptions import WrongDataValueType
-from toolforge_i18n.flask_things import ToolforgeI18n, message
+from toolforge_i18n.flask_things import ToolforgeI18n, message, pop_html_lang, push_html_lang
 import messages
 
 
@@ -494,24 +494,28 @@ def user_link(user_name):
 def item_link(item_id, label):
     return (Markup(r'<a href="http://www.wikidata.org/entity/') +
             Markup.escape(item_id) +
-            Markup(r'" lang="') +
-            Markup.escape(label['language']) +
-            Markup(r'" data-entity-id="') +
+            Markup(r'" ') +
+            push_html_lang(label['language']) +
+            Markup(r' data-entity-id="') +
             Markup.escape(item_id) +
             Markup(r'">') +
             Markup.escape(label['value']) +
-            Markup(r'</a>'))
+            Markup(r'</a') +
+            pop_html_lang(label['language']) +
+            Markup(r'>'))
 
 @app.template_filter()
 def depicted_item_link(depicted):
     if 'item_id' in depicted:
         return item_link(depicted['item_id'], depicted['label'])
     else:
-        return (Markup(r'<span class="wd-image-positions--snaktype-not-value" lang="') +
-                Markup.escape(depicted['label']['language']) +
-                Markup(r'">') +
+        return (Markup(r'<span class="wd-image-positions--snaktype-not-value" ') +
+                push_html_lang(depicted['label']['language']) +
+                Markup(r'>') +
                 Markup.escape(depicted['label']['value']) +
-                Markup(r'</span>'))
+                Markup(r'</span') +
+                pop_html_lang(depicted['label']['language']) +
+                Markup(r'>'))
 
 @app.template_global()
 def authentication_area():
