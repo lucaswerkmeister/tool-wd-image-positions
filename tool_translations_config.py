@@ -10,6 +10,7 @@ _variables = {
     'index-paragraph-2': ['url_wikidata', 'P18', 'url_sdoc'],
     'index-placeholder-item-id': ['example_id', 'example_url'],  # example_url is *not* a “url” argument
     'index-placeholder-file-title': ['example_name', 'example_id', 'example_url'],  # ditto
+    'alert-not-logged-in': ['url'],
 }
 
 
@@ -23,6 +24,7 @@ _derived_messages = {
 _allowed_html_elements = {
     'abbr': {'title'},
     'small': set(),
+    'noscript': set(),
 }
 
 

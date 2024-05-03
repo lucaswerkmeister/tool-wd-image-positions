@@ -23,5 +23,7 @@
 	"index-label-file-title": "File title",
 	"index-placeholder-file-title": "$1 or $2 or $3 or similar",
 	"index-heading-by-iiif": "By IIIF region and property",
-	"index-label-iiif-region": "<abbr title=\"International Image Interoperability Framework\">IIIF</abbr> region"
+	"index-label-iiif-region": "<abbr title=\"International Image Interoperability Framework\">IIIF</abbr> region",
+	"alert-not-logged-in": "You are not logged in<noscript> and JavaScript is disabled</noscript>, so you can only view existing regions and statements. To add new statements or regions or edit existing ones, [$1 log in]<noscript> and enable JavaScript</noscript>.",
+	"alert-noscript": "JavaScript is disabled, so you can only view existing regions and statements. To add new statements or regions or edit existing ones, enable JavaScript."
 }
