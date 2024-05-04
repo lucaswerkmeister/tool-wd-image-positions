@@ -1,52 +1,51 @@
 {% extends "base.html" %}
 {% block main_tag_attributes %}class="container mt-3"{% endblock main_tag_attributes %}
 {% block main %}
-<h1>Wikidata Image Positions</h1>
+<h1>{{ message('index-h1') }}</h1>
 <p>
-  This tool shows {{ item_link('P2677', labels.P2677) }} qualifiers
-  of {{ item_link('P180', labels.P180) }} or
-  {{ item_link('P9664', labels.P9664) }} statements
-  as areas on the relevant image.
+  {{ message('index-paragraph-1',
+             P2677=item_link('P2677', labels.P2677),
+             P180=item_link('P180', labels.P180),
+             P9664=item_link('P9664', labels.P9664)) }}
 </p>
 <p>
-  For statements on <a href="https://www.wikidata.org/">Wikidata</a> items,
-  they are shown on the item’s {{ item_link('P18', labels.P18) }}
-  (or other property).
-  For statements on <a href="https://commons.wikimedia.org/wiki/Special:MyLanguage/Commons:Structured_data">Structured Data on Commons</a> files,
-  they are shown on the file itself.
+  {{ message('index-paragraph-2',
+             url_wikidata='https://www.wikidata.org/',
+             P18=item_link('P18', labels.P18),
+             url_sdoc='https://commons.wikimedia.org/wiki/Special:MyLanguage/Commons:Structured_data') }}
 </p>
-<h2 class="mt-4">By item and property</h2>
+<h2 class="mt-4">{{ message('index-heading-by-item-and-property') }}</h2>
 <form method="post">
   <div class="mb-3">
-    <label for="item_id" class="form-label">Item ID</label>
-    <input type="text" id="item_id" name="item_id" class="form-control" required placeholder="Q1231009 or https://www.wikidata/org/wiki/Q1231009 or similar">
+    <label for="item_id" class="form-label">{{ message('index-label-item-id') }}</label>
+    <input type="text" id="item_id" name="item_id" class="form-control" required placeholder="{{ message('index-placeholder-item-id', example_id='Q1231009', example_url='https://www.wikidata/org/wiki/Q1231009') | striptags }}">
   </div>
   <div class="mb-3">
-    <label for="item_property_id" class="form-label">Property ID <small>(optional)</small></label>
+    <label for="item_property_id" class="form-label">{{ message('index-label-property-id-optional') }}</label>
     <input type="text" id="item_property_id" name="property_id" class="form-control" placeholder="P18" pattern="P[1-9][0-9]*">
   </div>
-  <button type="submit" class="btn btn-primary">Load</button>
-  <button type="submit" name="preview" class="btn btn-secondary">Preview IIIF</button>
-  <button type="submit" name="manifest" class="btn btn-secondary">IIIF Manifest</button>
+  <button type="submit" class="btn btn-primary">{{ message('index-button-load') }}</button>
+  <button type="submit" name="preview" class="btn btn-secondary">{{ message('index-button-preview-iiif') }}</button>
+  <button type="submit" name="manifest" class="btn btn-secondary">{{ message('index-button-iiif-manifest') }}</button>
 </form>
-<h2 class="mt-4">By file</h2>
+<h2 class="mt-4">{{ message('index-heading-by-file') }}</h2>
 <form method="post">
   <div class="mb-3">
-    <label for="image_title" class="form-label">File title</label>
-    <input type="text" id="image_title" name="image_title" class="form-control" required placeholder="Test.png or M56855503 or https://commons.wikimedia.org/wiki/File:Test.png or similar">
+    <label for="image_title" class="form-label">{{ message('index-label-file-title') }}</label>
+    <input type="text" id="image_title" name="image_title" class="form-control" required placeholder="{{ message('index-placeholder-file-title', example_name='Test.png', example_id='M56855503', example_url='https://commons.wikimedia.org/wiki/File:Test.png') | striptags }}">
   </div>
-  <button type="submit" class="btn btn-primary">Load</button>
+  <button type="submit" class="btn btn-primary">{{ message('index-button-load') }}</button>
 </form>
-<h2 class="mt-4">By IIIF region and property</h2>
+<h2 class="mt-4">{{ message('index-heading-by-iiif') }}</h2>
 <form method="post">
   <div class="mb-3">
-    <label for="iiif_region" class="form-label"><a href="https://iiif.io/api/image/2.0/#region"><abbr title="International Image Interoperability Framework">IIIF</abbr> region</a></label>
+    <label for="iiif_region" class="form-label"><a href="https://iiif.io/api/image/2.0/#region">{{ message('index-label-iiif-region') }}</a></label>
     <input type="text" id="iiif_region" name="iiif_region" class="form-control" required placeholder="pct:27.2,30,13.1,21.6" pattern="pct:((100|[1-9]?\d(\.\d+)?),){3}(100|[1-9]?\d(\.\d+)?)">
   </div>
   <div class="mb-3">
-    <label for="iiif_property_id" class="form-label">Property ID <small>(optional)</small></label>
+    <label for="iiif_property_id" class="form-label">{{ message('index-label-property-id-optional') }}</label>
     <input type="text" id="iiif_property_id" name="property_id" class="form-control" placeholder="P18" pattern="P[1-9][0-9]*">
   </div>
-  <button type="submit" class="btn btn-primary">Load</button>
+  <button type="submit" class="btn btn-primary">{{ message('index-button-load') }}</button>
 </form>
 {% endblock %}

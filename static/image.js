@@ -1,6 +1,8 @@
 function setup() {
     'use strict';
 
+    const translations = JSON.parse(document.getElementsByTagName('main')[0].dataset.translations);
+
     function addScaleInputs() {
         document.querySelectorAll('.wd-image-positions--wrapper').forEach(addScaleInput);
     }
@@ -19,7 +21,7 @@ function setup() {
         // which must be direct siblings of the wrapper for the CSS to work)
         const div = document.createElement('div');
         const label = document.createElement('label');
-        label.textContent = 'Image scale: ';
+        label.innerHTML = translations['image-scale'];
         const input = document.createElement('input');
         input.type = 'range';
         input.value = value;

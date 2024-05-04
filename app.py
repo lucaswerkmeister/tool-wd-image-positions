@@ -20,11 +20,13 @@ import urllib.parse
 import yaml
 
 from exceptions import WrongDataValueType
+from toolforge_i18n.flask_things import ToolforgeI18n, message, pop_html_lang, push_html_lang
 import messages
 
 
 app = flask.Flask(__name__)
 app.jinja_env.add_extension('jinja2.ext.do')
+i18n = ToolforgeI18n(app)
 
 user_agent = toolforge.set_user_agent('lexeme-forms', email='mail@lucaswerkmeister.de')
 
@@ -121,7 +123,7 @@ def index():
             image_title = parse_image_title_input(flask.request.form['image_title'])
             return flask.redirect(flask.url_for('file', image_title=image_title))
     return flask.render_template('index.html',
-                                 labels=load_labels(['P2677', 'P180', 'P9664', 'P18'], request_language_codes()))
+                                 labels=load_labels(['P2677', 'P180', 'P9664', 'P18']))
 
 def parse_item_id_input(input):
     # note: “item” here (and elsewhere in the tool, though not sure if *everywhere* else) refers to any non-MediaInfo entity type
@@ -363,7 +365,6 @@ def file_depicteds_html(image_title):
 
 @app.route('/api/v1/add_statement/<domain>', methods=['POST'])
 def api_add_statement(domain):
-    language_codes = request_language_codes()
     entity_id = flask.request.form.get('entity_id')
     snaktype = flask.request.form.get('snaktype')
     item_id = flask.request.form.get('item_id')
@@ -399,14 +400,14 @@ def api_add_statement(domain):
     if snaktype == 'value':
         value = json.dumps({'entity-type': 'item', 'id': item_id})
         depicted['item_id'] = item_id
-        labels = load_labels([item_id], language_codes)
+        labels = load_labels([item_id])
         depicted['label'] = labels[item_id]
     else:
         value = None
         if snaktype == 'somevalue':
-            depicted['label'] = messages.somevalue(language_codes[0])
+            depicted['label'] = messages.somevalue(flask.g.interface_language_code)
         elif snaktype == 'novalue':
-            depicted['label'] = messages.novalue(language_codes[0])
+            depicted['label'] = messages.novalue(flask.g.interface_language_code)
         else:
             raise ValueError('Unknown snaktype')
     try:
@@ -493,24 +494,28 @@ def user_link(user_name):
 def item_link(item_id, label):
     return (Markup(r'<a href="http://www.wikidata.org/entity/') +
             Markup.escape(item_id) +
-            Markup(r'" lang="') +
-            Markup.escape(label['language']) +
-            Markup(r'" data-entity-id="') +
+            Markup(r'" ') +
+            push_html_lang(label['language']) +
+            Markup(r' data-entity-id="') +
             Markup.escape(item_id) +
             Markup(r'">') +
             Markup.escape(label['value']) +
-            Markup(r'</a>'))
+            Markup(r'</a') +
+            pop_html_lang(label['language']) +
+            Markup(r'>'))
 
 @app.template_filter()
 def depicted_item_link(depicted):
     if 'item_id' in depicted:
         return item_link(depicted['item_id'], depicted['label'])
     else:
-        return (Markup(r'<span class="wd-image-positions--snaktype-not-value" lang="') +
-                Markup.escape(depicted['label']['language']) +
-                Markup(r'">') +
+        return (Markup(r'<span class="wd-image-positions--snaktype-not-value" ') +
+                push_html_lang(depicted['label']['language']) +
+                Markup(r'>') +
                 Markup.escape(depicted['label']['value']) +
-                Markup(r'</span>'))
+                Markup(r'</span') +
+                pop_html_lang(depicted['label']['language']) +
+                Markup(r'>'))
 
 @app.template_global()
 def authentication_area():
@@ -535,7 +540,9 @@ def authentication_area():
     if userinfo is None:
         return (Markup(r'<a id="login" class="navbar-text" href="') +
                 Markup.escape(flask.url_for('login')) +
-                Markup(r'">Log in</a>'))
+                Markup(r'">') +
+                message('nav-login') +
+                Markup(r'</a>'))
 
     csrf_token = flask.session.get('_csrf_token')
     if not csrf_token:
@@ -562,8 +569,6 @@ def handle_wrong_data_value_type(error):
 
 def load_item_and_property(item_id, property_id,
                            include_depicteds=False, include_description=False, include_metadata=False):
-    language_codes = request_language_codes()
-
     props = ['claims']
     if include_description:
         props.append('descriptions')
@@ -572,7 +577,8 @@ def load_item_and_property(item_id, property_id,
     api_response = session.get(action='wbgetentities',
                                props=props,
                                ids=item_id,
-                               languages=language_codes)
+                               languages=[flask.g.interface_language_code],
+                               languagefallback=True)
     item_data = api_response['entities'][item_id]
     item = {
         'entity_id': item_id,
@@ -580,19 +586,15 @@ def load_item_and_property(item_id, property_id,
     entity_ids = [item_id]
 
     if include_description:
-        description = None
-        for language_code in language_codes:
-            if language_code in item_data['descriptions']:
-                description = item_data['descriptions'][language_code]
-                break
-        item['description'] = description
+        item['description'] = item_data.get('descriptions', {})\
+                                       .get(flask.g.interface_language_code)
 
     image_datavalue = best_value(item_data, property_id)
     if image_datavalue is not None:
         if image_datavalue['type'] != 'string':
             raise WrongDataValueType(expected_data_value_type='string', actual_data_value_type=image_datavalue['type'])
         image_title = image_datavalue['value']
-        item.update(load_image(image_title, language_codes))
+        item.update(load_image(image_title))
 
     if include_depicteds:
         depicteds = depicted_items(item_data)
@@ -604,12 +606,12 @@ def load_item_and_property(item_id, property_id,
         metadata = entity_metadata(item_data)
         entity_ids += metadata.keys()
 
-    labels = load_labels(entity_ids, language_codes)
+    labels = load_labels(entity_ids)
     item['label'] = labels[item_id]
 
     if include_depicteds:
         for depicted in depicteds:
-            depicted['label'] = depicted_label(depicted, labels, language_codes)
+            depicted['label'] = depicted_label(depicted, labels)
         item['depicteds'] = depicteds
 
     if include_metadata:
@@ -624,9 +626,7 @@ def load_item_and_property(item_id, property_id,
     return item
 
 def load_file(image_title):
-    language_codes = request_language_codes()
-
-    image = load_image(image_title, language_codes)
+    image = load_image(image_title)
     if image is None:
         return None
 
@@ -640,8 +640,7 @@ def load_file(image_title):
     session = anonymous_session('commons.wikimedia.org')
     api_response = session.get(action='wbgetentities',
                                props=['claims'],
-                               ids=[entity_id],
-                               languages=language_codes)
+                               ids=[entity_id])
     file_data = api_response['entities'][entity_id]
 
     depicteds = depicted_items(file_data)
@@ -649,21 +648,21 @@ def load_file(image_title):
         if 'item_id' in depicted:
             entity_ids.append(depicted['item_id'])
 
-    labels = load_labels(entity_ids, language_codes)
+    labels = load_labels(entity_ids)
 
     for depicted in depicteds:
-        depicted['label'] = depicted_label(depicted, labels, language_codes)
+        depicted['label'] = depicted_label(depicted, labels)
     file['depicteds'] = depicteds
 
     return file
 
-def load_image(image_title, language_codes):
+def load_image(image_title):
     """Load the metadata of an image file on Commons, without structured data."""
     session = anonymous_session('commons.wikimedia.org')
 
     query_params = query_default_params()
     query_params.setdefault('titles', set()).update(['File:' + image_title])
-    image_attribution_query_add_params(query_params, image_title, language_codes[0])
+    image_attribution_query_add_params(query_params, image_title)
     image_url_query_add_params(query_params, image_title)
     image_size_query_add_params(query_params, image_title)
 
@@ -673,7 +672,7 @@ def load_image(image_title, language_codes):
         return None
 
     page_id = page['pageid']
-    attribution = image_attribution_query_process_response(query_response, image_title, language_codes[0])
+    attribution = image_attribution_query_process_response(query_response, image_title)
     url = image_url_query_process_response(query_response, image_title)
     width, height = image_size_query_process_response(query_response, image_title)
     return {
@@ -685,13 +684,13 @@ def load_image(image_title, language_codes):
         'image_height': height,
     }
 
-def depicted_label(depicted, labels, language_codes):
+def depicted_label(depicted, labels):
     if 'item_id' in depicted:
         return labels[depicted['item_id']]
     elif depicted['snaktype'] == 'somevalue':
-        return messages.somevalue(language_codes[0])
+        return messages.somevalue(flask.g.interface_language_code)
     elif depicted['snaktype'] == 'novalue':
-        return messages.novalue(language_codes[0])
+        return messages.novalue(flask.g.interface_language_code)
     else:
         raise ValueError('depicted has neither item ID nor somevalue/novalue snaktype')
 
@@ -728,7 +727,7 @@ def build_manifest(item):
         manifest.label = iiif_item_label
     if iiif_item_description is not None:
         manifest.description = iiif_item_description
-    attribution = image_attribution(item['image_title'], request_language_codes()[0])
+    attribution = image_attribution(item['image_title'])
     if attribution is not None:
         manifest.attribution = attribution['attribution_text']
         manifest.license = attribution['license_url']
@@ -763,28 +762,6 @@ def populate_canvas(canvas, item, fac):
     canvas.thumbnail.format = image_info['mime']
     thumbwidth, thumbheight = 400, int(height * (400 / width))
     canvas.thumbnail.set_hw(thumbheight, thumbwidth)
-
-def request_language_codes():
-    """Determine the MediaWiki language codes to use from the request context."""
-    # this could be made more accurate by using meta=languageinfo to match MediaWiki and BCP 47
-    language_codes = flask.request.args.getlist('uselang')
-
-    for accept_language in flask.request.headers.get('Accept-Language', '').split(','):
-        language_code = accept_language.split(';')[0].strip()
-        if language_code == '*' or not language_code:
-            continue
-        language_code = language_code.lower()
-        if '-' in language_code:
-            # these almost never match between MediaWiki and BCP 47:
-            # https://gist.github.com/lucaswerkmeister/3469d5e7edbc59a8d03f347d35eed585
-            language_codes.append(language_code.split('-')[0])
-        else:
-            # these often match between MediaWiki and BCP 47, just assume they do
-            language_codes.append(language_code)
-
-    language_codes.append('en')
-
-    return language_codes
 
 def best_value(entity_data, property_id):
     if property_id not in entity_data['claims']:
@@ -896,34 +873,37 @@ def entity_metadata(entity_data):
 
     return metadata
 
-def load_labels(entity_ids, language_codes):
+def load_labels(entity_ids):
+    """Load the labels of the given entity IDs in the interface language."""
     entity_ids = list(set(entity_ids))
     labels = {}
     session = anonymous_session('www.wikidata.org')
     for chunk in [entity_ids[i:i + 50] for i in range(0, len(entity_ids), 50)]:
-        items_data = session.get(action='wbgetentities', props='labels', languages=language_codes, ids=chunk)['entities']
+        items_data = session.get(action='wbgetentities',
+                                 props='labels',
+                                 languages=[flask.g.interface_language_code],
+                                 languagefallback=True,
+                                 ids=chunk)['entities']
         for entity_id, item_data in items_data.items():
-            labels[entity_id] = {'language': 'zxx', 'value': entity_id}
-            for language_code in language_codes:
-                if language_code in item_data['labels']:
-                    labels[entity_id] = item_data['labels'][language_code]
-                    break
+            labels[entity_id] = item_data.get('labels', {})\
+                                         .get(flask.g.interface_language_code,
+                                              {'language': 'zxx', 'value': entity_id})
     return labels
 
-def image_attribution(image_title, language_code):
+def image_attribution(image_title):
     params = query_default_params()
-    image_attribution_query_add_params(params, image_title, language_code)
+    image_attribution_query_add_params(params, image_title)
     session = anonymous_session('commons.wikimedia.org')
     response = session.get(**params)
-    return image_attribution_query_process_response(response, image_title, language_code)
+    return image_attribution_query_process_response(response, image_title)
 
-def image_attribution_query_add_params(params, image_title, language_code):
+def image_attribution_query_add_params(params, image_title):
     params.setdefault('prop', set()).update(['imageinfo'])
     params.setdefault('iiprop', set()).update(['extmetadata'])
-    params['iiextmetadatalanguage'] = language_code
+    params['iiextmetadatalanguage'] = flask.g.interface_language_code
     params.setdefault('titles', set()).update(['File:' + image_title])
 
-def image_attribution_query_process_response(response, image_title, language_code):
+def image_attribution_query_process_response(response, image_title):
     page = query_response_page(response, 'File:' + image_title)
     imageinfo = page['imageinfo'][0]
     metadata = imageinfo['extmetadata']

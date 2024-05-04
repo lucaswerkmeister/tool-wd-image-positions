@@ -22,4 +22,6 @@
 <script src="{{ url_for('static', filename='image-edit.js') }}" defer type="module"></script>
 {% endif %}
 {% endblock head %}
-{% block main_tag_attributes %}{{ super() }} data-depicted-properties='{{ depicted_properties() | tojson }}'{% endblock main_tag_attributes %}
+{% block main_tag_attributes %}{{ super() }} data-depicted-properties='{{ depicted_properties() | tojson }}' data-translations='{{ {
+  'image-scale': message('image-scale'),
+} | tojson }}'{% endblock main_tag_attributes %}

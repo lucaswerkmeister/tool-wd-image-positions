@@ -1,0 +1,30 @@
+{
+	"@metadata": {
+		"authors": [
+			"Lucas Werkmeister"
+		]
+	},
+	"tool-name": "Wikidata Image Positions",
+	"skip-to-main-content": "Skip to main content",
+	"nav-documentation": "Documentation",
+	"nav-toolforge": "Wikimedia Toolforge",
+	"nav-source-code": "Source code",
+	"nav-login": "Log in",
+	"index-paragraph-1": "This tool shows $1 qualifiers on $2 or $3 statements as areas on the relevant image.",
+	"index-paragraph-2": "For statements on [$1 Wikidata] items, they are shown on the item’s $2 (or other property). For statements on [$3 Structured Data on Commons] files, they are shown on the file itself.",
+	"index-heading-by-item-and-property": "By item and property",
+	"index-label-item-id": "Item ID",
+	"index-placeholder-item-id": "$1 or $2 or similar",
+	"index-label-property-id-optional": "Property ID <small>(optional)</small>",
+	"index-button-load": "Load",
+	"index-button-preview-iiif": "Preview IIIF",
+	"index-button-iiif-manifest": "IIIF Manifest",
+	"index-heading-by-file": "By file",
+	"index-label-file-title": "File title",
+	"index-placeholder-file-title": "$1 or $2 or $3 or similar",
+	"index-heading-by-iiif": "By IIIF region and property",
+	"index-label-iiif-region": "<abbr title=\"International Image Interoperability Framework\">IIIF</abbr> region",
+	"image-scale": "Image scale:&#32;",
+	"alert-not-logged-in": "You are not logged in<noscript> and JavaScript is disabled</noscript>, so you can only view existing regions and statements. To add new statements or regions or edit existing ones, [$1 log in]<noscript> and enable JavaScript</noscript>.",
+	"alert-noscript": "JavaScript is disabled, so you can only view existing regions and statements. To add new statements or regions or edit existing ones, enable JavaScript."
+}
