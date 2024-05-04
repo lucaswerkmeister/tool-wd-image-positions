@@ -29,7 +29,7 @@
   {{ image_attribution.attribution_html }}
 </p>
 {% endif %}
-Image scale:
+{{ message('image-scale') }}
 {% for scale in [1, 2, 3, 4, 5] %}
 {{ _scale_radio(image_title, scale) }}
 {% endfor %}
