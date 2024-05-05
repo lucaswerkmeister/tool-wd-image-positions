@@ -18,6 +18,8 @@ _derived_messages = {
     'index-h1': ('tool-name', _identity),
     'html-title': ('tool-name', _identity),
     'nav-tool-name': ('tool-name', _identity),
+    'settings-link': ('settings', _identity),
+    'settings-h1': ('settings', _identity),
 }
 
 

@@ -21,6 +21,7 @@ import yaml
 
 from exceptions import WrongDataValueType
 from toolforge_i18n.flask_things import ToolforgeI18n, message, pop_html_lang, push_html_lang
+from toolforge_i18n.language_info import lang_autonym
 import messages
 
 
@@ -207,6 +208,22 @@ def parse_image_title_input(input):
 
     flask.abort(400, Markup(r'Cannot parse a file name from <kbd>{}</kbd>.').format(input))
 
+@app.get('/settings/')
+def settings():
+    return flask.render_template(
+        'settings.html',
+        languages={
+            language_code: lang_autonym(language_code)
+            for language_code in i18n.translations
+        },
+    )
+
+@app.post('/settings/')
+def settings_save():
+    if 'interface-language-code' in flask.request.form:
+        flask.session['interface_language_code'] = flask.request.form['interface-language-code'][:20]
+    return flask.redirect(flask.url_for('index'))
+
 @app.route('/login')
 def login():
     redirect, request_token = mwoauth.initiate('https://www.wikidata.org/w/index.php', consumer_token, user_agent=user_agent)
@@ -379,7 +396,7 @@ def api_add_statement(domain):
     if property_id not in depicted_properties:
         return 'Bad property ID', 400
 
-    if csrf_token != flask.session['_csrf_token']:
+    if csrf_token != csrf_token():
         return 'Wrong CSRF token (try reloading the page).', 403
 
     if not flask.request.referrer.startswith(full_url('index')):
@@ -433,7 +450,7 @@ def api_add_qualifier(domain):
     if not statement_id or not iiif_region or not csrf_token:
         return 'Incomplete form data', 400
 
-    if csrf_token != flask.session['_csrf_token']:
+    if csrf_token != csrf_token():
         return 'Wrong CSRF token (try reloading the page).', 403
 
     if not flask.request.referrer.startswith(full_url('index')):
@@ -518,6 +535,12 @@ def depicted_item_link(depicted):
                 Markup(r'>'))
 
 @app.template_global()
+def csrf_token() -> str:
+    if '_csrf_token' not in flask.session:
+        flask.session['_csrf_token'] = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(64))
+    return flask.session['_csrf_token']
+
+@app.template_global()
 def authentication_area():
     if 'OAUTH' not in app.config:
         return Markup()
@@ -544,15 +567,10 @@ def authentication_area():
                 message('nav-login') +
                 Markup(r'</a>'))
 
-    csrf_token = flask.session.get('_csrf_token')
-    if not csrf_token:
-        csrf_token = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(64))
-        flask.session['_csrf_token'] = csrf_token
-
     return (Markup(r'<span class="navbar-text">Logged in as ') +
             user_link(userinfo['name']) +
             Markup(r'</span><span id="csrf_token" style="display: none;">') +
-            Markup.escape(csrf_token) +
+            Markup.escape(csrf_token()) +
             Markup(r'</span>'))
 
 @app.template_global()

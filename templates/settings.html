@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block main_tag_attributes %}class="container my-3"{% endblock main_tag_attributes %}
+{% block main %}
+<h1>{{ message('settings-h1') }}</h1>
+<form method="post">
+  <input name="csrf_token" type="hidden" value="{{ csrf_token() }}">
+  <div class="mb-3">
+    <label for="interface-language-code">
+      {{ message( 'settings-label-interface-language-code' ) }}
+    </label>
+    <select id="interface-language-code" name="interface-language-code" class="form-control">
+      {% for language_code, autonym in languages | dictsort( by='value' ) %}
+      <option
+        {% if language_code == g.interface_language_code %} selected {% endif %}
+        value="{{ language_code }}"
+        lang="{{ language_code | lang_mw_to_bcp47 }}"
+        {# no dir=, all the options should be aligned on the same side #}
+        >
+        {{ autonym }}
+      </option>
+      {% endfor %}
+    </select>
+  </div>
+  <button type="submit" class="btn btn-primary">{{ message( 'settings-save' ) }}</button>
+</form>
+{% endblock %}
