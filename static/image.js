@@ -9,7 +9,7 @@ function setup() {
 
     function addScaleInput(wrapper) {
         // remove the no-JS inputs, labels, and <br> before the wrapper
-        const nodesToRemove = new Set(['#text', 'BR', 'LABEL', 'INPUT']);
+        const nodesToRemove = new Set(['#text', 'BR', 'LABEL', 'INPUT', 'SPAN']);
         let node, value = 1;
         while (nodesToRemove.has((node = wrapper.previousSibling).nodeName)) {
             if (node.checked) {
