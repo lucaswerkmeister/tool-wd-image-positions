@@ -1,0 +1,30 @@
+{
+	"@metadata": {
+		"authors": [
+			"Jon Harald Søby"
+		]
+	},
+	"tool-name": "Bildeposisjoner på Wikidata",
+	"skip-to-main-content": "Hopp til hovedinnholdet",
+	"nav-documentation": "Dokumentasjon",
+	"nav-toolforge": "Wikimedia Toolforge",
+	"nav-source-code": "Kildekode",
+	"nav-login": "Logg inn",
+	"index-paragraph-1": "Dette verktøyet viser $1-kvalifikatorer som gjelder påstandene $2 eller $3 som områder på det relevante bildet.",
+	"index-paragraph-2": "Utsagn på [$1 Wikidata]-elementer vises på elementets $2 (eller en annen egenskap). For utsagn i [$3 Commons-filer med strukturerte data] blir de vist på selve bildet.",
+	"index-heading-by-item-and-property": "Etter element og egenskap",
+	"index-label-item-id": "Element-ID",
+	"index-placeholder-item-id": "$1, $2 eller lignende",
+	"index-label-property-id-optional": "Egenskaps-ID <small>(valgfritt)</small>",
+	"index-button-load": "Last",
+	"index-button-preview-iiif": "Forhåndsvis IIIF",
+	"index-button-iiif-manifest": "IIIF-manifest",
+	"index-heading-by-file": "Etter fil",
+	"index-label-file-title": "Filtittel",
+	"index-placeholder-file-title": "$1, $2, $3 eller lignende",
+	"index-heading-by-iiif": "Etter IIIF-region og -egenskap",
+	"index-label-iiif-region": "<abbr title=\"International Image Interoperability Framework\">IIIF</abbr>-region",
+	"image-scale": "Bildeskala:",
+	"alert-not-logged-in": "Du er ikke innlogget<noscript> og JavaScript er deaktivert</noscript>, så du kan kun vise eksisterende regioner og utsagn. For å legge til nye utsagn eller regioner eller redigere eksisterende må du [$1 logge inn]<noscript> og aktivere JavaScript</noscript>.",
+	"alert-noscript": "JavaScript er deaktivert, så du kan kun vise eksisterende regioner og utsagn. For å legge til nye utsagn eller regioner eller redigere eksisterende må du aktivere JavaScript."
+}

@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Lucas Werkmeister"
+			"Lucas Werkmeister",
+			"Siebrand"
 		]
 	},
 	"tool-name": "The name of the tool. This message is currently used for the page title, navigation bar / menu, and heading on the index page; those uses could later be split up into separate messages if necessary.",
@@ -18,13 +19,13 @@
 	"index-placeholder-item-id": "Placeholder for an input for a Wikidata item ID.\n\nParameters:\n* $1 - one possible format (item ID)\n* $2 - another possible format (full item URL)",
 	"index-label-property-id-optional": "Label for an optional input for a Wikidata property ID.",
 	"index-button-load": "Label for several buttons to load data.",
-	"index-button-preview-iiif": "Label for a button to preview a IIIF manifest on another tool. IIIF ([[:en:International Image Interoperability Framework|International Image Interoperability Framework]]) is not usually translated.",
-	"index-button-iiif-manifest": "Label for a button to generate a IIIF manifest. IIIF ([[:en:International Image Interoperability Framework|International Image Interoperability Framework]]) is not usually translated.",
+	"index-button-preview-iiif": "Label for a button to preview an IIIF manifest on another tool. IIIF ([[:w:International Image Interoperability Framework|International Image Interoperability Framework]]) is not usually translated.",
+	"index-button-iiif-manifest": "Label for a button to generate a IIIF manifest. IIIF ([[:w:International Image Interoperability Framework|International Image Interoperability Framework]]) is not usually translated.",
 	"index-heading-by-file": "Heading on the tool’s index page. “File” refers to media files on Wikimedia Commons. “By” has the same meaning as in e.g. {{msg-mw|special-itembytitle}}.",
 	"index-label-file-title": "Label for an input for a Wikimedia Commons file.",
 	"index-placeholder-file-title": "Placeholder for an input for a Wikimedia Commons file.\n\nParameters:\n* $1 - one possible format (file name)\n* $2 - another possible format (MediaInfo entity ID)\n* $3 - another possible format (full file URL)",
-	"index-heading-by-iiif": "Heading on the tool’s index page. IIIF ([[:en:International Image Interoperability Framework|International Image Interoperability Framework]]) is not usually translated. “Property” refers to Wikidata entities ({{msg-mw|wikibase-entity-property}}). “By” has the same meaning as in e.g. {{msg-mw|special-itembytitle}}.",
-	"index-label-iiif-region": "Label for an input for a IIIF region. The whole message is wrapped in a link to the relevant IIIF specification. IIIF ([[:en:International Image Interoperability Framework|International Image Interoperability Framework]]) is not usually translated.",
+	"index-heading-by-iiif": "Heading on the tool’s index page. IIIF ([[:w:International Image Interoperability Framework|International Image Interoperability Framework]]) is not usually translated. “Property” refers to Wikidata entities ({{msg-mw|wikibase-entity-property}}). “By” has the same meaning as in e.g. {{msg-mw|special-itembytitle}}.",
+	"index-label-iiif-region": "Label for an input for a IIIF region. The whole message is wrapped in a link to the relevant IIIF specification. IIIF ([[:w:International Image Interoperability Framework|International Image Interoperability Framework]]) is not usually translated.",
 	"image-scale": "Label for an input (or set of inputs) that let the user scale the size of the image between 0× and 5× (a kind of “zoom in” or “zoom out”).",
 	"alert-not-logged-in": "Message shown when the user is not logged into the tool. The parts in &lt;noscript&gt; are additionally only shown to users who have JavaScript disabled, and effectively duplicate the information from {{msg-wm|wikidata-image-positions-alert-noscript}}.\n\nParameters:\n* $1 - URL for the login link",
 	"alert-noscript": "Message shown when the user is logged in, but has JavaScript disabled. The entire message is wrapped in &lt;noscript&gt; by the tool; compare also {{msg-wm|wikidata-image-positions-alert-not-logged-in}}.",

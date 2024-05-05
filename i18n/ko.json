@@ -1,0 +1,25 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ykhwong"
+		]
+	},
+	"tool-name": "위키데이터 이미지 위치",
+	"skip-to-main-content": "본문 내용으로 건너뛰기",
+	"nav-documentation": "설명문서",
+	"nav-toolforge": "위키미디어 툴포지",
+	"nav-source-code": "소스 코드",
+	"nav-login": "로그인",
+	"index-heading-by-item-and-property": "항목 및 속성별",
+	"index-label-item-id": "항목 ID",
+	"index-placeholder-item-id": "$1 또는 $2 또는 이와 유사한 것",
+	"index-label-property-id-optional": "속성 ID <small>(선택사항)</small>",
+	"index-button-load": "불러오기",
+	"index-button-preview-iiif": "IIIF 미리 보기",
+	"index-button-iiif-manifest": "IIIF 매니페스트",
+	"index-heading-by-file": "파일별",
+	"index-label-file-title": "파일 제목",
+	"index-placeholder-file-title": "$1 , $2 , $3 또는 이와 유사한 것",
+	"index-heading-by-iiif": "IIIF 지역 및 속성별",
+	"image-scale": "이미지 크기:&#32;"
+}
