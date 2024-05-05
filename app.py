@@ -20,14 +20,23 @@ import urllib.parse
 import yaml
 
 from exceptions import WrongDataValueType
-from toolforge_i18n.flask_things import ToolforgeI18n, message, pop_html_lang, push_html_lang
+from toolforge_i18n.flask_things import ToolforgeI18n, interface_language_code_from_request, message, pop_html_lang, push_html_lang
 from toolforge_i18n.language_info import lang_autonym
 import messages
 
 
 app = flask.Flask(__name__)
 app.jinja_env.add_extension('jinja2.ext.do')
-i18n = ToolforgeI18n(app)
+
+def interface_language_code(translations):
+    if 'uselang' in flask.request.args:
+        return interface_language_code_from_request(translations)
+    elif flask.session.get('interface_language_code') in translations:
+        return flask.session['interface_language_code']
+    else:
+        return interface_language_code_from_request(translations)
+
+i18n = ToolforgeI18n(app, interface_language_code)
 
 user_agent = toolforge.set_user_agent('lexeme-forms', email='mail@lucaswerkmeister.de')
 
