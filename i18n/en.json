@@ -10,6 +10,7 @@
 	"nav-toolforge": "Wikimedia Toolforge",
 	"nav-source-code": "Source code",
 	"nav-login": "Log in",
+	"nav-logged-in": "{{GENDER:$2|Logged in}} as $1.",
 	"index-paragraph-1": "This tool shows $1 qualifiers on $2 or $3 statements as areas on the relevant image.",
 	"index-paragraph-2": "For statements on [$1 Wikidata] items, they are shown on the item’s $2 (or other property). For statements on [$3 Structured Data on Commons] files, they are shown on the file itself.",
 	"index-heading-by-item-and-property": "By item and property",

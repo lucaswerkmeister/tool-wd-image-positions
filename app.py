@@ -567,8 +567,9 @@ def authentication_area():
                 message('nav-login') +
                 Markup(r'</a>'))
 
-    return (Markup(r'<span class="navbar-text">Logged in as ') +
-            user_link(userinfo['name']) +
+    user_name = userinfo['name']
+    return (Markup(r'<span class="navbar-text">') +
+            Markup(message('nav-logged-in', user_link=user_link(user_name), user_name=user_name)) +
             Markup(r'</span><span id="csrf_token" style="display: none;">') +
             Markup.escape(csrf_token()) +
             Markup(r'</span>'))

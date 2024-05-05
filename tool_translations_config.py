@@ -6,6 +6,7 @@ def _identity(s: str) -> str:
 
 
 _variables = {
+    'nav-logged-in': ['user_link', 'user_name'],
     'index-paragraph-1': ['P2677', 'P180', 'P9664'],
     'index-paragraph-2': ['url_wikidata', 'P18', 'url_sdoc'],
     'index-placeholder-item-id': ['example_id', 'example_url'],  # example_url is *not* a “url” argument
