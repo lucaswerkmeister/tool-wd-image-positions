@@ -1,0 +1,16 @@
+{
+	"@metadata": {
+		"authors": [
+			"Nike"
+		]
+	},
+	"skip-to-main-content": "Siirry pääsisältöön",
+	"nav-documentation": "Käyttöohjeet",
+	"nav-toolforge": "Wikimedia Toolforge",
+	"nav-source-code": "Lähdekoodi",
+	"nav-login": "Kirjaudu sisään",
+	"index-label-item-id": "Wikidata-kohteen ID",
+	"index-placeholder-item-id": "$1 tai $2 tai vastaava",
+	"index-label-property-id-optional": "Omaisuus-ID <small>(valinnainen)</small>",
+	"index-button-load": "Lataa"
+}

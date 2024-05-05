@@ -1,0 +1,30 @@
+{
+	"@metadata": {
+		"authors": [
+			"Theklan"
+		]
+	},
+	"tool-name": "Wikidata Irudien Posizioak",
+	"skip-to-main-content": "Eduki nagusira pasa",
+	"nav-documentation": "Dokumentazioa",
+	"nav-toolforge": "Wikimedia Toolforge",
+	"nav-source-code": "Iturburu-kodea",
+	"nav-login": "Hasi saioa",
+	"index-paragraph-1": "Tresna honek $1 kalifikatzaileak $2 edo $3 adierazpenetan erakusten ditu dagokion irudiko eremu gisa.",
+	"index-paragraph-2": "[$1 Wikidata] elementuei buruzko adierazpenetarako, elementuaren $2 (edo beste jabetzan) erakusten dira. [$3 Commonseko Datu Egituratuak] fitxategiei buruzko adierazpenetarako, fitxategian bertan erakusten dira.",
+	"index-heading-by-item-and-property": "Item eta propietatearen arabera",
+	"index-label-item-id": "Elementuaren IDa",
+	"index-placeholder-item-id": "$1 edo $2 edo antzekoa",
+	"index-label-property-id-optional": "Propietatearen IDa <small>(hautazkoa)</small>",
+	"index-button-load": "Kargatu",
+	"index-button-preview-iiif": "IIIF aurreikusi",
+	"index-button-iiif-manifest": "IIIF Manifestua",
+	"index-heading-by-file": "Fitxategiaren arabera",
+	"index-label-file-title": "Fitxategiaren izenburua",
+	"index-placeholder-file-title": "$1 edo $2 edo $3 edo antzekoa",
+	"index-heading-by-iiif": "IIIF eskualde eta propietatearen arabera",
+	"index-label-iiif-region": "<abbr title=\"International Image Interoperability Framework\">IIIF</abbr> eskualdea",
+	"image-scale": "Irudiren eskala:&#32;",
+	"alert-not-logged-in": "Ez duzu saioa hasi<noscript> eta Javascript desgaituta dago</noscript>, beraz existitzen diren eskualdeak eta adierazpenak baino ezin dituzu ikusi. Adierazpen berri bat, eskualde berri bat gehitzeko, edo daudenak aldatzeko [$1 hasi saioa]<noscript> eta JavaScript gaitu</noscript>.",
+	"alert-noscript": "JavaScript desgaituta dago, beraz existitzen diren eskualdeak eta adierazpenak baino ezin dituzu ikusi. Adierazpen edo eskualde berriak gehitzeko, edo daudenak aldatzeko, Javascript gaitu behar duzu."
+}

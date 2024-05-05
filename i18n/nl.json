@@ -1,0 +1,30 @@
+{
+	"@metadata": {
+		"authors": [
+			"Siebrand"
+		]
+	},
+	"tool-name": "Wikidata Afbeeldingsposities",
+	"skip-to-main-content": "Naar hoofdinhoud springen",
+	"nav-documentation": "Documentatie",
+	"nav-toolforge": "Wikimedia Toolforge",
+	"nav-source-code": "Broncode",
+	"nav-login": "Aanmelden",
+	"index-paragraph-1": "Met dit hulpmiddel worden kwalificaties van het type $1 weergegeven op $2 of verklaringen op $3 als gebieden op de relevante afbeelding.",
+	"index-paragraph-2": "Voor verklaringen over [$1 Wikidata]-items worden deze weergegeven op de $2 van het item (of een andere eigenschap). Voor verklaringen over [$3 Structured Data on Commons]-bestanden worden deze bij het bestand zelf weergegeven.",
+	"index-heading-by-item-and-property": "Per item en eigenschap",
+	"index-label-item-id": "Item-ID:",
+	"index-placeholder-item-id": "$1 of $2 of soortgelijke",
+	"index-label-property-id-optional": "Eigenschap-ID <small>(optioneel)</small>",
+	"index-button-load": "Laden",
+	"index-button-preview-iiif": "IIIF voorbeeld bekijken",
+	"index-button-iiif-manifest": "IIIF-manifest",
+	"index-heading-by-file": "Op bestandsnaam",
+	"index-label-file-title": "Bestandsnaam",
+	"index-placeholder-file-title": "$1 of $2 of $3 of soortgelijke",
+	"index-heading-by-iiif": "Op IIIF-regio en eigenschap",
+	"index-label-iiif-region": "<abbr title=\"International Image Interoperability Framework\"></abbr>-regio",
+	"image-scale": "Afbeeldingsschaal:&#32;",
+	"alert-not-logged-in": "U bent niet aangemeld<noscript> en JavaScript is uitgeschakeld</noscript>, zodat u alleen bestaande regio's en verklaringen kunt bekijken. Om nieuwe verklaringen of regio's toe te voegen of bestaande te bewerken, [$1 meldt u zich aan]<noscript> en schakelt u JavaScript in</noscript>.",
+	"alert-noscript": "JavaScript is uitgeschakeld, dus u kunt alleen bestaande regio's en verklaringen bekijken. Schakel JavaScript in om nieuwe verklaringen of regio's toe te voegen of bestaande te bewerken."
+}

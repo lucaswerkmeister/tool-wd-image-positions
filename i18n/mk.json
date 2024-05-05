@@ -1,0 +1,30 @@
+{
+	"@metadata": {
+		"authors": [
+			"Bjankuloski06"
+		]
+	},
+	"tool-name": "Положби во слики од Википодатоците",
+	"skip-to-main-content": "Прејди на главната содржина",
+	"nav-documentation": "Документација",
+	"nav-toolforge": "Викимедиина алатница",
+	"nav-source-code": "Изворен код",
+	"nav-login": "Најава",
+	"index-paragraph-1": "Оваа алатка покажува определници за $1 на искази $2 или $3 како подрачја на релевантната слика.",
+	"index-paragraph-2": "За искази на предмети на [$1 Википодатоците], тие се прикажуваат на $2 (или друго својство) на предметот. За предмети на податотеки со [$3 Структурирани податоци на Ризницата], тие се прикажуваат на самата податотека.",
+	"index-heading-by-item-and-property": "По предмет и својство",
+	"index-label-item-id": "Назнака на предметот",
+	"index-placeholder-item-id": "$1 или $2 или слично",
+	"index-label-property-id-optional": "Назнака на својството <small>(незадолж.)</small>",
+	"index-button-load": "Вчитај",
+	"index-button-preview-iiif": "Прегледај IIIF",
+	"index-button-iiif-manifest": "Манифест на IIIF",
+	"index-heading-by-file": "По податотека",
+	"index-label-file-title": "Наслов на податотеката",
+	"index-placeholder-file-title": "$1 или $2 или $3 или слично",
+	"index-heading-by-iiif": "По IIIF-регион и својство",
+	"index-label-iiif-region": "<abbr title=\"International Image Interoperability Framework\">IIIF</abbr>-регион",
+	"image-scale": "Размер на сликата:&#32;",
+	"alert-not-logged-in": "Не сте најавени<noscript> и JavaScript е оневозможен</noscript>, па затоа можете да гледате само постоечки региони и искази. За да додавата нови искази или региони, или да менувате постоечки, [$1 најавете се]<noscript> и овозможете го JavaScript</noscript>.",
+	"alert-noscript": "JavaScript е оневозможен, па затоа можете да гледате само постоечки региони и искази. За да додавата нови искази или региони, или да менувате постоечки, овозможете го JavaScript."
+}

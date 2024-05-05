@@ -1,0 +1,30 @@
+{
+	"@metadata": {
+		"authors": [
+			"Lucas Werkmeister"
+		]
+	},
+	"tool-name": "Wikidata Bildpositionen",
+	"skip-to-main-content": "Zum Hauptinhalt springen",
+	"nav-documentation": "Dokumentation",
+	"nav-toolforge": "Wikimedia Toolforge",
+	"nav-source-code": "Quellcode",
+	"nav-login": "Anmelden",
+	"index-paragraph-1": "Dieses Werkzeug zeigt $1-Qualifikatoren auf $2- oder $3-Aussagen als Bereiche auf dem entsprechenden Bild an.",
+	"index-paragraph-2": "Aussagen auf [$1 Wikidata]-Datenobjekten werden auf dem $2 (oder anderer Eigenschaft) des Datenobjekts angezeigt. Aussagen auf Commons-Dateien mit [$3 strukturierten Daten] werden auf der Datei selbst angezeigt.",
+	"index-heading-by-item-and-property": "Nach Datenobjekt und Eigenschaft",
+	"index-label-item-id": "Objektkennung",
+	"index-placeholder-item-id": "$1 oder $2 oder ähnlich",
+	"index-label-property-id-optional": "Eigenschaftskennung <small>(optional)</small>",
+	"index-button-load": "Laden",
+	"index-button-preview-iiif": "IIIF-Vorschau",
+	"index-button-iiif-manifest": "IIIF-Manifest",
+	"index-heading-by-file": "Nach Datei",
+	"index-label-file-title": "Dateiname",
+	"index-placeholder-file-title": "$1 oder $2 oder $3 oder ähnlich",
+	"index-heading-by-iiif": "Nach IIIF-Region und Eigenschaft",
+	"index-label-iiif-region": "<abbr title=\"International Image Interoperability Framework\">IIIF</abbr>-Region",
+	"image-scale": "Bildskalierung:&#32;",
+	"alert-not-logged-in": "Du bist nicht angemeldet<noscript> und JavaScript ist deaktiviert</noscript>, daher kannst du nur bestehende Regionen und Aussagen anzeigen. Um neue Aussagen oder Regionen anzulegen oder bestehende zu bearbeiten, [$1 melde dich an]<noscript> und aktiviere JavaScript</noscript>.",
+	"alert-noscript": "JavaScript ist deaktiviert, daher kannst du nur bestehende Regionen und Aussagen anzeigen. Um neue Aussagen oder Regionen anzulegen oder bestehende zu bearbeiten, aktiviere JavaScript."
+}
