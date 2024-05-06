@@ -1,0 +1,36 @@
+{
+	"@metadata": {
+		"authors": [
+			"Cookai1205",
+			"Kly",
+			"Winston Sung"
+		]
+	},
+	"tool-name": "維基數據圖片位置",
+	"skip-to-main-content": "跳至主要內容",
+	"nav-documentation": "說明文件",
+	"nav-toolforge": "維基媒體Toolforge",
+	"nav-source-code": "原始碼",
+	"nav-login": "登入",
+	"nav-logged-in": "以 $1 {{GENDER:$2|登入}}。",
+	"index-paragraph-1": "此工具可顯示在$2的$1修飾，或是做為在相關圖片上區域的$3陳述。",
+	"index-paragraph-2": "對於[$1 維基數據]項目的陳述，僅能顯示在項目的$2（或是其他屬性）。對於[$3 維基共享資源檔案的結構化資料]的陳述，只能顯示在檔案本身。",
+	"index-heading-by-item-and-property": "依項目和屬性搜尋",
+	"index-label-item-id": "項目ID",
+	"index-placeholder-item-id": "$1 或 $2 或其他類似輸入",
+	"index-label-property-id-optional": "屬性ID<small>（選擇性）</small>",
+	"index-button-load": "載入",
+	"index-button-preview-iiif": "預覽IIIF",
+	"index-button-iiif-manifest": "IIIF 資訊清單",
+	"index-heading-by-file": "依檔案搜尋",
+	"index-label-file-title": "檔案標題",
+	"index-placeholder-file-title": "$1 或 $2 或 $3 或其他類似輸入",
+	"index-heading-by-iiif": "依IIIF區域和屬性搜尋",
+	"index-label-iiif-region": "<abbr title=\"國際圖像互通架構\">IIIF</abbr>區域（region）",
+	"image-scale": "圖片縮放比例：",
+	"alert-not-logged-in": "您尚未登入<noscript>且停用了 JavaScript</noscript>，因此您僅能檢視現有區域和陳述。要新增區域或陳述，或是編輯現有內容，請先[$1 登入]<noscript>並啟用JavaScript</noscript>。",
+	"alert-noscript": "JavaScript已停用，因此您僅能檢視現有區域和陳述。要新增區域或陳述，或是編輯現有內容，請啟用JavaScript。",
+	"settings": "設定",
+	"settings-label-interface-language-code": "使用者介面語言",
+	"settings-save": "儲存"
+}

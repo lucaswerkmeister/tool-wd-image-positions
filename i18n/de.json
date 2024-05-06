@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"21 little ducks",
 			"Lucas Werkmeister"
 		]
 	},
@@ -10,6 +11,7 @@
 	"nav-toolforge": "Wikimedia Toolforge",
 	"nav-source-code": "Quellcode",
 	"nav-login": "Anmelden",
+	"nav-logged-in": "{{GENDER:$2|Eingeloggt}} als $1.",
 	"index-paragraph-1": "Dieses Werkzeug zeigt $1-Qualifikatoren auf $2- oder $3-Aussagen als Bereiche auf dem entsprechenden Bild an.",
 	"index-paragraph-2": "Aussagen auf [$1 Wikidata]-Datenobjekten werden auf dem $2 (oder anderer Eigenschaft) des Datenobjekts angezeigt. Aussagen auf Commons-Dateien mit [$3 strukturierten Daten] werden auf der Datei selbst angezeigt.",
 	"index-heading-by-item-and-property": "Nach Datenobjekt und Eigenschaft",
@@ -26,5 +28,8 @@
 	"index-label-iiif-region": "<abbr title=\"International Image Interoperability Framework\">IIIF</abbr>-Region",
 	"image-scale": "Bildskalierung:&#32;",
 	"alert-not-logged-in": "Du bist nicht angemeldet<noscript> und JavaScript ist deaktiviert</noscript>, daher kannst du nur bestehende Regionen und Aussagen anzeigen. Um neue Aussagen oder Regionen anzulegen oder bestehende zu bearbeiten, [$1 melde dich an]<noscript> und aktiviere JavaScript</noscript>.",
-	"alert-noscript": "JavaScript ist deaktiviert, daher kannst du nur bestehende Regionen und Aussagen anzeigen. Um neue Aussagen oder Regionen anzulegen oder bestehende zu bearbeiten, aktiviere JavaScript."
+	"alert-noscript": "JavaScript ist deaktiviert, daher kannst du nur bestehende Regionen und Aussagen anzeigen. Um neue Aussagen oder Regionen anzulegen oder bestehende zu bearbeiten, aktiviere JavaScript.",
+	"settings": "Einstellungen",
+	"settings-label-interface-language-code": "Sprache der Benutzeroberfläche",
+	"settings-save": "Speichern"
 }
