@@ -1,0 +1,15 @@
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+stages:
+  - test
+
+test-job:
+  stage: test
+  image: docker-registry.tools.wmflabs.org/toolforge-python311-sssd-base:latest
+  script:
+    - python3 -m venv /tmp/venv &&
+      . /tmp/venv/bin/activate &&
+      python3 -m pip install --upgrade pip &&
+      python3 -m pip install -r requirements.txt &&
+      make check
