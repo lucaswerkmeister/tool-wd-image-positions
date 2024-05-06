@@ -1,5 +1,7 @@
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
+  PYTHONDONTWRITEBYTECODE: "1"
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
 
 stages:
   - test
@@ -7,6 +9,10 @@ stages:
 test-job:
   stage: test
   image: docker-registry.tools.wmflabs.org/toolforge-python311-sssd-base:latest
+  cache:
+    - key: pip-python-3.11
+      paths:
+        - .cache/pip
   script:
     - python3 -m venv /tmp/venv &&
       . /tmp/venv/bin/activate &&
