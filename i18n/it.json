@@ -1,0 +1,17 @@
+{
+	"@metadata": {
+		"authors": [
+			"Beta16"
+		]
+	},
+	"skip-to-main-content": "Passa al contenuto principale",
+	"nav-source-code": "Codice sorgente",
+	"nav-login": "Entra",
+	"nav-logged-in": "{{GENDER:$2|Acceduto|Acceduta|Acceduto/a}} come $1.",
+	"index-placeholder-item-id": "$1, $2 o simile",
+	"index-button-load": "Carica",
+	"index-placeholder-file-title": "$1, $2, $3 o simile",
+	"settings": "Impostazioni",
+	"settings-label-interface-language-code": "Lingua dell'interfaccia utente",
+	"settings-save": "Salva"
+}

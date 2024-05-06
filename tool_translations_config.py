@@ -24,6 +24,12 @@ _derived_messages = {
 }
 
 
+def _language_code_to_babel(code: str) -> str:
+    return {
+        'zh-hant': 'zh_Hant',
+    }.get(code, code)
+
+
 _allowed_html_elements = {
     'abbr': {'title'},
     'small': set(),
@@ -34,5 +40,6 @@ _allowed_html_elements = {
 config = TranslationsConfig(
     variables=_variables,
     derived_messages=_derived_messages,
+    language_code_to_babel=_language_code_to_babel,
     allowed_html_elements=_allowed_html_elements,
 )

@@ -1,0 +1,30 @@
+{
+	"@metadata": {
+		"authors": [
+			"Eulalio",
+			"Suecarmol"
+		]
+	},
+	"skip-to-main-content": "Saltar al contenido principal",
+	"nav-documentation": "Documentación",
+	"nav-source-code": "Código fuente",
+	"nav-login": "Iniciar sesión",
+	"nav-logged-in": "{{GENDER:$2|Inicié sesión}} como $1.",
+	"index-heading-by-item-and-property": "Por artículo y propiedad",
+	"index-label-item-id": "Id. del elemento",
+	"index-placeholder-item-id": "$1 o $2 o similar",
+	"index-label-property-id-optional": "ID de propiedad <small>(opcional)</small>",
+	"index-button-load": "Cargar",
+	"index-button-preview-iiif": "Vista previa IIIF",
+	"index-button-iiif-manifest": "Manifiesto IIIF",
+	"index-heading-by-file": "Por archivo",
+	"index-label-file-title": "Nombre del archivo",
+	"index-placeholder-file-title": "$1 o $2 o $3 o similar",
+	"index-heading-by-iiif": "Por región y propiedad del IIIF",
+	"index-label-iiif-region": "Región <abbr title=\"Marco internacional de interoperabilidad de imágenes\">IIIF</abbr>",
+	"image-scale": "Escala de imagen:",
+	"alert-noscript": "JavaScript está deshabilitado, por lo que solo puede ver regiones y declaraciones existentes. Para agregar nuevas declaraciones o regiones o editar las existentes, habilite JavaScript.",
+	"settings": "Ajustes",
+	"settings-label-interface-language-code": "Idioma de interfaz de usuario",
+	"settings-save": "\nGuardar"
+}
