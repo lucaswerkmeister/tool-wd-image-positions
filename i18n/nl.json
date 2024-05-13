@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"McDutchie",
 			"Siebrand"
 		]
 	},
@@ -10,6 +11,7 @@
 	"nav-toolforge": "Wikimedia Toolforge",
 	"nav-source-code": "Broncode",
 	"nav-login": "Aanmelden",
+	"nav-logged-in": "{{GENDER:$2|Aangemeld}} als $1.",
 	"index-paragraph-1": "Met dit hulpmiddel worden kwalificaties van het type $1 weergegeven op $2 of verklaringen op $3 als gebieden op de relevante afbeelding.",
 	"index-paragraph-2": "Voor verklaringen over [$1 Wikidata]-items worden deze weergegeven op de $2 van het item (of een andere eigenschap). Voor verklaringen over [$3 Structured Data on Commons]-bestanden worden deze bij het bestand zelf weergegeven.",
 	"index-heading-by-item-and-property": "Per item en eigenschap",
@@ -26,5 +28,8 @@
 	"index-label-iiif-region": "<abbr title=\"International Image Interoperability Framework\"></abbr>-regio",
 	"image-scale": "Afbeeldingsschaal:&#32;",
 	"alert-not-logged-in": "U bent niet aangemeld<noscript> en JavaScript is uitgeschakeld</noscript>, zodat u alleen bestaande regio's en verklaringen kunt bekijken. Om nieuwe verklaringen of regio's toe te voegen of bestaande te bewerken, [$1 meldt u zich aan]<noscript> en schakelt u JavaScript in</noscript>.",
-	"alert-noscript": "JavaScript is uitgeschakeld, dus u kunt alleen bestaande regio's en verklaringen bekijken. Schakel JavaScript in om nieuwe verklaringen of regio's toe te voegen of bestaande te bewerken."
+	"alert-noscript": "JavaScript is uitgeschakeld, dus u kunt alleen bestaande regio's en verklaringen bekijken. Schakel JavaScript in om nieuwe verklaringen of regio's toe te voegen of bestaande te bewerken.",
+	"settings": "Instellingen",
+	"settings-label-interface-language-code": "Taal van de gebruikersinterface",
+	"settings-save": "Opslaan"
 }

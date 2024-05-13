@@ -1,11 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
+			"Amire80",
 			"Lucas Werkmeister",
 			"Siebrand"
 		]
 	},
-	"tool-name": "The name of the tool. This message is currently used for the page title, navigation bar / menu, and heading on the index page; those uses could later be split up into separate messages if necessary.",
+	"tool-name": "The name of the tool. This message is currently used for the page title, navigation bar / menu, and heading on the index page. Those uses could later be split up into separate messages if necessary.",
 	"skip-to-main-content": "Text for a link that allows users of assistive technologies to skip unimportant parts of the page (the navigation section).",
 	"nav-documentation": "Text for a link to the tool’s documentation in its navigation bar / menu.\n{{Identical|Documentation}}",
 	"nav-toolforge": "Text for a link to the tool’s hosting platform, Wikimedia Toolforge, in its navigation bar / menu.",
