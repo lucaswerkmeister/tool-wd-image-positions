@@ -1,0 +1,35 @@
+{
+	"@metadata": {
+		"authors": [
+			"Amire80",
+			"Lucas Werkmeister"
+		]
+	},
+	"tool-name": "מיקומי בתמונה לפי ויקינתונים",
+	"skip-to-main-content": "מעבר לתוכן הראשי",
+	"nav-documentation": "תיעוד",
+	"nav-toolforge": "טולפורג׳ של ויקימדיה",
+	"nav-source-code": "קוד מקור",
+	"nav-login": "כניסה לחשבון",
+	"nav-logged-in": "{{GENDER:$2|נכנס|נכנסה}} לחשבון $1.",
+	"index-paragraph-1": "הכלי הזה מציג מבחיני $1 על קביעות $2 או $3 כאזורים בתמונה הרלוונטית.",
+	"index-paragraph-2": "עבור קביעות על פריטי [$1 ויקינתונים], הם מוצגים ב$2 של הפריט (או במאפיין אחר). עבור קביעות על קובצי [$3 נתונים מבניים בוויקישיתוף], הם מוצגים בקובץ עצמו.",
+	"index-heading-by-item-and-property": "לפי פריט ומאפיין",
+	"index-label-item-id": "מזהה פריט",
+	"index-placeholder-item-id": "$1 או $2 או דומה",
+	"index-label-property-id-optional": "מזהה מאפיין <small>(לא חובה)</small>",
+	"index-button-load": "טעינה",
+	"index-button-preview-iiif": "תצוגה מקדימה של IIIF",
+	"index-button-iiif-manifest": "מניפסט של IIIF",
+	"index-heading-by-file": "לפי קובץ",
+	"index-label-file-title": "כותרת הקובץ",
+	"index-placeholder-file-title": "$1 או $2 או $3 או דומה",
+	"index-heading-by-iiif": "לפי אזור ומאפיין IIIF",
+	"index-label-iiif-region": "אזור <abbr title=\"International Image Interoperability Framework מסגרת תאימות תמונות בין־לאומית\">IIIF</abbr>",
+	"image-scale": "תקריב תמונה:&#32;",
+	"alert-not-logged-in": "לא נכנסת לחשבון<noscript> והתמיכה ב־JavaScript כבויה</noscript>, כך שבאפשרותך להציג רק אזורים וקביעות שכבר קיימים. כדי להוסיף קביעות או אזורים חדשים או לערוך קיימים, [$1 יש היכנס לחשבון]<noscript> ולהפעיל תמיכה ב־JavaScript</noscript>.",
+	"alert-noscript": "התמיכה ב־JavaScript מושבתת, כך שיש לך אפשרות להציג רק אזורים וקביעות שכבר קיימים. כדי להוסיף קביעות או אזורים חדשים או לערוך קיימים, יש להפעיל JavaScript.",
+	"settings": "הגדרות",
+	"settings-label-interface-language-code": "שפת ממשק המשתמש",
+	"settings-save": "שמירה"
+}

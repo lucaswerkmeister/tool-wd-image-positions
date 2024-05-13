@@ -1,0 +1,34 @@
+{
+	"@metadata": {
+		"authors": [
+			"Eleassar"
+		]
+	},
+	"tool-name": "Položaji slik Wikipodatkov",
+	"skip-to-main-content": "Pojdi na glavno vsebino",
+	"nav-documentation": "Dokumentacija",
+	"nav-toolforge": "Wikimedia Toolforge",
+	"nav-source-code": "izvorna koda",
+	"nav-login": "Prijava",
+	"nav-logged-in": "{{GENDER:$2|Prijavljen|Prijavljena|Prijavljen_a}} kot $1.",
+	"index-paragraph-1": "To orodje prikazuje kvalifikatorje za $1 pri izjavah $2 ali $3 kot področja na ustrezni sliki.",
+	"index-paragraph-2": "Za izjave o predmetih [$1 Wikipodatkov] so prikazane pri $2 (ali drugi lastnosti) predmeta. Za izjave o datotekah [$3 Structured Data on Commons] so prikazane v sami datoteki.",
+	"index-heading-by-item-and-property": "Po predmetu in lastnosti",
+	"index-label-item-id": "ID predmeta",
+	"index-placeholder-item-id": "$1 ali $2 ali podobno",
+	"index-label-property-id-optional": "ID lastnosti <small>(neobvezno)</small>",
+	"index-button-load": "Naloži",
+	"index-button-preview-iiif": "Predogled IIIF",
+	"index-button-iiif-manifest": "Manifest IIIF",
+	"index-heading-by-file": "Po datoteki",
+	"index-label-file-title": "Naslov datoteke",
+	"index-placeholder-file-title": "$1 ali $2 ali $3 ali podobno",
+	"index-heading-by-iiif": "Po regiji IIIF in lastnosti",
+	"index-label-iiif-region": "Regija <abbr title=\"International Image Interoperability Framework\">IIIF</abbr>",
+	"image-scale": "Merilo slike:&#32;",
+	"alert-not-logged-in": "Niste prijavljeni<noscript> in JavaScript je onemogočen</noscript>, zato si lahko samo ogledate obstoječe regije in izjave. Če želite dodati nove izjave ali regije ali urediti obstoječe, [$1 se prijavite]<noscript> in omogočite JavaScript</noscript>.",
+	"alert-noscript": "JavaScript je onemogočen, zato si lahko samo ogledate obstoječe regije in izjave. Če želite dodati nove izjave ali regije ali urediti obstoječe, omogočite JavaScript.",
+	"settings": "Nastavitve",
+	"settings-label-interface-language-code": "Jezik uporabniškega vmesnika",
+	"settings-save": "Shrani"
+}

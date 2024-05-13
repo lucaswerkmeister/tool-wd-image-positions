@@ -1,0 +1,34 @@
+{
+	"@metadata": {
+		"authors": [
+			"McDutchie"
+		]
+	},
+	"tool-name": "Positiones de imagines Wikidata",
+	"skip-to-main-content": "Saltar al contento principal",
+	"nav-documentation": "Documentation",
+	"nav-toolforge": "Wikimedia Toolforge",
+	"nav-source-code": "Codice fonte",
+	"nav-login": "Aperir session",
+	"nav-logged-in": "{{GENDER:$2|In session}} como $1.",
+	"index-paragraph-1": "Iste instrumento monstra qualificatores $1 sur declarationes $2 o $3 como areas sur le imagine pertinente.",
+	"index-paragraph-2": "Pro declarationes sur elementos [$1 Wikidata], illos es monstrate sur le $2 (o altere proprietate) del elemento. Pro declarationes sur files de [$3 Datos Structurate sur Commons], illos es monstrate sur le file mesme.",
+	"index-heading-by-item-and-property": "Per elemento e proprietate",
+	"index-label-item-id": "ID de elemento",
+	"index-placeholder-item-id": "$1 o $2 o similar",
+	"index-label-property-id-optional": "ID de proprietate <small>(optional)</small>",
+	"index-button-load": "Cargar",
+	"index-button-preview-iiif": "Previsualisar IIIF",
+	"index-button-iiif-manifest": "Manifesto IIIF",
+	"index-heading-by-file": "Per file",
+	"index-label-file-title": "Titulo del file",
+	"index-placeholder-file-title": "$1 o $2 o $3 o similar",
+	"index-heading-by-iiif": "Per region e proprietate IIIF",
+	"index-label-iiif-region": "Region <abbr title=\"International Image Interoperability Framework (Quadro international de interoperabilitate de imagines)\">IIIF</abbr>",
+	"image-scale": "Scala del imagine:&#32;",
+	"alert-not-logged-in": "Tu non ha aperite session<noscript> e JavaScript es disactivate</noscript>, dunque tu pote vider solmente regiones e declarationes existente. Pro adder nove declarationes o regiones o modificar existentes, [$1 aperi session]<noscript> e activa JavaScript</noscript>.",
+	"alert-noscript": "JavaScript es disactivate, dunque tu pote vider solmente regiones e declarationes existente. Pro adder nove declarationes o regiones o modificar existentes, activa JavaScript.",
+	"settings": "Parametros",
+	"settings-label-interface-language-code": "Lingua del interfacie de usator",
+	"settings-save": "Salveguardar"
+}

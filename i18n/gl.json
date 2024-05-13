@@ -1,0 +1,34 @@
+{
+	"@metadata": {
+		"authors": [
+			"Toliño"
+		]
+	},
+	"tool-name": "Posicións de imaxes do Wikidata",
+	"skip-to-main-content": "Saltar ao contido",
+	"nav-documentation": "Documentación",
+	"nav-toolforge": "Wikimedia Toolforge",
+	"nav-source-code": "Código fonte",
+	"nav-login": "Acceder ao sistema",
+	"nav-logged-in": "{{GENDER:$2|Iniciaches sesión}} como $1.",
+	"index-paragraph-1": "Esta ferramenta amosa os cualificadores da $1 en extractos $2 ou $3 como zonas da imaxe relevante.",
+	"index-paragraph-2": "Os extractos sobre os elementos do [$1 Wikidata] amósanse na $2 do elemento (ou noutra propiedade). Os extractos sobre os ficheiros de [$3 datos estruturados de Commons] amósanse no propio ficheiro.",
+	"index-heading-by-item-and-property": "Por elemento e propiedade",
+	"index-label-item-id": "ID do elemento",
+	"index-placeholder-item-id": "$1 ou $2 ou similar",
+	"index-label-property-id-optional": "ID da propiedade <small>(opcional)</small>",
+	"index-button-load": "Cargar",
+	"index-button-preview-iiif": "Vista previa IIIF",
+	"index-button-iiif-manifest": "Manifesto IIIF",
+	"index-heading-by-file": "Por ficheiro",
+	"index-label-file-title": "Título do ficheiro",
+	"index-placeholder-file-title": "$1 ou $2 ou $3 ou similar",
+	"index-heading-by-iiif": "Por rexión e propiedade do IIIF",
+	"index-label-iiif-region": "Rexión <abbr title=\"International Image Interoperability Framework\">IIIF</abbr>",
+	"image-scale": "Escala da imaxe:&#32;",
+	"alert-not-logged-in": "Non iniciaches sesión<noscript> e tes o JavaScript desactivado</noscript>, polo que só pode ver as rexións e os extractos existentes. Para engadir novos extractos ou rexións ou para editar os existentes, [$1 inicia sesión]<noscript> e activa o JavaScript</noscript>.",
+	"alert-noscript": "Tes o JavaScript desactivado, polo que só pode ver as rexións e os extractos existentes. Para engadir novos extractos ou rexións ou para editar os existentes, activa o JavaScript.",
+	"settings": "Axustes",
+	"settings-label-interface-language-code": "Lingua da interface de usuario",
+	"settings-save": "Gardar"
+}

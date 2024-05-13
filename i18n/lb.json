@@ -1,0 +1,18 @@
+{
+	"@metadata": {
+		"authors": [
+			"Robby",
+			"Volvox"
+		]
+	},
+	"tool-name": "Wikidata Bild Positiounen",
+	"nav-documentation": "Dokumentatioun",
+	"nav-source-code": "Quellcode",
+	"nav-logged-in": "{{GENDER:$2|Ageloggt}} als $1.",
+	"index-button-load": "Lueden",
+	"index-heading-by-file": "Per Fichier",
+	"index-label-file-title": "Titel vum Fichier",
+	"settings": "Astellungen",
+	"settings-label-interface-language-code": "Sprooch vun der Benotzeruewerfläch",
+	"settings-save": "Späicheren"
+}
