@@ -1,0 +1,17 @@
+{
+	"@metadata": {
+		"authors": [
+			"Cookai1205",
+			"GuoPC"
+		]
+	},
+	"skip-to-main-content": "跳至主要内容",
+	"nav-toolforge": "维基媒体Toolforge",
+	"nav-source-code": "源代码",
+	"nav-login": "登录",
+	"nav-logged-in": "已以$1身份{{GENDER:$2|登录}}。",
+	"index-button-load": "加载",
+	"settings": "设置",
+	"settings-label-interface-language-code": "用户界面语言",
+	"settings-save": "保存"
+}

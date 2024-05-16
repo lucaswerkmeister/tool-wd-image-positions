@@ -2,14 +2,19 @@
 	"@metadata": {
 		"authors": [
 			"Eulalio",
+			"ProtoplasmaKid",
 			"Suecarmol"
 		]
 	},
+	"tool-name": "Posicionador de elementos de Wikidata en imágenes.",
 	"skip-to-main-content": "Saltar al contenido principal",
 	"nav-documentation": "Documentación",
+	"nav-toolforge": "Wikimedia Toolforge",
 	"nav-source-code": "Código fuente",
 	"nav-login": "Iniciar sesión",
 	"nav-logged-in": "{{GENDER:$2|Inicié sesión}} como $1.",
+	"index-paragraph-1": "Esta herramienta muestra $1 calificadores en $2 o $3 declaraciones en áreas relevantes de la imagen.",
+	"index-paragraph-2": "Para declaraciones en elementos de [$1 Wikidata] se muestran en el $2 del elemento (u otra propiedad). Para declaraciones en archivos con [$3 datos estructurados en Commons], se muestran en ellos mismos.",
 	"index-heading-by-item-and-property": "Por artículo y propiedad",
 	"index-label-item-id": "Id. del elemento",
 	"index-placeholder-item-id": "$1 o $2 o similar",
@@ -23,6 +28,7 @@
 	"index-heading-by-iiif": "Por región y propiedad del IIIF",
 	"index-label-iiif-region": "Región <abbr title=\"Marco internacional de interoperabilidad de imágenes\">IIIF</abbr>",
 	"image-scale": "Escala de imagen:",
+	"alert-not-logged-in": "No has ingresado con tu cuenta<noscript> y Javascript está deshabilitado</noscript>, así que tú solo puedes ver las declaraciones ya hechas en regiones existentes. Para sumar nuevas declaraciones o regiones o editar las existentes, [$1 ingresa con tu cuenta]<noscript> y habilita JavaScript</noscript>.",
 	"alert-noscript": "JavaScript está deshabilitado, por lo que solo puede ver regiones y declaraciones existentes. Para agregar nuevas declaraciones o regiones o editar las existentes, habilite JavaScript.",
 	"settings": "Ajustes",
 	"settings-label-interface-language-code": "Idioma de interfaz de usuario",
