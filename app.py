@@ -395,8 +395,8 @@ def api_add_statement(domain):
     snaktype = flask.request.form.get('snaktype')
     item_id = flask.request.form.get('item_id')
     property_id = flask.request.form.get('property_id', 'P180')
-    csrf_token = flask.request.form.get('_csrf_token')
-    if not entity_id or not snaktype or not csrf_token:
+    request_csrf_token = flask.request.form.get('_csrf_token')
+    if not entity_id or not snaktype or not request_csrf_token:
         return 'Incomplete form data', 400
     if (snaktype == 'value') != (item_id is not None):
         return 'Inconsistent form data', 400
@@ -405,7 +405,7 @@ def api_add_statement(domain):
     if property_id not in depicted_properties:
         return 'Bad property ID', 400
 
-    if csrf_token != csrf_token():
+    if request_csrf_token != csrf_token():
         return 'Wrong CSRF token (try reloading the page).', 403
 
     if not flask.request.referrer.startswith(full_url('index')):
@@ -454,12 +454,12 @@ def api_add_statement(domain):
 def api_add_qualifier(domain):
     statement_id = flask.request.form.get('statement_id')
     iiif_region = flask.request.form.get('iiif_region')
-    csrf_token = flask.request.form.get('_csrf_token')
+    request_csrf_token = flask.request.form.get('_csrf_token')
     qualifier_hash = flask.request.form.get('qualifier_hash')  # optional
-    if not statement_id or not iiif_region or not csrf_token:
+    if not statement_id or not iiif_region or not request_csrf_token:
         return 'Incomplete form data', 400
 
-    if csrf_token != csrf_token():
+    if request_csrf_token != csrf_token():
         return 'Wrong CSRF token (try reloading the page).', 403
 
     if not flask.request.referrer.startswith(full_url('index')):
