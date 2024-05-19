@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import cachetools
 import collections
 import decorator
 import flask
@@ -15,6 +16,7 @@ import requests
 import requests_oauthlib
 import stat
 import string
+import threading
 import toolforge
 import urllib.parse
 import yaml
@@ -48,15 +50,18 @@ requests_session.headers.update({
 
 default_property = 'P18'
 
+# maps property IDs to message keys for “… with no region specified:” list labels
+# note: currently, these must be item-type properties;
+# support for other data types (e.g. P1684 inscription) would need more work
 depicted_properties = {
-    # first label is used in dropdown,
-    # second forms “… with no region specified” list label
-    'P180': ['depicts', 'Depicted'],
-    'P9664': ['named place on map', 'Named places on map'],
-    # note: currently, these must be item-type properties;
-    # support for other data types (e.g. P1684 inscription) needs more work
+    'P180': 'image-depicted-without-region',
+    'P9664': 'image-named-places-on-map-without-region',
 }
 app.add_template_global(lambda: depicted_properties, 'depicted_properties')
+app.add_template_global(
+    lambda: {property_id: message(key) for property_id, key in depicted_properties.items()},
+    'depicted_properties_messages'
+)
 
 @decorator.decorator
 def read_private(func, *args, **kwargs):
@@ -917,6 +922,39 @@ def load_labels(entity_ids):
                                          .get(flask.g.interface_language_code,
                                               {'language': 'zxx', 'value': entity_id})
     return labels
+
+@cachetools.cached(cache=cachetools.TTLCache(maxsize=1000, ttl=7 * 24 * 60 * 60),
+                   lock=threading.RLock())
+def depicted_properties_labels():
+    """Load the labels of the depicted_properties in all available interface languages.
+
+    This is implemented separately from load_labels() because we can cache this data much better;
+    the depicted_properties labels are needed for almost every request,
+    whereas individual entity labels loaded by load_labels()
+    are probably only needed for one request.
+    """
+    assert len(depicted_properties) <= 50
+    property_ids = list(depicted_properties.keys())
+    languages = list(i18n.translations.keys())
+    labels = {}
+    session = anonymous_session('www.wikidata.org')
+    for chunk in [languages[i:i + 50] for i in range(0, len(languages), 50)]:
+        properties_data = session.get(action='wbgetentities',
+                                      props='labels',
+                                      languages=chunk,
+                                      languagefallback=True,
+                                      ids=property_ids)['entities']
+        for property_id, property_data in properties_data.items():
+            labels[property_id] = property_data['labels']
+    return labels
+
+@app.template_global(name='depicted_properties_labels')
+def depicted_properties_labels_in_interface_language():
+    return {
+        property_id: labels.get(flask.g.interface_language_code,
+                                labels['en'])
+        for property_id, labels in depicted_properties_labels().items()
+    }
 
 def image_attribution(image_title):
     params = query_default_params()

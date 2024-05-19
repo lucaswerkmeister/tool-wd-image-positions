@@ -8,7 +8,9 @@ function setup() {
 
     const csrfTokenElement = document.getElementById('csrf_token'),
           baseUrl = document.querySelector('link[rel=index]').href.replace(/\/$/, ''),
-          depictedProperties = JSON.parse(document.getElementsByTagName('main')[0].dataset.depictedProperties);
+          mainDataset = document.getElementsByTagName('main')[0].dataset,
+          depictedPropertiesLabels = JSON.parse(mainDataset.depictedPropertiesLabels),
+          depictedPropertiesMessages = JSON.parse(mainDataset.depictedPropertiesMessages);
 
     /** Make a key event handler that calls the given callback when Esc is pressed. */
     function onEscape(callback) {
@@ -401,9 +403,9 @@ function setup() {
 `,
             components: codex,
             data() {
-                const properties = Object.entries(depictedProperties).map(entry => ({
+                const properties = Object.entries(depictedPropertiesLabels).map(entry => ({
                     value: entry[0],
-                    label: entry[1][0],
+                    label: entry[1].value,
                 }));
                 return {
                     disabled: false,
@@ -502,7 +504,7 @@ function setup() {
                                 if (!depictedsWithoutRegionList) {
                                     const depictedsWithoutRegionDiv = document.createElement('div'),
                                           depictedsWithoutRegionText = document.createTextNode(
-                                              `${depictedProperties[propertyId]?.[1] || propertyId} with no region specified:`,
+                                              depictedPropertiesMessages[propertyId],
                                           );
                                     depictedsWithoutRegionList = document.createElement('ul');
                                     depictedsWithoutRegionDiv.classList.add('wd-image-positions--depicteds-without-region');
