@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Error – {{ super() }}{% endblock title %}
+{% block title %}{{ message('error-title') | striptags }} – {{ super() }}{% endblock title %}
 {% block main_tag_attributes %}class="container mt-3"{% endblock main_tag_attributes %}
 {% block main %}
 <div class="alert alert-info" role="alert">

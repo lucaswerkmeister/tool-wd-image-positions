@@ -41,5 +41,12 @@
 	"alert-noscript": "Message shown when the user is logged in, but has JavaScript disabled. The entire message is wrapped in &lt;noscript&gt; by the tool; compare also {{msg-wm|wikidata-image-positions-alert-not-logged-in}}.",
 	"settings": "The tool’s settings (preferences, options, etc.). This message is currently used for the heading on the settings page as well as the link in the navigation bar / menu; those uses could later be split up into separate messages if necessary.",
 	"settings-label-interface-language-code": "Label for one of the tool’s settings, for the language the tool’s user interface is in.",
-	"settings-save": "Label for the button to save the settings."
+	"settings-save": "Label for the button to save the settings.",
+	"error-title": "Part of the tool’s title for some error pages.\n{{Identical|Error}}",
+	"file-not-found-heading": "Heading for an error page when a file (on Commons) could not be found.",
+	"file-not-found-body": "Body text for an error page when a file (on Commons) could not be found.\n\nParameters:\n* $1 - the file title (without File: prefix).",
+	"item-without-image": "Text for an error page when a specified Wikidata item has no suitable [[:d:Property:P18|image]] statement.",
+	"wrong-data-value-type-heading": "Heading for an error page about an incorrect type of a property specified by the user. For “value type”, compare Wikibase messages like {{msg-mw|wikibase-validator-bad-value-type}} or {{msg-mw|wikibase-listdatavaluetypes-generalbody}}.",
+	"wrong-data-value-type-paragraph-1": "First paragraph for an error page about an incorrect type of a property specified by the user. “The image property” refers to the property that the user selected as an alternative to [[:d:Property:P18|image (P18)]]. For “value type”, compare Wikibase messages like {{msg-mw|wikibase-validator-bad-value-type}} or {{msg-mw|wikibase-listdatavaluetypes-generalbody}}.\n\nParameters:\n* $1 - the expected value type\n* $2 - the actual value type",
+	"wrong-data-value-type-paragraph-2": "Second paragraph for an error page about an incorrect type of a property specified by the user."
 }

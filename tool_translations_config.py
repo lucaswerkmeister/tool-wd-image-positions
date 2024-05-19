@@ -12,6 +12,8 @@ _variables = {
     'index-placeholder-item-id': ['example_id', 'example_url'],  # example_url is *not* a “url” argument
     'index-placeholder-file-title': ['example_name', 'example_id', 'example_url'],  # ditto
     'alert-not-logged-in': ['url'],
+    'file-not-found-body': ['title'],
+    'wrong-data-value-type-paragraph-1': ['expected_data_value_type', 'actual_data_value_type'],
 }
 
 
@@ -26,8 +28,10 @@ _derived_messages = {
 
 _allowed_html_elements = {
     'abbr': {'title'},
-    'small': set(),
+    'code': set(),
     'noscript': set(),
+    'q': set(),
+    'small': set(),
 }
 
 

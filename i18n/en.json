@@ -39,5 +39,12 @@
 	"alert-noscript": "JavaScript is disabled, so you can only view existing regions and statements. To add new statements or regions or edit existing ones, enable JavaScript.",
 	"settings": "Settings",
 	"settings-label-interface-language-code": "User interface language",
-	"settings-save": "Save"
+	"settings-save": "Save",
+	"error-title": "Error",
+	"file-not-found-heading": "File not found",
+	"file-not-found-body": "A file by the title <q>$1</q> could not be found. It might be missing, or the title might be invalid.",
+	"item-without-image": "This item has no image.",
+	"wrong-data-value-type-heading": "Incorrect value type",
+	"wrong-data-value-type-paragraph-1": "Incorrect value type for the image property: expected <code>$1</code> but was <code>$2</code>.",
+	"wrong-data-value-type-paragraph-2": "Did you specify the wrong property?"
 }

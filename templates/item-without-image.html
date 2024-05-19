@@ -1,5 +1,5 @@
 {% extends "images.html" %}
 {% block title %}{{ label.value }} – {{ super() }}{% endblock title %}
 {% block main %}
-This item has no image.
+{{ message('item-without-image') }}
 {% endblock main %}

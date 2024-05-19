@@ -1,16 +1,10 @@
 {% extends "base.html" %}
-{% block title %}Error – {{ super() }}{% endblock title %}
+{% block title %}{{ message('error-title') | striptags }} – {{ super() }}{% endblock title %}
 {% block main_tag_attributes %}class="container mt-3"{% endblock main_tag_attributes %}
 {% block main %}
 <div class="alert alert-danger">
-  <h4 class="alert-heading">Incorrect data value type</h4>
-  <p>
-    Incorrect data value type for the image property:
-    expected <code>{{ expected_data_value_type }}</code>
-    but was <code>{{ actual_data_value_type }}</code>.
-  </p>
-  <p>
-    Did you specify the wrong property?
-  </p>
+  <h4 class="alert-heading">{{ message('wrong-data-value-type-heading') }}</h4>
+  <p>{{ message('wrong-data-value-type-paragraph-1', expected_data_value_type=expected_data_value_type, actual_data_value_type=actual_data_value_type) }}</p>
+  <p>{{ message('wrong-data-value-type-paragraph-2') }}</p>
 </div>
 {% endblock %}
