@@ -56,7 +56,7 @@
 <!-- add the depicteds without region (grouped by property) -->
 {% for property_id, message_key in depicted_properties().items() %}
 {% if depicteds_without_region_by_property_id[property_id] %}
-{{ _depicteds_without_region(depicteds_without_region, property_id, message_key) }}
+{{ _depicteds_without_region(depicteds_without_region_by_property_id[property_id], property_id, message_key) }}
 {% endif %}
 {% endfor %}
 {% endmacro %}
