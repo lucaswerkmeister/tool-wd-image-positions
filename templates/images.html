@@ -24,4 +24,11 @@
 {% endblock head %}
 {% block main_tag_attributes %}{{ super() }} data-depicted-properties-labels='{{ depicted_properties_labels() | tojson }}' data-depicted-properties-messages='{{ depicted_properties_messages() | tojson }}' data-translations='{{ {
   'image-scale': message('image-scale'),
+  'image-button-add-region': message('image-button-add-region'),
+  'image-button-use-region': message('image-button-use-region'),
+  'image-button-cancel': message('image-button-cancel'),
+  'image-button-editing-statement': message('image-button-editing-statement'),
+  'image-button-edit-region': message('image-button-edit-region'),
+  'image-button-select-region': message('image-button-select-region'),
+  'image-button-loading': message('image-button-loading'),
 } | tojson }}'{% endblock main_tag_attributes %}

@@ -9,6 +9,7 @@ function setup() {
     const csrfTokenElement = document.getElementById('csrf_token'),
           baseUrl = document.querySelector('link[rel=index]').href.replace(/\/$/, ''),
           mainDataset = document.getElementsByTagName('main')[0].dataset,
+          translations = JSON.parse(mainDataset.translations),
           depictedPropertiesLabels = JSON.parse(mainDataset.depictedPropertiesLabels),
           depictedPropertiesMessages = JSON.parse(mainDataset.depictedPropertiesMessages);
 
@@ -35,7 +36,7 @@ function setup() {
         const button = document.createElement('button');
         button.type = 'button';
         button.classList.add('btn', 'btn-secondary', 'btn-sm', 'ms-2');
-        button.textContent = 'add region';
+        button.textContent = translations['image-button-add-region'];
         button.addEventListener('click', onClick);
         element.append(button);
 
@@ -46,7 +47,7 @@ function setup() {
 
         function onClick() {
             if (cropper === null) {
-                button.textContent = 'loading...';
+                button.textContent = translations['image-button-loading'];
                 wrapper.classList.add('wd-image-positions--active');
                 image.classList.add('wd-image-positions--active');
                 button.classList.add('wd-image-positions--active');
@@ -61,19 +62,19 @@ function setup() {
                     checkCrossOrigin: false,
                     autoCrop: false,
                     ready: function() {
-                        button.textContent = 'use this region';
+                        button.textContent = translations['image-button-use-region'];
 
                         cancelButton = document.createElement('button');
                         cancelButton.type = 'button';
                         cancelButton.classList.add('btn', 'btn-secondary', 'btn-sm', 'wd-image-positions--active', 'ms-2');
-                        cancelButton.textContent = 'cancel';
+                        cancelButton.textContent = translations['image-button-cancel'];
                         cancelButton.addEventListener('click', cancelEditing);
                         element.append(cancelButton);
                     },
                 });
                 document.addEventListener('keydown', onKeyDown);
             } else {
-                if (button.textContent === 'loading...') {
+                if (button.textContent === translations['image-button-loading']) {
                     return;
                 }
                 const cropData = cropper.getData();
@@ -94,7 +95,7 @@ function setup() {
                 depicted.dataset.statementId = element.dataset.statementId;
                 depicted.append(element.firstChild.cloneNode(true));
                 image.append(depicted);
-                button.textContent = 'editing statement…';
+                button.textContent = translations['image-button-editing-statement'];
                 const subject = { id: entity.dataset.entityId, domain: entity.dataset.entityDomain };
                 saveCropper(subject, image, depicted, cropper).then(
                     function() {
@@ -121,7 +122,7 @@ function setup() {
             wrapper.classList.remove('wd-image-positions--active');
             image.classList.remove('wd-image-positions--active');
             document.removeEventListener('keydown', onKeyDown);
-            button.textContent = 'add region';
+            button.textContent = translations['image-button-add-region'];
             button.classList.remove('wd-image-positions--active');
             scaleInput.disabled = false;
             if (cancelButton !== null) {
@@ -229,12 +230,12 @@ function setup() {
         const button = document.createElement('button');
         button.type = 'button';
         button.classList.add('btn', 'btn-secondary');
-        button.textContent = 'Edit a region';
+        button.textContent = translations['image-button-edit-region'];
         button.addEventListener('click', addEditRegionListeners);
         const cancelButton = document.createElement('button');
         cancelButton.type = 'button';
         cancelButton.classList.add('btn', 'btn-secondary', 'wd-image-positions--active', 'ms-2');
-        cancelButton.textContent = 'cancel';
+        cancelButton.textContent = translations['image-button-cancel'];
         const buttonWrapper = document.createElement('div');
         buttonWrapper.append(button);
         // cancelButton is not appended yet
@@ -246,7 +247,7 @@ function setup() {
         let onKeyDown = null;
 
         function addEditRegionListeners() {
-            button.textContent = 'Select a region to edit';
+            button.textContent = translations['image-button-select-region'];
             button.classList.add('wd-image-positions--active');
             for (const depicted of entityElement.querySelectorAll('.wd-image-positions--depicted')) {
                 depicted.addEventListener('click', editRegion);
@@ -288,23 +289,23 @@ function setup() {
                         width: Math.round(parseFloat(depicted.style.width) * canvasData.naturalWidth / 100),
                         height: Math.round(parseFloat(depicted.style.height) * canvasData.naturalHeight / 100),
                     });
-                    button.textContent = 'use this region';
+                    button.textContent = translations['image-button-use-region'];
                     button.addEventListener('click', doEditRegion);
                 },
             });
 
             function doEditRegion() {
                 button.removeEventListener('click', doEditRegion);
-                button.textContent = 'editing statement…';
+                button.textContent = translations['image-button-editing-statement'];
                 const subject = { id: entityElement.dataset.entityId, domain: entityElement.dataset.entityDomain };
                 saveCropper(subject, image, depicted, cropper).then(
                     function() {
-                        button.textContent = 'Edit a region';
+                        button.textContent = translations['image-button-edit-region'];
                         button.classList.remove('wd-image-positions--active');
                         button.addEventListener('click', addEditRegionListeners);
                     },
                     function() {
-                        button.textContent = 'Edit a region';
+                        button.textContent = translations['image-button-edit-region'];
                         button.classList.remove('wd-image-positions--active');
                         button.addEventListener('click', addEditRegionListeners);
                     },
@@ -321,7 +322,7 @@ function setup() {
                 wrapper.classList.remove('wd-image-positions--active');
                 image.classList.remove('wd-image-positions--active');
                 button.removeEventListener('click', doEditRegion);
-                button.textContent = 'Edit a region';
+                button.textContent = translations['image-button-edit-region'];
                 button.addEventListener('click', addEditRegionListeners);
                 button.classList.remove('wd-image-positions--active');
                 document.removeEventListener('keydown', onKeyDown);
@@ -334,7 +335,7 @@ function setup() {
             for (const depicted of entityElement.querySelectorAll('.wd-image-positions--depicted')) {
                 depicted.removeEventListener('click', editRegion);
             }
-            button.textContent = 'Edit a region';
+            button.textContent = translations['image-button-edit-region'];
             button.addEventListener('click', addEditRegionListeners);
             button.classList.remove('wd-image-positions--active');
             document.removeEventListener('keydown', onKeyDown);
