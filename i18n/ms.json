@@ -1,0 +1,34 @@
+{
+	"@metadata": {
+		"authors": [
+			"Tofeiku"
+		]
+	},
+	"tool-name": "Kedudukan Imej Wikidata",
+	"skip-to-main-content": "Langkau ke kandungan utama",
+	"nav-documentation": "Pendokumenan",
+	"nav-toolforge": "Wikimedia Toolforge",
+	"nav-source-code": "Kod sumber",
+	"nav-login": "Log masuk",
+	"nav-logged-in": "{{GENDER:$2|Log masuk}} sebagai $1.",
+	"index-paragraph-1": "Alat ini menunjukkan penerang $1 di kenyataan $2 atau $3 sebagai kawasan di imej yang berkaitan.",
+	"index-paragraph-2": "Untuk kenyataan di butir [$1 Wikidata], ia ditunjukkan di $2 butir (atau sifat lain). Untuk kenyataan di [$3 Data Berstruktur di fail Commons], ia ditunjukkan di fail sendiri.",
+	"index-heading-by-item-and-property": "Mengikut butir dan sifat",
+	"index-label-item-id": "ID butir",
+	"index-placeholder-item-id": "$1 atau $2 atau serupa",
+	"index-label-property-id-optional": "ID sifat <small>(pilihan)</small>",
+	"index-button-load": "Muatkan",
+	"index-button-preview-iiif": "Pralihat IIIF",
+	"index-button-iiif-manifest": "Manifes IIIF",
+	"index-heading-by-file": "Mengikut fail",
+	"index-label-file-title": "Tajuk fail",
+	"index-placeholder-file-title": "$1 atau $2 atau $3 atau serupa",
+	"index-heading-by-iiif": "Mengikut rantau IIIF dan sifat",
+	"index-label-iiif-region": "Rantau <abbr title=\"Rangka Antara Kebolehkendalian Imej Antarabangsa\">IIIF</abbr>",
+	"image-scale": "Skala imej:&#32;",
+	"alert-not-logged-in": "Anda belum log masuk<noscript> dan JavaScript dilumpuhkan</noscript>, agar anda hanya boleh lihat rantau dan kenyataan sedia ada. Untuk mengambah kenyataan atau rantau baru atau sunting yang sedia ada, [$1 log masuk]<noscript> dan bolehkan JavaScript</noscript>.",
+	"alert-noscript": "JavaScript dilumpuuhkan agar anda hanya boleh lihat rantau dan kenyataan sedia ada, bolehkan JavaScript.",
+	"settings": "Tetapan",
+	"settings-label-interface-language-code": "Bahasa antara muka pengguna",
+	"settings-save": "Simpan"
+}

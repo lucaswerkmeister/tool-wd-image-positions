@@ -11,7 +11,17 @@
 	"index-placeholder-item-id": "$1, $2 o simile",
 	"index-button-load": "Carica",
 	"index-placeholder-file-title": "$1, $2, $3 o simile",
+	"image-button-add-region": "aggiungi regione",
+	"image-button-use-region": "utilizza questa regione",
+	"image-button-cancel": "annulla",
+	"image-button-edit-region": "Modifica una regione",
+	"image-button-loading": "caricamento in corso…",
 	"settings": "Impostazioni",
 	"settings-label-interface-language-code": "Lingua dell'interfaccia utente",
-	"settings-save": "Salva"
+	"settings-save": "Salva",
+	"error-title": "Errore",
+	"file-not-found-heading": "File non trovato",
+	"item-without-image": "Questo elemento non ha alcuna immagine.",
+	"wrong-data-value-type-heading": "Tipo di valore non corretto",
+	"wrong-data-value-type-paragraph-2": "Hai indicato la proprietà sbagliata?"
 }
