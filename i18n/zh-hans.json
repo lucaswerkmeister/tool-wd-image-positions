@@ -10,8 +10,14 @@
 	"nav-source-code": "源代码",
 	"nav-login": "登录",
 	"nav-logged-in": "已以$1身份{{GENDER:$2|登录}}。",
+	"index-label-item-id": "项目ID",
+	"index-label-property-id-optional": "属性ID<small>（可选）</small>",
 	"index-button-load": "加载",
+	"index-button-preview-iiif": "预览IIIF",
+	"image-button-cancel": "取消",
+	"image-button-loading": "正在加载…",
 	"settings": "设置",
 	"settings-label-interface-language-code": "用户界面语言",
-	"settings-save": "保存"
+	"settings-save": "保存",
+	"error-title": "错误"
 }

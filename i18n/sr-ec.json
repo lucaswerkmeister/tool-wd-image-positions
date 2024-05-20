@@ -14,7 +14,17 @@
 	"index-button-load": "Учитај",
 	"index-heading-by-file": "По датотеци",
 	"index-label-file-title": "Наслов датотеке",
+	"image-button-add-region": "додај регион",
+	"image-button-use-region": "користи овај регион",
+	"image-button-cancel": "откажи",
+	"image-button-editing-statement": "уређивање изјаве…",
+	"image-button-edit-region": "Уреди регион",
+	"image-button-loading": "учитавање…",
 	"settings": "Подешавања",
 	"settings-label-interface-language-code": "Језик корисничког интерфејса",
-	"settings-save": "Сачувај"
+	"settings-save": "Сачувај",
+	"error-title": "Грешка",
+	"file-not-found-heading": "Датотека није пронађена",
+	"item-without-image": "Ова ставка нема слику.",
+	"wrong-data-value-type-paragraph-2": "Да нисте случајно навели погрешно својство?"
 }

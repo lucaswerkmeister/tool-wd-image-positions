@@ -1,18 +1,19 @@
 {
 	"@metadata": {
 		"authors": [
-			"VIGNERON"
+			"VIGNERON",
+			"Wladek92"
 		]
 	},
 	"tool-name": "Positions des images Wikidata",
-	"skip-to-main-content": "Aller au contenu",
+	"skip-to-main-content": "Aller au contenu principal",
 	"nav-documentation": "Documentation",
 	"nav-toolforge": "Wikimedia Toolforge",
 	"nav-source-code": "Code source",
 	"nav-login": "Se connecter",
 	"nav-logged-in": "Connecté{{GENDER:$2||e}} en tant que $1.",
 	"index-paragraph-1": "Cet outil affiche les qualificatifs pour la $1 pour $2 ou $3 sous forme de zones sur l’image correspondante.",
-	"index-paragraph-2": "Pour les déclarations sur les éléments [$1 Wikidata], elles sont affichées sur le $2 de l'élément (ou sur une autre propriété). Pour les instructions sur les fichiers [$3 Structured Data on Commons], elles sont affichées sur le fichier lui-même.",
+	"index-paragraph-2": "Pour les déclarations sur les éléments [$1 Wikidata], elles sont affichées sur le $2 de l'élément (ou sur une autre propriété). Pour les instructions sur les fichiers des [$3 Données structurées de Commons], elles sont affichées sur le fichier lui-même.",
 	"index-heading-by-item-and-property": "Par élément et propriété",
 	"index-label-item-id": "Identifiant de l’élément",
 	"index-placeholder-item-id": "$1 ou $2 ou similaire",
@@ -29,6 +30,6 @@
 	"alert-not-logged-in": "Vous n'êtes pas connecté<noscript> et JavaScript est désactivé</noscript>, vous ne pouvez donc afficher que les régions et les déclarations existantes. Pour ajouter de nouvelles déclarations ou régions ou modifier celles existantes, [$1 connectez-vous]<noscript> et activez JavaScript</noscript>.",
 	"alert-noscript": "JavaScript est désactivé, vous ne pouvez donc afficher que les régions et les déclarations existantes. Pour ajouter de nouvelles déclarations ou régions ou modifier celles existantes, activez JavaScript.",
 	"settings": "Options",
-	"settings-label-interface-language-code": "Langue de l’interface",
+	"settings-label-interface-language-code": "Langue de l’interface utilisateur",
 	"settings-save": "Enregistrer"
 }
