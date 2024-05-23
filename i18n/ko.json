@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Ykhwong"
+			"Ykhwong",
+			"밥풀떼기"
 		]
 	},
 	"tool-name": "위키데이터 이미지 위치",
@@ -21,5 +22,17 @@
 	"index-label-file-title": "파일 제목",
 	"index-placeholder-file-title": "$1 , $2 , $3 또는 이와 유사한 것",
 	"index-heading-by-iiif": "IIIF 지역 및 속성별",
-	"image-scale": "이미지 크기:&#32;"
+	"image-scale": "이미지 크기:&#32;",
+	"image-button-add-region": "지역 추가",
+	"image-button-use-region": "이 지역 사용하기",
+	"image-button-cancel": "취소",
+	"image-button-edit-region": "지역 편집",
+	"image-button-loading": "불러오는 중…",
+	"settings": "설정",
+	"settings-label-interface-language-code": "사용자 인터페이스 언어",
+	"settings-save": "저장",
+	"error-title": "오류",
+	"file-not-found-heading": "파일을 찾을 수 없습니다",
+	"item-without-image": "이 항목에는 이미지가 없습니다.",
+	"wrong-data-value-type-heading": "잘못된 값 유형"
 }
