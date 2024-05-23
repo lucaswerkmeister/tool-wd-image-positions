@@ -1,14 +1,15 @@
 {
 	"@metadata": {
 		"authors": [
-			"Eleassar"
+			"Eleassar",
+			"Pipi Ferry"
 		]
 	},
 	"tool-name": "Položaji slik Wikipodatkov",
 	"skip-to-main-content": "Pojdi na glavno vsebino",
 	"nav-documentation": "Dokumentacija",
 	"nav-toolforge": "Wikimedia Toolforge",
-	"nav-source-code": "izvorna koda",
+	"nav-source-code": "Izvorna koda",
 	"nav-login": "Prijava",
 	"nav-logged-in": "{{GENDER:$2|Prijavljen|Prijavljena|Prijavljen_a}} kot $1.",
 	"index-paragraph-1": "To orodje prikazuje kvalifikatorje za $1 pri izjavah $2 ali $3 kot področja na ustrezni sliki.",

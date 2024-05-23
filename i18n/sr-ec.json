@@ -26,5 +26,6 @@
 	"error-title": "Грешка",
 	"file-not-found-heading": "Датотека није пронађена",
 	"item-without-image": "Ова ставка нема слику.",
+	"wrong-data-value-type-heading": "Погрешан тип вредности",
 	"wrong-data-value-type-paragraph-2": "Да нисте случајно навели погрешно својство?"
 }

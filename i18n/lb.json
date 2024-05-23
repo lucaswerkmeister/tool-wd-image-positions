@@ -12,7 +12,17 @@
 	"index-button-load": "Lueden",
 	"index-heading-by-file": "Per Fichier",
 	"index-label-file-title": "Titel vum Fichier",
+	"image-button-add-region": "Regioun derbäisetzen",
+	"image-button-use-region": "dës Regioun benotzen",
+	"image-button-cancel": "ofbriechen",
+	"image-button-edit-region": "Eng Regioun änneren",
+	"image-button-select-region": "Wielt (klickt op) eng Regioun fir z'änneren",
 	"settings": "Astellungen",
 	"settings-label-interface-language-code": "Sprooch vun der Benotzeruewerfläch",
-	"settings-save": "Späicheren"
+	"settings-save": "Späicheren",
+	"error-title": "Feeler",
+	"file-not-found-heading": "Fichier net fonnt",
+	"file-not-found-body": "E Fichier mam Numm <q>$1</q> gouf net fonnt. Et ka sinn, datt e feelt oder datt den Numm ongülteg ass.",
+	"item-without-image": "Dëst Element huet kee Bild.",
+	"wrong-data-value-type-paragraph-2": "Hutt Dir déi falsch Eegenschaft uginn?"
 }

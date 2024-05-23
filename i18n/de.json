@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"21 little ducks",
-			"Lucas Werkmeister"
+			"Lucas Werkmeister",
+			"Mcliquid"
 		]
 	},
 	"tool-name": "Wikidata Bildpositionen",
@@ -27,6 +28,9 @@
 	"index-heading-by-iiif": "Nach IIIF-Region und Eigenschaft",
 	"index-label-iiif-region": "<abbr title=\"International Image Interoperability Framework\">IIIF</abbr>-Region",
 	"image-scale": "Bildskalierung:&#32;",
+	"image-depicted-without-region": "Dargestellt ohne Angabe einer Region:",
+	"image-named-places-on-map-without-region": "Benannte Orte auf der Karte ohne angegebene Region:",
+	"image-button-add-region": "Region hinzufügen",
 	"alert-not-logged-in": "Du bist nicht angemeldet<noscript> und JavaScript ist deaktiviert</noscript>, daher kannst du nur bestehende Regionen und Aussagen anzeigen. Um neue Aussagen oder Regionen anzulegen oder bestehende zu bearbeiten, [$1 melde dich an]<noscript> und aktiviere JavaScript</noscript>.",
 	"alert-noscript": "JavaScript ist deaktiviert, daher kannst du nur bestehende Regionen und Aussagen anzeigen. Um neue Aussagen oder Regionen anzulegen oder bestehende zu bearbeiten, aktiviere JavaScript.",
 	"settings": "Einstellungen",
