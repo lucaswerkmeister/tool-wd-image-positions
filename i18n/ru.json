@@ -1,0 +1,22 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kareyac",
+			"Okras"
+		]
+	},
+	"nav-login": "Войти",
+	"index-label-item-id": "ID элемента",
+	"index-label-file-title": "Название файла",
+	"image-button-cancel": "отмена",
+	"image-button-edit-region": "Редактировать регион",
+	"image-button-select-region": "Выберите (нажмите) регион для редактирования",
+	"image-button-loading": "загружается…",
+	"settings": "Настройки",
+	"settings-label-interface-language-code": "Язык интерфейса",
+	"settings-save": "Сохранить",
+	"error-title": "Ошибка",
+	"file-not-found-heading": "Файл не найден",
+	"item-without-image": "У этого элемента нет изображения.",
+	"wrong-data-value-type-heading": "Неправильный тип значения"
+}

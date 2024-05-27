@@ -34,5 +34,6 @@
 	"error-title": "오류",
 	"file-not-found-heading": "파일을 찾을 수 없습니다",
 	"item-without-image": "이 항목에는 이미지가 없습니다.",
-	"wrong-data-value-type-heading": "잘못된 값 유형"
+	"wrong-data-value-type-heading": "잘못된 값 유형",
+	"wrong-data-value-type-paragraph-2": "잘못된 속성을 지정하셨습니까?"
 }
