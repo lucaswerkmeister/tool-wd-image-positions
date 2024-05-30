@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"AnupamM",
 			"Eulalio",
 			"ProtoplasmaKid",
 			"Suecarmol"
@@ -28,6 +29,8 @@
 	"index-heading-by-iiif": "Por región y propiedad del IIIF",
 	"index-label-iiif-region": "Región <abbr title=\"Marco internacional de interoperabilidad de imágenes\">IIIF</abbr>",
 	"image-scale": "Escala de imagen:",
+	"image-button-cancel": "cancelar",
+	"image-button-loading": "cargando…",
 	"alert-not-logged-in": "No has ingresado con tu cuenta<noscript> y Javascript está deshabilitado</noscript>, así que tú solo puedes ver las declaraciones ya hechas en regiones existentes. Para sumar nuevas declaraciones o regiones o editar las existentes, [$1 ingresa con tu cuenta]<noscript> y habilita JavaScript</noscript>.",
 	"alert-noscript": "JavaScript está deshabilitado, por lo que solo puede ver regiones y declaraciones existentes. Para agregar nuevas declaraciones o regiones o editar las existentes, habilite JavaScript.",
 	"settings": "Ajustes",
