@@ -29,10 +29,13 @@
 	"index-heading-by-iiif": "Par région et propriété IIIF",
 	"index-label-iiif-region": "Région <abbr title=\"International Image Interoperability Framework\">IIIF</abbr>",
 	"image-scale": "Échelle de l'image :",
+	"image-depicted-without-region": "Représenté sans région spécifiée :",
 	"image-named-places-on-map-without-region": "Lieux nommés sur la carte sans région spécifiée :",
 	"image-button-add-region": "ajouter une région",
 	"image-button-use-region": "utiliser cette région",
 	"image-button-cancel": "annuler",
+	"image-button-editing-statement": "modifier une déclaration…",
+	"image-button-edit-region": "Modifier une région",
 	"image-button-select-region": "Sélectionnez (cliquez) une région à modifier",
 	"image-button-loading": "chargement...",
 	"alert-not-logged-in": "Vous n'êtes pas connecté<noscript> et JavaScript est désactivé</noscript>, vous ne pouvez donc afficher que les régions et les déclarations existantes. Pour ajouter de nouvelles déclarations ou régions ou modifier celles existantes, [$1 connectez-vous]<noscript> et activez JavaScript</noscript>.",
@@ -44,6 +47,7 @@
 	"file-not-found-heading": "Fichier introuvable",
 	"file-not-found-body": "Un fichier portant le titre <q>$1</q> est introuvable. Il se peut qu'il soit manquant ou que le titre soit invalide.",
 	"item-without-image": "Cet article n'a pas d'image.",
+	"wrong-data-value-type-heading": "Type de valeur incorrect",
 	"wrong-data-value-type-paragraph-1": "Type de valeur incorrect pour la propriété d'image : <code>$1</code> attendu mais <code>$2</code> indiqué.",
 	"wrong-data-value-type-paragraph-2": "Avez-vous spécifié la mauvaise propriété ?"
 }
