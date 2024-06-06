@@ -148,7 +148,7 @@ function setup() {
               originalSrc = img.src;
 
         if (!/\.(?:jpe?g|png|gif)$/i.test(originalSrc)) {
-            img.src = img.srcset.split(' ').slice(-2)[0];
+            img.src = img.srcset.trim().split(/\s+/).slice(-2)[0];
         }
 
         return function() {
