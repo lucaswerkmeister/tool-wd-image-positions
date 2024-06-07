@@ -8,6 +8,7 @@ function setup() {
 
     const csrfTokenElement = document.getElementById('csrf_token'),
           baseUrl = document.querySelector('link[rel=index]').href.replace(/\/$/, ''),
+          interfaceLanguageCode = document.documentElement.dataset.interfaceLanguageCode,
           mainDataset = document.getElementsByTagName('main')[0].dataset,
           translations = JSON.parse(mainDataset.translations),
           depictedPropertiesLabels = JSON.parse(mainDataset.depictedPropertiesLabels),
@@ -345,6 +346,7 @@ function setup() {
 
     function addNewDepictedForm(entityElement) {
         const session = new Session( 'www.wikidata.org', {
+            uselang: interfaceLanguageCode,
             formatversion: 2,
             origin: '*',
         }, {
@@ -450,7 +452,7 @@ function setup() {
                     const response = await session.request({
                         action: 'wbsearchentities',
                         search: value,
-                        language: 'en',
+                        language: interfaceLanguageCode,
                         type: 'item',
                         limit: this.searchLimit,
                         continue: this.searchOffset,
