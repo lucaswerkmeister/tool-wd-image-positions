@@ -5,8 +5,16 @@
 			"Okras"
 		]
 	},
+	"skip-to-main-content": "Перейти к основному содержанию",
+	"nav-documentation": "Документация",
+	"nav-toolforge": "Wikimedia Toolforge",
+	"nav-source-code": "Исходный код",
 	"nav-login": "Войти",
+	"index-heading-by-item-and-property": "По элементу и свойству",
 	"index-label-item-id": "ID элемента",
+	"index-placeholder-item-id": "$1 или $2 или аналогичный",
+	"index-button-load": "Загрузить",
+	"index-heading-by-file": "По файлу",
 	"index-label-file-title": "Название файла",
 	"image-button-cancel": "отмена",
 	"image-button-edit-region": "Редактировать регион",
