@@ -261,7 +261,7 @@ def oauth_callback():
 
 @app.route('/logout')
 def logout():
-    flask.session.pop('oauth_request_token', None)
+    flask.session.pop('oauth_access_token', None)
     flask.session.permanent = False
     return flask.redirect(flask.url_for('index'))
 
