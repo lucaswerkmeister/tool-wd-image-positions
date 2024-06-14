@@ -224,6 +224,7 @@ def parse_image_title_input(input):
 
 @app.get('/settings/')
 def settings():
+    flask.session['return_to_redirect'] = flask.request.referrer
     return flask.render_template(
         'settings.html',
         languages={
@@ -236,12 +237,13 @@ def settings():
 def settings_save():
     if 'interface-language-code' in flask.request.form:
         flask.session['interface_language_code'] = flask.request.form['interface-language-code'][:20]
-    return flask.redirect(flask.url_for('index'))
+    return flask.redirect(flask.session.pop('return_to_redirect', flask.url_for('index')))
 
 @app.route('/login')
 def login():
     redirect, request_token = mwoauth.initiate('https://www.wikidata.org/w/index.php', consumer_token, user_agent=user_agent)
     flask.session['oauth_request_token'] = dict(zip(request_token._fields, request_token))
+    flask.session['return_to_redirect'] = flask.request.referrer
     return flask.redirect(redirect)
 
 @app.route('/oauth/callback')
@@ -255,7 +257,7 @@ def oauth_callback():
     flask.session['oauth_access_token'] = dict(zip(access_token._fields, access_token))
     flask.session.permanent = True
     flask.session.pop('_csrf_token', None)
-    return flask.redirect(flask.url_for('index'))
+    return flask.redirect(flask.session.pop('return_to_redirect', flask.url_for('index')))
 
 @app.route('/logout')
 def logout():
