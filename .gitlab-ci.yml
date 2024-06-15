@@ -1,5 +1,4 @@
 variables:
-  GIT_SUBMODULE_STRATEGY: recursive
   PYTHONDONTWRITEBYTECODE: "1"
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
 
