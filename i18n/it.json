@@ -1,10 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
-			"Beta16"
+			"Beta16",
+			"Champ0999"
 		]
 	},
 	"skip-to-main-content": "Passa al contenuto principale",
+	"nav-documentation": "Documentazione",
 	"nav-source-code": "Codice sorgente",
 	"nav-login": "Entra",
 	"nav-logged-in": "{{GENDER:$2|Acceduto|Acceduta|Acceduto/a}} come $1.",
