@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"McDutchie",
+			"Romaine",
 			"Siebrand"
 		]
 	},
@@ -27,9 +28,25 @@
 	"index-heading-by-iiif": "Op IIIF-regio en eigenschap",
 	"index-label-iiif-region": "<abbr title=\"International Image Interoperability Framework\"></abbr>-regio",
 	"image-scale": "Afbeeldingsschaal:&#32;",
+	"image-depicted-without-region": "Afbeelding zonder specifieke regio:",
+	"image-named-places-on-map-without-region": "Plaatsen met naam op de kaart zonder gespecificeerde regio:",
+	"image-button-add-region": "voeg regio toe",
+	"image-button-use-region": "gebruik deze regio",
+	"image-button-cancel": "annuleren",
+	"image-button-editing-statement": "verklaring bewerken...",
+	"image-button-edit-region": "Bewerk een regio",
+	"image-button-select-region": "Selecteer (klik) een regio om te bewerken",
+	"image-button-loading": "aan het laden…",
 	"alert-not-logged-in": "U bent niet aangemeld<noscript> en JavaScript is uitgeschakeld</noscript>, zodat u alleen bestaande regio's en verklaringen kunt bekijken. Om nieuwe verklaringen of regio's toe te voegen of bestaande te bewerken, [$1 meldt u zich aan]<noscript> en schakelt u JavaScript in</noscript>.",
 	"alert-noscript": "JavaScript is uitgeschakeld, dus u kunt alleen bestaande regio's en verklaringen bekijken. Schakel JavaScript in om nieuwe verklaringen of regio's toe te voegen of bestaande te bewerken.",
 	"settings": "Instellingen",
 	"settings-label-interface-language-code": "Taal van de gebruikersinterface",
-	"settings-save": "Opslaan"
+	"settings-save": "Opslaan",
+	"error-title": "Fout",
+	"file-not-found-heading": "Bestand niet gevonden",
+	"file-not-found-body": "Er kon geen bestand met de titel <q>$1</q> worden gevonden. Het kan zijn dat deze ontbreekt of dat de titel ongeldig is.",
+	"item-without-image": "Dit item heeft geen afbeelding.",
+	"wrong-data-value-type-heading": "Onjuist waardetype",
+	"wrong-data-value-type-paragraph-1": "Onjuist waardetype voor de afbeeldingseigenschap: <code>$1</code> werd verwacht maar het was <code>$2</code>.",
+	"wrong-data-value-type-paragraph-2": "Heb je de verkeerde eigenschap opgegeven?"
 }
