@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"EdoAug",
 			"Jon Harald Søby"
 		]
 	},
@@ -10,6 +11,7 @@
 	"nav-toolforge": "Wikimedia Toolforge",
 	"nav-source-code": "Kildekode",
 	"nav-login": "Logg inn",
+	"nav-logged-in": "{{GENDER:$2|Innlogget}} som $1.",
 	"index-paragraph-1": "Dette verktøyet viser $1-kvalifikatorer som gjelder påstandene $2 eller $3 som områder på det relevante bildet.",
 	"index-paragraph-2": "Utsagn på [$1 Wikidata]-elementer vises på elementets $2 (eller en annen egenskap). For utsagn i [$3 Commons-filer med strukturerte data] blir de vist på selve bildet.",
 	"index-heading-by-item-and-property": "Etter element og egenskap",
@@ -25,6 +27,17 @@
 	"index-heading-by-iiif": "Etter IIIF-region og -egenskap",
 	"index-label-iiif-region": "<abbr title=\"International Image Interoperability Framework\">IIIF</abbr>-region",
 	"image-scale": "Bildeskala:",
+	"image-button-cancel": "avbryt",
+	"image-button-editing-statement": "redigerer utsagn ...",
+	"image-button-loading": "laster ...",
 	"alert-not-logged-in": "Du er ikke innlogget<noscript> og JavaScript er deaktivert</noscript>, så du kan kun vise eksisterende regioner og utsagn. For å legge til nye utsagn eller regioner eller redigere eksisterende må du [$1 logge inn]<noscript> og aktivere JavaScript</noscript>.",
-	"alert-noscript": "JavaScript er deaktivert, så du kan kun vise eksisterende regioner og utsagn. For å legge til nye utsagn eller regioner eller redigere eksisterende må du aktivere JavaScript."
+	"alert-noscript": "JavaScript er deaktivert, så du kan kun vise eksisterende regioner og utsagn. For å legge til nye utsagn eller regioner eller redigere eksisterende må du aktivere JavaScript.",
+	"settings": "Innstillinger",
+	"settings-label-interface-language-code": "Grensesnittspråk",
+	"settings-save": "Lagre",
+	"error-title": "Feil",
+	"file-not-found-heading": "Fil ikke funnet",
+	"item-without-image": "Dette elementet har intet bilde.",
+	"wrong-data-value-type-heading": "Feil verditype",
+	"wrong-data-value-type-paragraph-2": "Anga du feil egenskap?"
 }
