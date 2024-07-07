@@ -13,4 +13,4 @@ pyyaml
 requests
 requests_oauthlib
 toolforge >= 4.2.0
-toolforge_i18n == 0.0.1
+toolforge_i18n == 0.0.2
