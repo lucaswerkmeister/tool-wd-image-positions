@@ -1,0 +1,23 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ignatgg",
+			"Lucas Werkmeister"
+		]
+	},
+	"tool-name": "Позиції зображень Вікіданих",
+	"skip-to-main-content": "Перейти до основного вмісту",
+	"nav-documentation": "Документація",
+	"nav-toolforge": "Вікімедіа Toolforge",
+	"nav-source-code": "Вихідний код",
+	"nav-login": "Увійти",
+	"nav-logged-in": "{{GENDER:$2|Увійшли}} як $1.",
+	"index-paragraph-1": "Цей інструмент показує кваліфікатори $1 у заявах $2 або $3 як області на відповідному зображенні.",
+	"index-paragraph-2": "Для заяв щодо елементів [$1 Wikidata] вони відображаються в $2 елемента (або іншій властивості). Для заяв щодо файлів [$3 Structured Data on Commons] вони відображаються в самому файлі.",
+	"index-heading-by-item-and-property": "За предметом і майном",
+	"index-label-item-id": "ID товару",
+	"index-placeholder-item-id": "$1 або $2 або подібні",
+	"index-label-property-id-optional": "ID власності <small>(необов'язково)</small>",
+	"index-button-load": "Завантажити",
+	"index-button-preview-iiif": "Попередній перегляд IIIF"
+}

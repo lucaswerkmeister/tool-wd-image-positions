@@ -3,7 +3,8 @@
 		"authors": [
 			"21 little ducks",
 			"Lucas Werkmeister",
-			"Mcliquid"
+			"Mcliquid",
+			"TomatoCake"
 		]
 	},
 	"tool-name": "Wikidata Bildpositionen",
@@ -31,9 +32,18 @@
 	"image-depicted-without-region": "Dargestellt ohne Angabe einer Region:",
 	"image-named-places-on-map-without-region": "Benannte Orte auf der Karte ohne angegebene Region:",
 	"image-button-add-region": "Region hinzufügen",
+	"image-button-use-region": "Diese Region verwenden",
+	"image-button-cancel": "Abbrechen",
+	"image-button-editing-statement": "Aussage bearbeiten …",
+	"image-button-select-region": "Wähle eine Region durch Klicken aus, um sie zu bearbeiten",
+	"image-button-loading": "Lade …",
 	"alert-not-logged-in": "Du bist nicht angemeldet<noscript> und JavaScript ist deaktiviert</noscript>, daher kannst du nur bestehende Regionen und Aussagen anzeigen. Um neue Aussagen oder Regionen anzulegen oder bestehende zu bearbeiten, [$1 melde dich an]<noscript> und aktiviere JavaScript</noscript>.",
 	"alert-noscript": "JavaScript ist deaktiviert, daher kannst du nur bestehende Regionen und Aussagen anzeigen. Um neue Aussagen oder Regionen anzulegen oder bestehende zu bearbeiten, aktiviere JavaScript.",
 	"settings": "Einstellungen",
 	"settings-label-interface-language-code": "Sprache der Benutzeroberfläche",
-	"settings-save": "Speichern"
+	"settings-save": "Speichern",
+	"error-title": "Fehler",
+	"file-not-found-heading": "Datei nicht gefunden",
+	"wrong-data-value-type-heading": "Ungültiger Wertetyp",
+	"wrong-data-value-type-paragraph-2": "Hast du die falsche Eigenschaft angegeben?"
 }
