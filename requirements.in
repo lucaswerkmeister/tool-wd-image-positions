@@ -1,5 +1,4 @@
 babel
-beautifulsoup4
 cachetools
 decorator
 flake8
@@ -13,4 +12,4 @@ pyyaml
 requests
 requests_oauthlib
 toolforge >= 4.2.0
-toolforge_i18n == 0.0.2
+toolforge_i18n == 0.0.5

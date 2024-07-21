@@ -39,4 +39,5 @@ config = TranslationsConfig(
     variables=_variables,
     derived_messages=_derived_messages,
     allowed_html_elements=_allowed_html_elements,
+    check_translations=False,
 )
