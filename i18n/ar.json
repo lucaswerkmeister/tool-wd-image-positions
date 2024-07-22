@@ -1,0 +1,22 @@
+{
+	"@metadata": {
+		"authors": [
+			"Mohammed Qays"
+		]
+	},
+	"skip-to-main-content": "انتقل إلى المحتوى الرئيسي",
+	"nav-documentation": "التوثيق",
+	"nav-toolforge": "أدوات ويكيميديا",
+	"nav-source-code": "الكود المصدري",
+	"nav-logged-in": "{{GENDER:$2| تم تسجيل الدخول}} كـ $1 .",
+	"index-label-item-id": "مُعرّف العنصر",
+	"index-placeholder-item-id": "$1 أو $2 أو ما شابه ذلك",
+	"index-label-file-title": "عنوان الملف",
+	"index-placeholder-file-title": "$1 أو $2 أو $3 أو ما شابه ذلك",
+	"image-button-cancel": "ألغِ",
+	"image-button-loading": "جارٍ التحميل…",
+	"settings": "الإعدادات",
+	"settings-label-interface-language-code": "لغة واجهة المستخدم",
+	"error-title": "خطأ",
+	"file-not-found-heading": "لم يُعثر على الملف"
+}
