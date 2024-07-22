@@ -1,4 +1,4 @@
-from toolforge_i18n.translations import TranslationsConfig
+from toolforge_i18n.translations import TranslationsConfig, language_code_to_babel
 
 
 def _identity(s: str) -> str:
@@ -35,9 +35,23 @@ _allowed_html_elements = {
 }
 
 
+def _language_code_to_babel(code: str) -> str:
+    mapped = language_code_to_babel(code)
+    if mapped != code:
+        return mapped
+    return {
+        # kaa (Karakalpak) is in Latin script in MediaWiki,
+        # but its closest relatives in Babel are all in Cyrillic script;
+        # uz (Uzbek) has the same plural forms,
+        # and its list formatting (“X and Y”) is probably intelligible to Karakalpak speakers for geopolitical reasons
+        'kaa': 'uz',
+    }.get(code, code.partition('-')[0])
+
+
 config = TranslationsConfig(
     variables=_variables,
     derived_messages=_derived_messages,
+    language_code_to_babel=_language_code_to_babel,
     allowed_html_elements=_allowed_html_elements,
     check_translations=False,
 )
