@@ -4,6 +4,7 @@
 			"21 little ducks",
 			"Lucas Werkmeister",
 			"Mcliquid",
+			"RucolaSpacecat",
 			"TomatoCake"
 		]
 	},
@@ -35,6 +36,7 @@
 	"image-button-use-region": "Diese Region verwenden",
 	"image-button-cancel": "Abbrechen",
 	"image-button-editing-statement": "Aussage bearbeiten …",
+	"image-button-edit-region": "Region bearbeiten",
 	"image-button-select-region": "Wähle eine Region durch Klicken aus, um sie zu bearbeiten",
 	"image-button-loading": "Lade …",
 	"alert-not-logged-in": "Du bist nicht angemeldet<noscript> und JavaScript ist deaktiviert</noscript>, daher kannst du nur bestehende Regionen und Aussagen anzeigen. Um neue Aussagen oder Regionen anzulegen oder bestehende zu bearbeiten, [$1 melde dich an]<noscript> und aktiviere JavaScript</noscript>.",
@@ -44,6 +46,9 @@
 	"settings-save": "Speichern",
 	"error-title": "Fehler",
 	"file-not-found-heading": "Datei nicht gefunden",
+	"file-not-found-body": "Eine Datei mit dem Titel <q>$1</q> konnte nicht gefunden werden. Vielleicht fehlt sie oder der Titel ist ungültig.",
+	"item-without-image": "Dieses Datenobjekt hat kein Bild.",
 	"wrong-data-value-type-heading": "Ungültiger Wertetyp",
+	"wrong-data-value-type-paragraph-1": "Falscher Wertetyp für die Bild-Eigenschaft: Erwartet wurde <code>$1</code>, aber es war <code>$2</code>.",
 	"wrong-data-value-type-paragraph-2": "Hast du die falsche Eigenschaft angegeben?"
 }
