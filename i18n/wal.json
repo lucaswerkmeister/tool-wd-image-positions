@@ -1,0 +1,31 @@
+{
+	"@metadata": {
+		"authors": [
+			"Malaalaa"
+		]
+	},
+	"tool-name": "Wikkii-daataa misiliya utettata",
+	"skip-to-main-content": "Huuphe kesuwakko aadhdha",
+	"nav-source-code": "Man\"iya koodiya",
+	"nav-login": "Gela",
+	"nav-logged-in": "$1dan {{GENDER:$2|geliis}}.",
+	"index-label-file-title": "Fayliya sunttaa",
+	"index-placeholder-file-title": "$1 woykko $2 woykko $3 woykko malatiyagaa",
+	"image-scale": "Misiliya qottaa:&#32;",
+	"image-depicted-without-region": "Heeraa shaakkennan qoncciis:",
+	"image-named-places-on-map-without-region": "Heeraa shaakkennan sohotu sunttay karttan qoncciis:",
+	"image-button-add-region": "Heeraa gujja",
+	"image-button-use-region": "Ha heeraa gujja",
+	"image-button-cancel": "Qucca",
+	"image-button-editing-statement": "qonccissuwa goydiiddi...",
+	"image-button-edit-region": "Heeraa goyda",
+	"image-button-select-region": "Heeraa goydanawu bochcha",
+	"image-button-loading": "ehiiddi...",
+	"alert-noscript": "Jaavaaskriptee oottennan, hegaassi neeni kase gelida heeratanne qonccissotu xallaa be'anawu danddayaasa.",
+	"settings-label-interface-language-code": "Yaray go'ettiyo doonata",
+	"settings-save": "Minjja",
+	"error-title": "Balaa",
+	"file-not-found-heading": "Faylee beettibeenna",
+	"file-not-found-body": "<q>$1</q> sunttan de'iya faylee beettibeenna. Baynnaagaa woykko like gidenna suntta gidanawu danddayees.",
+	"item-without-image": "Ha dummatidaagaassi misilee baawa."
+}
