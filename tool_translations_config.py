@@ -1,4 +1,4 @@
-from toolforge_i18n.translations import TranslationsConfig, language_code_to_babel
+from toolforge_i18n import TranslationsConfig, language_code_to_babel
 
 
 def _identity(s: str) -> str:

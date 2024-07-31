@@ -22,8 +22,7 @@ import urllib.parse
 import yaml
 
 from exceptions import WrongDataValueType
-from toolforge_i18n.flask_things import ToolforgeI18n, interface_language_code_from_request, message, pop_html_lang, push_html_lang
-from toolforge_i18n.language_info import lang_autonym
+from toolforge_i18n import ToolforgeI18n, interface_language_code_from_request, lang_autonym, message, pop_html_lang, push_html_lang
 import messages
 
 
