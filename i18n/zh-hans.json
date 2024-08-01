@@ -2,10 +2,13 @@
 	"@metadata": {
 		"authors": [
 			"Cookai1205",
-			"GuoPC"
+			"GuoPC",
+			"Huajing"
 		]
 	},
+	"tool-name": "维基数据图片位置",
 	"skip-to-main-content": "跳至主要内容",
+	"nav-documentation": "文档",
 	"nav-toolforge": "维基媒体Toolforge",
 	"nav-source-code": "源代码",
 	"nav-login": "登录",
