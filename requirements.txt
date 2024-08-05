@@ -116,8 +116,10 @@ soupsieve==2.5
     # via beautifulsoup4
 toolforge==6.0.0
     # via -r requirements.in
-toolforge-i18n==0.0.6
-    # via -r requirements.in
+toolforge-i18n[flask]==0.0.7
+    # via
+    #   -r requirements.in
+    #   toolforge-i18n
 urllib3==2.2.1
     # via requests
 werkzeug==3.0.3
