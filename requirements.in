@@ -12,4 +12,4 @@ pyyaml
 requests
 requests_oauthlib
 toolforge >= 4.2.0
-toolforge_i18n[Flask] == 0.0.7
+toolforge_i18n[Flask] >= 0.1.0
