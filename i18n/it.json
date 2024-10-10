@@ -2,14 +2,17 @@
 	"@metadata": {
 		"authors": [
 			"Beta16",
-			"Champ0999"
+			"Champ0999",
+			"Egidio24"
 		]
 	},
 	"skip-to-main-content": "Passa al contenuto principale",
 	"nav-documentation": "Documentazione",
+	"nav-toolforge": "Wikimedia Toolforge",
 	"nav-source-code": "Codice sorgente",
 	"nav-login": "Entra",
 	"nav-logged-in": "{{GENDER:$2|Acceduto|Acceduta|Acceduto/a}} come $1.",
+	"index-paragraph-1": "Questo strumento mostra i qualificatori di $1 sulle dichiarazioni di $2 o $3 come aree dell'immagine pertinente.",
 	"index-placeholder-item-id": "$1, $2 o simile",
 	"index-button-load": "Carica",
 	"index-placeholder-file-title": "$1, $2, $3 o simile",

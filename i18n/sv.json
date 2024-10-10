@@ -1,0 +1,18 @@
+{
+	"@metadata": {
+		"authors": [
+			"WikiPhoenix"
+		]
+	},
+	"nav-documentation": "Dokumentation",
+	"nav-source-code": "Källkod",
+	"nav-login": "Logga in",
+	"index-placeholder-item-id": "$1 eller $2 eller liknande",
+	"index-button-load": "Ladda",
+	"index-heading-by-file": "Efter titel",
+	"settings": "Inställningar",
+	"settings-label-interface-language-code": "Användargränssnittets språk",
+	"settings-save": "Spara",
+	"error-title": "Fel",
+	"file-not-found-heading": "Filen hittades inte"
+}
