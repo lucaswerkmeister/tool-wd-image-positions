@@ -38,9 +38,9 @@ flask==3.0.3
     # via
     #   -r requirements.in
     #   toolforge-i18n
-frozendict==2.4.5
+frozendict==2.4.6
     # via pyld
-frozenlist==1.4.1
+frozenlist==1.5.0
     # via
     #   aiohttp
     #   aiosignal
@@ -60,7 +60,7 @@ lxml==5.3.0
     # via
     #   iiif-prezi
     #   pyld
-markupsafe==3.0.1
+markupsafe==3.0.2
     # via
     #   -r requirements.in
     #   jinja2
@@ -84,7 +84,7 @@ oauthlib==3.2.2
     #   requests-oauthlib
 packaging==24.1
     # via pytest
-pillow==10.4.0
+pillow==11.0.0
     # via iiif-prezi
 pluggy==1.5.0
     # via pytest
@@ -126,9 +126,9 @@ toolforge-i18n[flask]==0.1.1
     #   toolforge-i18n
 urllib3==2.2.3
     # via requests
-werkzeug==3.0.4
+werkzeug==3.0.6
     # via
     #   flask
     #   toolforge-i18n
-yarl==1.15.1
+yarl==1.16.0
     # via aiohttp
