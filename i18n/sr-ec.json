@@ -11,6 +11,7 @@
 	"nav-logged-in": "{{GENDER:$2|Пријављени сте}} као $1.",
 	"index-heading-by-item-and-property": "По ставци и својству",
 	"index-label-item-id": "ID ставке",
+	"index-placeholder-item-id": "$1 или $2 или слично",
 	"index-button-load": "Учитај",
 	"index-heading-by-file": "По датотеци",
 	"index-label-file-title": "Наслов датотеке",

@@ -3,7 +3,8 @@
 		"authors": [
 			"Cookai1205",
 			"Kly",
-			"Winston Sung"
+			"Winston Sung",
+			"沈澄心"
 		]
 	},
 	"tool-name": "維基數據圖片位置",
@@ -33,7 +34,7 @@
 	"image-button-add-region": "新增區域",
 	"image-button-use-region": "使用此區域",
 	"image-button-cancel": "取消",
-	"image-button-editing-statement": "正在編輯陳述…",
+	"image-button-editing-statement": "正在編輯陳述……",
 	"image-button-edit-region": "編輯區域",
 	"image-button-select-region": "點擊來選擇編輯區域",
 	"image-button-loading": "載入中…",
