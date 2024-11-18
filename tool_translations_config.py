@@ -45,6 +45,10 @@ def _language_code_to_babel(code: str) -> str:
         # uz (Uzbek) has the same plural forms,
         # and its list formatting (“X and Y”) is probably intelligible to Karakalpak speakers for geopolitical reasons
         'kaa': 'uz',
+        # krc (Karachay-Balkar) falls back to ru (Russian) in MediaWiki;
+        # they share the Cyrillic script, and while Russian has more plural forms,
+        # I don’t think that should be a problem
+        'krc': 'ru',
     }.get(code, code.partition('-')[0])
 
 
