@@ -1,0 +1,22 @@
+{
+	"@metadata": {
+		"authors": [
+			"Vishwanatha Badikana"
+		]
+	},
+	"tool-name": "ವಿಕಿಡೇಟಾ ಚಿತ್ರೊದ ಸ್ತಾನೊಲು",
+	"skip-to-main-content": "ಮುಕ್ಯ ವಿಸಯೊಗು ಪೋಲೆ",
+	"nav-documentation": "ದಾಕಲಾತಿ",
+	"nav-toolforge": "ವಿಕಿಮೀಡಿಯಾ ಟೂಲ್‌ಫೋರ್ಜ್",
+	"nav-source-code": "ಮೂಲ ಸಂಕೇತೊ",
+	"nav-login": "ಲಾಗ್ ಇನ್ ಮಲ್ಪುಲೆ",
+	"nav-logged-in": "{{GENDER:$2|ಲಾಗ್ ಇನ್ ಆಯೆರ್}} ಅಂಚ $1.",
+	"index-paragraph-1": "ಈ ಸಾದನೊ $2 ಅತ್ತಂದೆ $3 ವಿವರಣೆಲೆಡ್ $1 ಅರ್ಹತೆಲೆನ್ ಸಮ್ಮಂದಿತೊ ಚಿತ್ರೊಡು ಪ್ರದೇಸೊಲೆನ ರೂಪೊಡು ತೋಜಾವುಂಡು.",
+	"index-paragraph-2": "[$1 ವಿಕಿಡೇಟಾ] ವಸ್ತುಲೆನ ವಿವರಣೆಲೆಗ್, ಅವು ವಸ್ತುಲೆದ $2 (ಅತ್ತ್ಂಡ ಬೇತೆ ಆಸ್ತಿ)ಡ್ ತೋಜಾವುಂಡು. [$3 ಮಾಹಿತಿಡ್ ಡಾಟಾ ಬುಕ್ಕೊ ಕಾಮನ್ಸ್] ಕಡತೊಲೆಡ್ ವಿವರಣೆಲೆಗ್, ಅವು ಕಡತೊಡ್ ತೋಜುಂಡು.",
+	"index-heading-by-item-and-property": "ಸೊತ್ತು ಬುಕ್ಕೊ ಆಸ್ತಿದ ಪ್ರಕಾರೊ",
+	"index-label-item-id": "ಸೊತ್ತುದ ಗುರ್ತೊ",
+	"index-placeholder-item-id": "$1 ಅತ್ತ್ಂಡ $2 ಅತ್ತ್ಂಡ ಅಂಚನೆ",
+	"index-label-property-id-optional": "ಆಸ್ತಿ ಗುರ್ತೊ <small>(ಬೋಡಾಂಡ)</small>",
+	"index-button-load": "ದಿನ್ನೊ",
+	"index-button-preview-iiif": "ಮುನ್ನೋಟೊ IIIF"
+}
