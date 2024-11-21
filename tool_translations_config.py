@@ -49,6 +49,10 @@ def _language_code_to_babel(code: str) -> str:
         # they share the Cyrillic script, and while Russian has more plural forms,
         # I don’t think that should be a problem
         'krc': 'ru',
+        # tcy (Tulu) falls back to kn (Kannada) in MediaWiki;
+        # Tulu messages use the Kannada script,
+        # and Tulu seems to have no special plural forms
+        'tcy': 'kn',
     }.get(code, code.partition('-')[0])
 
 
