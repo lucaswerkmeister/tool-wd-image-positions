@@ -1,0 +1,21 @@
+{
+	"@metadata": {
+		"authors": [
+			"Herryz",
+			"Lucas Werkmeister"
+		]
+	},
+	"tool-name": "Inganan ni gambar Wikidata",
+	"skip-to-main-content": "Mangalangkap tu konten utama",
+	"nav-documentation": "Dokumentasi",
+	"nav-toolforge": "Wikipedia Bengkel",
+	"nav-source-code": "Kode sumber",
+	"nav-login": "Masuk ma",
+	"index-heading-by-item-and-property": "Marhite barang dohot harta",
+	"index-label-item-id": "Barang ID",
+	"index-placeholder-item-id": "$1 manang $2 manang sarupa",
+	"index-label-property-id-optional": "Parbagasan ID <small>(pilihan)</small>",
+	"index-button-load": "Mamuat",
+	"index-label-file-title": "Judul berkas",
+	"index-placeholder-file-title": "$1 manang $2 manang $3 manang sarupa"
+}
