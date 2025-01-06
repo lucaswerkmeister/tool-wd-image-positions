@@ -1,0 +1,37 @@
+{
+	"@metadata": {
+		"authors": [
+			"Spotter"
+		]
+	},
+	"tool-name": "Umístění obrázků Wikidata",
+	"skip-to-main-content": "Přejít na hlavní obsah",
+	"nav-documentation": "Dokumentace",
+	"nav-toolforge": "Wikimedia Toolforge",
+	"nav-source-code": "Zdrojový kód",
+	"nav-login": "Přihlásit se",
+	"index-heading-by-item-and-property": "Podle položky a majetku",
+	"index-label-item-id": "ID položky",
+	"index-button-load": "Načíst",
+	"index-button-preview-iiif": "Náhled IIIF",
+	"index-button-iiif-manifest": "Manifest IIIF",
+	"index-heading-by-file": "Podle souboru",
+	"index-label-file-title": "Název souboru",
+	"image-scale": "Měřítko obrázku:",
+	"image-named-places-on-map-without-region": "Pojmenovaná místa na mapě bez specifikovaného regionu:",
+	"image-button-add-region": "přidat region",
+	"image-button-use-region": "použít tento region",
+	"image-button-cancel": "zrušit",
+	"image-button-editing-statement": "úprava prohlášení…",
+	"image-button-edit-region": "Upravit oblast",
+	"image-button-select-region": "Vyberte (klikněte na) oblast, kterou chcete upravit",
+	"image-button-loading": "načítá se",
+	"settings": "Nastavení",
+	"settings-label-interface-language-code": "Jazyk uživatelského rozhraní",
+	"settings-save": "Uložit",
+	"error-title": "Chyba",
+	"file-not-found-heading": "Soubor nenalezen",
+	"item-without-image": "Tato položka nemá žádný obrázek.",
+	"wrong-data-value-type-heading": "Nesprávný typ hodnoty",
+	"wrong-data-value-type-paragraph-2": "Zadali jste špatnou vlastnost?"
+}
