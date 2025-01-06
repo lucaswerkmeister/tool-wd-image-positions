@@ -1,18 +1,36 @@
 {
 	"@metadata": {
 		"authors": [
+			"Listz3",
 			"WikiPhoenix"
 		]
 	},
+	"skip-to-main-content": "Hoppa till huvudinnehåll",
 	"nav-documentation": "Dokumentation",
+	"nav-toolforge": "Wikimedia Toolforge",
 	"nav-source-code": "Källkod",
 	"nav-login": "Logga in",
+	"index-heading-by-item-and-property": "Efter objekt och egenskap",
+	"index-label-item-id": "Objekt-ID",
 	"index-placeholder-item-id": "$1 eller $2 eller liknande",
 	"index-button-load": "Ladda",
 	"index-heading-by-file": "Efter titel",
+	"index-label-file-title": "Filnamn",
+	"index-placeholder-file-title": "$1 eller $2 eller $3 eller liknande",
+	"index-heading-by-iiif": "Efter IIIF-region och egenskap",
+	"image-scale": "Bildskala:",
+	"image-button-add-region": "lägg till område",
+	"image-button-use-region": "använda detta område",
+	"image-button-editing-statement": "redigerar uttalande...",
+	"image-button-edit-region": "Redigera ett område",
+	"image-button-loading": "laddar...",
 	"settings": "Inställningar",
 	"settings-label-interface-language-code": "Användargränssnittets språk",
 	"settings-save": "Spara",
 	"error-title": "Fel",
-	"file-not-found-heading": "Filen hittades inte"
+	"file-not-found-heading": "Filen hittades inte",
+	"file-not-found-body": "En fil med titeln <q>$1</q> kunde inte hittas. Detta kan bero på att filen saknas eller att titeln är ogiltig.",
+	"item-without-image": "Detta objekt har ingen bild.",
+	"wrong-data-value-type-heading": "Felaktig värdetyp",
+	"wrong-data-value-type-paragraph-2": "Har du angett fel egenskap?"
 }
