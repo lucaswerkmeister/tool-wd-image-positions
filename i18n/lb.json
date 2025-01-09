@@ -1,11 +1,13 @@
 {
 	"@metadata": {
 		"authors": [
+			"GilPe",
 			"Robby",
 			"Volvox"
 		]
 	},
 	"tool-name": "Wikidata Bild Positiounen",
+	"skip-to-main-content": "Wiesselt op den Haaptinhalt",
 	"nav-documentation": "Dokumentatioun",
 	"nav-toolforge": "Wikimedia Toolforge",
 	"nav-source-code": "Quellcode",
@@ -22,6 +24,9 @@
 	"index-placeholder-file-title": "$1 oder $2 oder $3 oder änlech",
 	"index-heading-by-iiif": "No IIIF-Regioun an Eegenschaft",
 	"index-label-iiif-region": "<abbr title=\"International Image Interoperability Framework\">IIIF</abbr>-Regioun",
+	"image-scale": "Bildskaléierung:&#32;",
+	"image-depicted-without-region": "Duergestallt ouni Indikatioun vun enger Regioun:",
+	"image-named-places-on-map-without-region": "Plazen op der Kaart ouni Indikatioun vun enger Regioun:",
 	"image-button-add-region": "Regioun derbäisetzen",
 	"image-button-use-region": "dës Regioun benotzen",
 	"image-button-cancel": "ofbriechen",
@@ -29,6 +34,8 @@
 	"image-button-edit-region": "Eng Regioun änneren",
 	"image-button-select-region": "Wielt (klickt op) eng Regioun fir z'änneren",
 	"image-button-loading": "lueden…",
+	"alert-not-logged-in": "Dir sidd net ageloggt a JavaScript ass ausgeschalt, sou datt Dir nëmmen existent Regiounen an Aussoe gesitt. Fir nei Aussoen oder Regioune bäizesetzen oder déi existent z'änneren, [$1 log in] an aktivéiert JavaScript.",
+	"alert-noscript": "JavaScript ass ausgeschalt, sou datt Dir nëmmen existent Regiounen an Aussoen gesitt. Fir nei Aussoe oder Regioune bäizesetzen oder déi existent z'änneren,  aktivéiert JavaScript.",
 	"settings": "Astellungen",
 	"settings-label-interface-language-code": "Sprooch vun der Benotzeruewerfläch",
 	"settings-save": "Späicheren",
@@ -36,5 +43,7 @@
 	"file-not-found-heading": "Fichier net fonnt",
 	"file-not-found-body": "E Fichier mam Numm <q>$1</q> gouf net fonnt. Et ka sinn, datt e feelt oder datt den Numm ongülteg ass.",
 	"item-without-image": "Dëst Element huet kee Bild.",
+	"wrong-data-value-type-heading": "Falsche Wäerttyp",
+	"wrong-data-value-type-paragraph-1": "Falsche Wäerttyp fir d'Eegeschaft vum Bild: dir hutt <code>$2</code> amplaz vu(n) <code>$1</code> aginn.",
 	"wrong-data-value-type-paragraph-2": "Hutt Dir déi falsch Eegenschaft uginn?"
 }
