@@ -3,7 +3,8 @@
 		"authors": [
 			"Lucas Werkmeister",
 			"Meno25",
-			"Mohammed Qays"
+			"Mohammed Qays",
+			"XIDME"
 		]
 	},
 	"tool-name": "مواضع الصور في ويكي بيانات",
@@ -32,7 +33,7 @@
 	"image-named-places-on-map-without-region": "الأماكن المسماة على الخريطة دون تحديد المنطقة:",
 	"image-button-add-region": "أضف المنطقة",
 	"image-button-use-region": "استخدم هذه المنطقة",
-	"image-button-cancel": "ألغِ",
+	"image-button-cancel": "إلغاء",
 	"image-button-editing-statement": "بيان التحرير…",
 	"image-button-edit-region": "تعديل المنطقة",
 	"image-button-select-region": "حدد (انقر) على المنطقة لتعديلها",
