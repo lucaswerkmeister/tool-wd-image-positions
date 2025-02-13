@@ -1,0 +1,34 @@
+{
+	"@metadata": {
+		"authors": [
+			"Lucas Werkmeister",
+			"Tejoebāsa"
+		]
+	},
+	"tool-name": "ဝီကီးဒေတာ ဓာတ်ပုံအနီအထား",
+	"skip-to-main-content": "အဓိကအကြောင်းရာပသို့ ကျော်လားပါ",
+	"nav-documentation": "မှတ်တမ်းမှတ်ရာတိ",
+	"nav-toolforge": "ဝီကီပီးဒီးယားတူလ်ဖော",
+	"nav-source-code": "အရင်းအမြစ်ကုဒ်",
+	"nav-login": "အကောင့်၀င်ပါ",
+	"nav-logged-in": "{{GENDER:$2|လော့ခ်အင်၀င်ပါ}} $1 အနီနန့်",
+	"index-paragraph-1": "ဒေကိရိယာစော် သက်ဆိုင်ရာပုံက ဧရိယာအဖြစ် $2 ယင်းသို့မဟုတ် $3 ကြေငြာချက်တိမှာ $1 အရည်အချင်းစစ်တိကို ပြပါရေ။",
+	"index-paragraph-2": "[$1 ဝီကီးဒေတာ] ပစ္စည်းတိဆိုင်ရာ ထုတ်ပြန်ချက်တိအတွက် ယင်းချင့်ရို့ကို ပစ္စည်းဧ့ $2 (ယင်းသို့မဟုတ် တခြားပိုင်ဆိုင်မှု) မှာ ပြထားပါရေ။ [$3 Structured Data on Commons] ဖိုင်တိမှာ ဖော်ပြချပ်တိအတွက် ယင်းကို ဖိုင်ကိုယ်တိုင် ပြထားပါရေ။",
+	"index-heading-by-item-and-property": "အိုင်တမ်နန့် ပစ္စည်းအနီနန့်",
+	"index-label-item-id": "ပစ္စည်း ID",
+	"index-placeholder-item-id": "$1 ယင်းသို့မဟုတ် $2 ယင်းသို့မဟုတ် တတူတူ",
+	"index-label-property-id-optional": "ပစ္စည်းဥစ္စာ အိုင်ဒီ <small>(ရွီးချယ်ခွင့်)</small>",
+	"index-button-load": "၀န်",
+	"index-button-preview-iiif": "စီးစစ် IIIF",
+	"index-button-iiif-manifest": "ထင်ရှားရေ IIIF",
+	"index-heading-by-file": "ဖိုင်နန့်",
+	"index-label-file-title": "ဖိုင်ခေါင်းစီး",
+	"index-placeholder-file-title": "$1 ယင်းသို့မဟုတ် $2 ယင်းသို့မဟုတ် $3 ယင်းသို့မဟုတ် တတူတူ",
+	"index-heading-by-iiif": "ဒေသနန့် ပိုင်ဆိုင်မှု IIIF အနီနန့်",
+	"image-button-cancel": "ဖျက်သိမ်းရေ",
+	"image-button-loading": "တင်နီပါရေ...",
+	"settings": "အပြင်အဆင်တိ",
+	"settings-save": "သိမ်းပါ",
+	"error-title": "အမှား",
+	"file-not-found-heading": "ဖိုင်ရှာမတွိပါ"
+}
