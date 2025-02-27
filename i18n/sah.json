@@ -1,0 +1,24 @@
+{
+	"@metadata": {
+		"authors": [
+			"HalanTul"
+		]
+	},
+	"skip-to-main-content": "Сүрүн ис хоһоонугар",
+	"nav-documentation": "Документация",
+	"nav-source-code": "Төрүт код",
+	"nav-login": "Киир",
+	"index-label-item-id": "Элэмиэн нүөмэрэ",
+	"index-placeholder-item-id": "$1 эбэтэр $2 эбэтэр майгынныыр",
+	"index-button-load": "Киллэр",
+	"index-label-file-title": "Билэ аата",
+	"image-button-cancel": "Салҕаама",
+	"image-button-loading": "киллэрии…",
+	"settings": "Туруоруулара",
+	"settings-label-interface-language-code": "Алтыһаанын тыла",
+	"settings-save": "Бигэргэт",
+	"error-title": "Алҕас",
+	"file-not-found-heading": "Билэ көстүбэтэ",
+	"item-without-image": "Бу элэмиэн ойуута суох.",
+	"wrong-data-value-type-heading": "Суолтатын көрүҥэ алҕастаах"
+}
