@@ -1,0 +1,39 @@
+{
+	"@metadata": {
+		"authors": [
+			"Hedda",
+			"Slickdaddy"
+		]
+	},
+	"skip-to-main-content": "Ana içeriğe geç",
+	"nav-documentation": "Belgelendirme",
+	"nav-toolforge": "Wikimedia Toolforge",
+	"nav-source-code": "Kaynak kodu",
+	"nav-login": "Oturum aç",
+	"nav-logged-in": "$1 olarak {{GENDER:$2|oturum açtı}}.",
+	"index-heading-by-item-and-property": "Öge ve özelliğe göre",
+	"index-label-item-id": "Öge kimliği",
+	"index-placeholder-item-id": "$1 ya da $2 ya da benzeri",
+	"index-label-property-id-optional": "Özellik kimliği <small>(isteğe bağlı)</small>",
+	"index-button-load": "Yükle",
+	"index-heading-by-file": "Dosyaya göre",
+	"index-label-file-title": "Dosya başlığı",
+	"index-placeholder-file-title": "$1 ya da $2 ya da $3 ya da benzeri",
+	"image-scale": "Görüntü ölçeği:&#32;",
+	"image-button-add-region": "bölge ekle",
+	"image-button-use-region": "bu bölgeyi kullan",
+	"image-button-cancel": "iptal",
+	"image-button-edit-region": "Bir bölgeyi düzenle",
+	"image-button-select-region": "Düzenlemek için bir bölge seçin (tıklayın)",
+	"image-button-loading": "yükleniyor...",
+	"settings": "Ayarlar",
+	"settings-label-interface-language-code": "Kullanıcı arayüzü dili",
+	"settings-save": "Kaydet",
+	"error-title": "Hata",
+	"file-not-found-heading": "Dosya bulunamadı",
+	"file-not-found-body": "<q>$1</q> başlıklı bir dosya bulunamadı. Dosya eksik olabilir veya başlık geçersiz olabilir.",
+	"item-without-image": "Bu ögenin görseli bulunmamaktadır.",
+	"wrong-data-value-type-heading": "Yanlış değer türü",
+	"wrong-data-value-type-paragraph-1": "Resim özelliği için yanlış değer türü: <code>$1</code> bekleniyordu ancak <code>$2</code> idi.",
+	"wrong-data-value-type-paragraph-2": "Yanlış özelliği mi belirttiniz?"
+}
