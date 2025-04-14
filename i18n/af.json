@@ -1,0 +1,21 @@
+{
+	"@metadata": {
+		"authors": [
+			"Rooiratel"
+		]
+	},
+	"tool-name": "Wikidata Beeld Posisies",
+	"skip-to-main-content": "Slaan oor na hoofinhoud",
+	"nav-documentation": "Dokumentasie",
+	"nav-toolforge": "Wikimedia Toolforge",
+	"nav-source-code": "Bronkode",
+	"nav-login": "Meld aan",
+	"nav-logged-in": "{{GENDER:$2|Aangemeld}} as $1.",
+	"index-button-load": "Laai",
+	"image-button-loading": "laai tans…",
+	"settings": "Instellings",
+	"settings-label-interface-language-code": "Gebruikerskoppelvlaktaal",
+	"settings-save": "Stoor",
+	"error-title": "Fout",
+	"file-not-found-heading": "Die lêer is nie gevind nie"
+}
