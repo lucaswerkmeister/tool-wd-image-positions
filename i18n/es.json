@@ -4,6 +4,7 @@
 			"AnupamM",
 			"Dgstranz",
 			"Eulalio",
+			"JaimeDes",
 			"ProtoplasmaKid",
 			"Suecarmol",
 			"Yupik"
@@ -31,7 +32,14 @@
 	"index-heading-by-iiif": "Por región y propiedad del IIIF",
 	"index-label-iiif-region": "Región <abbr title=\"Marco internacional de interoperabilidad de imágenes\">IIIF</abbr>",
 	"image-scale": "Escala de imagen:",
+	"image-depicted-without-region": "La propiedad representa a no tiene una región para la posición relativa en la imagen:",
+	"image-named-places-on-map-without-region": "El lugar nombrado en el mapa no tiene una región para la posición relativa en la imagen:",
+	"image-button-add-region": "añadir región",
+	"image-button-use-region": "usar esta región",
 	"image-button-cancel": "cancelar",
+	"image-button-editing-statement": "editando declaración...",
+	"image-button-edit-region": "Editar una región",
+	"image-button-select-region": "Selecciona (haz clic) en una región para editar",
 	"image-button-loading": "cargando…",
 	"alert-not-logged-in": "No has ingresado con tu cuenta<noscript> y Javascript está deshabilitado</noscript>, así que tú solo puedes ver las declaraciones ya hechas en regiones existentes. Para sumar nuevas declaraciones o regiones o editar las existentes, [$1 ingresa con tu cuenta]<noscript> y habilita JavaScript</noscript>.",
 	"alert-noscript": "JavaScript está deshabilitado, por lo que solo puede ver regiones y declaraciones existentes. Para agregar nuevas declaraciones o regiones o editar las existentes, habilite JavaScript.",
@@ -40,5 +48,9 @@
 	"settings-save": "Guardar",
 	"error-title": "Error",
 	"file-not-found-heading": "No se encontró el archivo",
-	"item-without-image": "Este elemento no tiene imagen."
+	"file-not-found-body": "No se pudo encontrar el archivo <q>$1</q>. Es posible que no exista o el título no sea válido.",
+	"item-without-image": "Este elemento no tiene imagen.",
+	"wrong-data-value-type-heading": "Tipo de valor incorrecto",
+	"wrong-data-value-type-paragraph-1": "Tipo de valor incorrecto para la propiedad de imagen: se requería <code>$1</code> pero se ingresó <code>$2</code>.",
+	"wrong-data-value-type-paragraph-2": "¿Ingresaste la propiedad incorrecta?"
 }
