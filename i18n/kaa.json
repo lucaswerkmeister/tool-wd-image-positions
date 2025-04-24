@@ -1,18 +1,24 @@
 {
 	"@metadata": {
 		"authors": [
-			"Inabat Allanova"
+			"Inabat Allanova",
+			"Lucas Werkmeister"
 		]
 	},
 	"tool-name": "Wikidata súwret poziciyaları",
+	"skip-to-main-content": "Tiykarǵı kontentke ótiw",
 	"nav-documentation": "Hújjet",
 	"nav-toolforge": "Wikimedia Toolforge",
 	"nav-source-code": "Derek kodı",
 	"nav-login": "Kiriw",
 	"nav-logged-in": "{{GENDER:$2|Siz sistemaǵa}} $1 sıpatında kirdińiz.",
+	"index-heading-by-item-and-property": "Elementi hám qásiyeti boyınsha",
 	"index-label-item-id": "Obiekt identifikaciyası",
 	"index-placeholder-item-id": "$1 yamasa $2 yaki soǵan uqsas",
+	"index-label-property-id-optional": "Múlk ID<small>(ıqtiyariy)</small>",
 	"index-button-load": "Júklew",
+	"index-button-preview-iiif": "IIIF aldınnan kórip shıǵıw",
+	"index-button-iiif-manifest": "IIIF Manifesti",
 	"index-heading-by-file": "Fayl arqalı",
 	"index-label-file-title": "Fayl ataması",
 	"index-placeholder-file-title": "$1 yamasa $2 yamasa $3 yaki soǵan uqsas",
@@ -22,11 +28,13 @@
 	"image-button-cancel": "biykar etiw",
 	"image-button-editing-statement": "redaktorlanbaqta...",
 	"image-button-edit-region": "Aymaqtı redaktorlaw",
+	"image-button-select-region": "Ózgertiw ushın aymaqtı tańlań (basıń)",
 	"image-button-loading": "júklenbekte...",
 	"settings": "Sazlawlar",
 	"settings-label-interface-language-code": "Paydalanıwshı interfeysiniń tili",
 	"settings-save": "Saqlaw",
 	"error-title": "Qátelik",
 	"file-not-found-heading": "Fayl tabılmadı",
-	"item-without-image": "Bul obiekttiń súwreti joq."
+	"item-without-image": "Bul obiekttiń súwreti joq.",
+	"wrong-data-value-type-paragraph-2": "Qásiyetin nadurıs kórsettińiz be?"
 }
