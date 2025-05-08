@@ -1,0 +1,20 @@
+{
+	"@metadata": {
+		"authors": [
+			"Dj"
+		]
+	},
+	"nav-documentation": "Dokumentáció",
+	"nav-toolforge": "Wikimedia Toolforge",
+	"nav-source-code": "Forráskód",
+	"nav-login": "Bejelentkezés",
+	"nav-logged-in": "{{GENDER:$2|Bejelentkezve}} $1 néven.",
+	"index-button-load": "Betöltés",
+	"index-button-preview-iiif": "IIIF előnézete",
+	"index-label-file-title": "Fájl címe",
+	"image-button-loading": "betöltés…",
+	"error-title": "Hiba",
+	"file-not-found-heading": "A fájl nem található",
+	"item-without-image": "Ehhez az elemhez nincs kép.",
+	"wrong-data-value-type-heading": "Helytelen értéktípus"
+}
