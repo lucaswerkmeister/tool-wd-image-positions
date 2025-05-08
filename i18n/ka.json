@@ -1,0 +1,29 @@
+{
+	"@metadata": {
+		"authors": [
+			"David1010"
+		]
+	},
+	"nav-source-code": "საწყისი კოდი",
+	"nav-login": "შესვლა",
+	"nav-logged-in": "{{GENDER:$2|შესული ხართ}}, როგორც $1.",
+	"index-label-item-id": "ელემენტის ID",
+	"index-placeholder-item-id": "$1 ან $2 ან მსგავსი",
+	"index-label-property-id-optional": "თვისების ID <small>(არასავალდებულო)</small>",
+	"index-button-load": "ჩატვირთვა",
+	"index-heading-by-file": "ფაილის მიხედვით",
+	"index-label-file-title": "ფაილის სათაური",
+	"index-placeholder-file-title": "$1 ან $2 ან $3 ან მსგავსი",
+	"image-scale": "სურათის მასშტაბი:&#32;",
+	"image-button-add-region": "რეგიონის დამატება",
+	"image-button-use-region": "გამოიყენეთ ეს რეგიონი",
+	"image-button-cancel": "გაუქმება",
+	"image-button-edit-region": "რეგიონის რედაქტირება",
+	"image-button-select-region": "აირჩიეთ (დააწკაპუნეთ) რედაქტირებისთვის განკუთვნილი რეგიონი",
+	"image-button-loading": "იტვირთება…",
+	"settings": "პარამეტრები",
+	"settings-label-interface-language-code": "მომხმარებლის ინტერფეისის ენა",
+	"settings-save": "შენახვა",
+	"error-title": "შეცდომა",
+	"file-not-found-heading": "ფაილი ვერ მოიძებნა"
+}
