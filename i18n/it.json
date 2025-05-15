@@ -3,7 +3,8 @@
 		"authors": [
 			"Beta16",
 			"Champ0999",
-			"Egidio24"
+			"Egidio24",
+			"Emabarto01"
 		]
 	},
 	"skip-to-main-content": "Passa al contenuto principale",
@@ -25,6 +26,7 @@
 	"image-button-use-region": "utilizza questa regione",
 	"image-button-cancel": "annulla",
 	"image-button-edit-region": "Modifica una regione",
+	"image-button-select-region": "Seleziona (clicca) una regione da modificare",
 	"image-button-loading": "caricamento in corso…",
 	"settings": "Impostazioni",
 	"settings-label-interface-language-code": "Lingua dell'interfaccia utente",
