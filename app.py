@@ -9,17 +9,14 @@ import json
 from markupsafe import Markup
 import mwapi
 import mwoauth
-import os
 import random
 import re
 import requests
 import requests_oauthlib
-import stat
 import string
 import threading
 import toolforge
 import urllib.parse
-import yaml
 
 from exceptions import WrongDataValueType
 from toolforge_i18n import ToolforgeI18n, interface_language_code_from_request, lang_autonym, message, pop_html_lang, push_html_lang
@@ -62,23 +59,7 @@ app.add_template_global(
     'depicted_properties_messages'
 )
 
-@decorator.decorator
-def read_private(func, *args, **kwargs):
-    try:
-        f = args[0]
-        fd = f.fileno()
-    except AttributeError:
-        pass
-    except IndexError:
-        pass
-    else:
-        mode = os.stat(fd).st_mode
-        if (stat.S_IRGRP | stat.S_IROTH) & mode:
-            raise ValueError(f'{getattr(f, "name", "config file")} is readable to others, '
-                             'must be exclusively user-readable!')
-    return func(*args, **kwargs)
-
-has_config = app.config.from_file('config.yaml', load=read_private(yaml.safe_load), silent=True)
+has_config = app.config.from_file('config.yaml', load=toolforge.load_private_yaml, silent=True)
 if has_config:
     consumer_token = mwoauth.ConsumerToken(app.config['OAUTH']['consumer_key'], app.config['OAUTH']['consumer_secret'])
 else:
