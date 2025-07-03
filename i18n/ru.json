@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Kareyac",
-			"Okras"
+			"Okras",
+			"Solidest"
 		]
 	},
 	"skip-to-main-content": "Перейти к основному содержанию",
@@ -16,6 +17,7 @@
 	"index-button-load": "Загрузить",
 	"index-heading-by-file": "По файлу",
 	"index-label-file-title": "Название файла",
+	"image-button-add-region": "добавить регион",
 	"image-button-cancel": "отмена",
 	"image-button-edit-region": "Редактировать регион",
 	"image-button-select-region": "Выберите (нажмите) регион для редактирования",
