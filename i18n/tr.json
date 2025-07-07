@@ -1,12 +1,14 @@
 {
 	"@metadata": {
 		"authors": [
+			"Cobija",
 			"Hedda",
 			"Leo",
-			"Slickdaddy"
+			"Slickdaddy",
+			"ToprakM"
 		]
 	},
-	"tool-name": "Wikidata Görüntü Pozisyonları",
+	"tool-name": "Vikiveri Görüntü Pozisyonları",
 	"skip-to-main-content": "Ana içeriğe geç",
 	"nav-documentation": "Belgelendirme",
 	"nav-toolforge": "Wikimedia Toolforge",
@@ -14,7 +16,7 @@
 	"nav-login": "Oturum aç",
 	"nav-logged-in": "$1 olarak {{GENDER:$2|oturum açtı}}.",
 	"index-paragraph-1": "Bu araç, ilgili görselde $2 veya $3 ifadelerindeki $1 niteleyicilerini alan olarak gösterir.",
-	"index-paragraph-2": "[$1 Wikidata] öğelerindeki ifadeler için, öğenin $2'sinde (veya diğer mülkünde) gösterilir. [$3 Commons'taki Yapılandırılmış Veriler] dosyalarındaki ifadeler için, dosyanın kendisinde gösterilir.",
+	"index-paragraph-2": "[$1 Vikiveri] ögelerindeki ifadeler için, öğenin $2'sinde (veya diğer mülkünde) gösterilir. [$3 Commons'taki Yapılandırılmış Veriler] dosyalarındaki ifadeler için, dosyanın kendisinde gösterilir.",
 	"index-heading-by-item-and-property": "Öge ve özelliğe göre",
 	"index-label-item-id": "Öge kimliği",
 	"index-placeholder-item-id": "$1 ya da $2 ya da benzeri",
