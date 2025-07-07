@@ -3,7 +3,8 @@
 		"authors": [
 			"Constraque",
 			"Ignatgg",
-			"Lucas Werkmeister"
+			"Lucas Werkmeister",
+			"Ата"
 		]
 	},
 	"tool-name": "Позиції зображень Вікіданих",
@@ -11,5 +12,7 @@
 	"nav-documentation": "Документація",
 	"nav-toolforge": "Вікімедія Toolforge",
 	"nav-source-code": "Выходный код",
-	"nav-login": "Увійти"
+	"nav-login": "Увійти",
+	"nav-logged-in": "{{GENDER:$2|Ви увійшли в систему}} як $1.",
+	"index-paragraph-1": "Цей інструмент показує кваліфікатори $1 на твердженнях $2 або $3 як області на відповідному зображенні."
 }
