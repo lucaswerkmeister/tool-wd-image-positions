@@ -1,9 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
-			"Dj"
+			"Dj",
+			"Urbalazs"
 		]
 	},
+	"skip-to-main-content": "Ugrás a fő tartalomhoz",
 	"nav-documentation": "Dokumentáció",
 	"nav-toolforge": "Wikimedia Toolforge",
 	"nav-source-code": "Forráskód",
