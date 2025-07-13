@@ -61,7 +61,7 @@ app.add_template_global(
 
 has_config = app.config.from_file('config.yaml', load=toolforge.load_private_yaml, silent=True)
 if has_config:
-    consumer_token = mwoauth.ConsumerToken(app.config['OAUTH']['consumer_key'], app.config['OAUTH']['consumer_secret'])
+    consumer_token = mwoauth.ConsumerToken(app.config['OAUTH']['CONSUMER_KEY'], app.config['OAUTH']['CONSUMER_SECRET'])
 else:
     print('config.yaml file not found, assuming local development setup')
     app.secret_key = 'fake'
