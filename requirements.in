@@ -2,10 +2,12 @@ babel
 cachetools
 decorator
 flask >= 2.0.0
+gunicorn
 iiif-prezi
 MarkupSafe
 mwapi
 mwoauth
+pymysql @ git+https://github.com/PyMySQL/PyMySQL@main
 pyyaml
 requests
 requests_oauthlib
