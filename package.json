@@ -1,5 +1,5 @@
 {
   "dependencies": {
-    "m3api": "^0.8.0"
+    "m3api": "^1.0.0"
   }
 }
