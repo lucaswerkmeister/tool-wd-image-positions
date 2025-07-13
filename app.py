@@ -476,6 +476,10 @@ def api_add_qualifier(domain):
             return flask.jsonify(qualifier_hash=qualifier['hash'])
     return flask.jsonify(qualifier_hash=None)
 
+@app.route('/healthz')
+def health():
+    return ''
+
 
 # https://iiif.io/api/image/2.0/#region
 @app.template_filter()
