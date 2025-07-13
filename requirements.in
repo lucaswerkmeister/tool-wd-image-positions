@@ -1,13 +1,11 @@
 babel
 cachetools
 decorator
-flake8
 flask >= 2.0.0
 iiif-prezi
 MarkupSafe
 mwapi
 mwoauth
-pytest
 pyyaml
 requests
 requests_oauthlib

@@ -34,8 +34,6 @@ decorator==5.2.1
     # via
     #   -r requirements.in
     #   toolforge
-flake8==7.3.0
-    # via -r requirements.in
 flask==3.1.1
     # via
     #   -r requirements.in
@@ -52,8 +50,6 @@ idna==3.10
     #   yarl
 iiif-prezi==0.3.0
     # via -r requirements.in
-iniconfig==2.1.0
-    # via pytest
 itsdangerous==2.2.0
     # via flask
 jinja2==3.1.6
@@ -69,8 +65,6 @@ markupsafe==3.0.2
     #   jinja2
     #   toolforge-i18n
     #   werkzeug
-mccabe==0.7.0
-    # via flake8
 multidict==6.6.3
     # via
     #   aiohttp
@@ -85,30 +79,18 @@ oauthlib==3.3.1
     # via
     #   mwoauth
     #   requests-oauthlib
-packaging==25.0
-    # via pytest
 pillow==11.3.0
     # via iiif-prezi
-pluggy==1.6.0
-    # via pytest
 propcache==0.3.2
     # via
     #   aiohttp
     #   yarl
-pycodestyle==2.14.0
-    # via flake8
-pyflakes==3.4.0
-    # via flake8
-pygments==2.19.2
-    # via pytest
 pyjwt==2.10.1
     # via mwoauth
 pyld==2.0.4
     # via iiif-prezi
 pymysql==1.1.1
     # via toolforge
-pytest==8.4.1
-    # via -r requirements.in
 pyyaml==6.0.2
     # via -r requirements.in
 requests==2.32.4

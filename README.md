@@ -54,7 +54,7 @@ You can also run the tool locally, which is much more convenient for development
 ```
 git clone https://gitlab.wikimedia.org/toolforge-repos/wd-image-positions.git
 cd wd-image-positions
-pip3 install -r requirements.txt
+pip3 install -r requirements.txt -r dev-requirements.txt
 FLASK_ENV=development flask run
 ```
 
