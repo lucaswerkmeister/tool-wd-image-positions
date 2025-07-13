@@ -17,6 +17,7 @@ import string
 import threading
 import toolforge
 import urllib.parse
+import yaml
 
 from exceptions import WrongDataValueType
 from toolforge_i18n import ToolforgeI18n, interface_language_code_from_request, lang_autonym, message, pop_html_lang, push_html_lang
@@ -59,12 +60,15 @@ app.add_template_global(
     'depicted_properties_messages'
 )
 
-has_config = app.config.from_file('config.yaml', load=toolforge.load_private_yaml, silent=True)
-if has_config:
+app.config.from_file('config.yaml', load=toolforge.load_private_yaml, silent=True)
+app.config.from_prefixed_env('TOOL', loads=yaml.safe_load)
+if 'OAUTH' in app.config:
     consumer_token = mwoauth.ConsumerToken(app.config['OAUTH']['CONSUMER_KEY'], app.config['OAUTH']['CONSUMER_SECRET'])
+    assert app.secret_key is not None, 'If OAuth is configured, the SECRET_KEY must also be configured (a fixed random string)'
 else:
-    print('config.yaml file not found, assuming local development setup')
-    app.secret_key = 'fake'
+    print('No OAuth configuration found, assuming local development setup')
+    if app.secret_key is None:
+        app.secret_key = 'fake'
 
 def anonymous_session(domain):
     host = 'https://' + domain
