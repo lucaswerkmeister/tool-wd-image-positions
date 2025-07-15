@@ -11,7 +11,9 @@ iniconfig==2.1.0
 mccabe==0.7.0
     # via flake8
 packaging==25.0
-    # via pytest
+    # via
+    #   -c /home/lucas/git/wd-image-positions/requirements.txt
+    #   pytest
 pluggy==1.6.0
     # via pytest
 pycodestyle==2.14.0
