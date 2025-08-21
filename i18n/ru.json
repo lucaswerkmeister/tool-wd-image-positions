@@ -14,6 +14,7 @@
 	"index-heading-by-item-and-property": "По элементу и свойству",
 	"index-label-item-id": "ID элемента",
 	"index-placeholder-item-id": "$1 или $2 или аналогичный",
+	"index-label-property-id-optional": "ID свойства <small>(необязательно)</small>",
 	"index-button-load": "Загрузить",
 	"index-heading-by-file": "По файлу",
 	"index-label-file-title": "Название файла",

@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"FocalPoint"
+			"FocalPoint",
+			"Warudo"
 		]
 	},
 	"tool-name": "Θέσεις εικόνας Wikidata",
@@ -28,15 +29,15 @@
 	"image-scale": "Κλίμακα εικόνας:&#32;",
 	"image-depicted-without-region": "Απεικονίζεται χωρίς καθορισμένη περιοχή:",
 	"image-named-places-on-map-without-region": "Επώνυμες τοποθεσίες στο χάρτη χωρίς καθορισμένη περιοχή:",
-	"image-button-add-region": "προσθέστε περιοχή",
-	"image-button-use-region": "χρησιμοποιήστε αυτήν την περιοχή",
+	"image-button-add-region": "προσθήκη περιοχής",
+	"image-button-use-region": "χρήση αυτής της περιοχής",
 	"image-button-cancel": "Ακύρωση",
 	"image-button-editing-statement": "επεξεργασία δήλωσης…",
-	"image-button-edit-region": "Επεξεργαστείτε μια περιοχή",
+	"image-button-edit-region": "Επεξεργασία περιοχής",
 	"image-button-select-region": "Επιλέξτε (κλικ) περιοχή για επεξεργασία",
 	"image-button-loading": "φόρτωση...",
-	"alert-not-logged-in": "Δεν είστε συνδεδεμένοι<noscript> και η JavaScript είναι απενεργοποιημένη</noscript> , έτσι μπορείτε να προβάλετε μόνο τις υπάρχουσες περιοχές και δηλώσεις. Για να προσθέσετε νέες δηλώσεις ή περιοχές ή να επεξεργαστείτε υπάρχουσες, [$1 σύνδεση]<noscript> και ενεργοποιήστε τη JavaScript</noscript> .",
-	"alert-noscript": "Η JavaScript είναι απενεργοποιημένη, επομένως μπορείτε να δείτε μόνο τις υπάρχουσες περιοχές και δηλώσεις. Για να προσθέσετε νέες δηλώσεις ή περιοχές ή να επεξεργαστείτε τις υπάρχουσες, ενεργοποιήστε τη JavaScript.",
+	"alert-not-logged-in": "Δεν είστε συνδεδεμένοι<noscript> και το JavaScript είναι απενεργοποιημένο</noscript> , έτσι μπορείτε να προβάλετε μόνο τις υπάρχουσες περιοχές και δηλώσεις. Για να προσθέσετε νέες δηλώσεις ή περιοχές ή να επεξεργαστείτε τις υπάρχουσες, [$1 συνδεθείτε]<noscript> και ενεργοποιήστε το JavaScript</noscript> .",
+	"alert-noscript": "Το JavaScript είναι απενεργοποιημένο, επομένως μπορείτε να δείτε μόνο τις υπάρχουσες περιοχές και δηλώσεις. Για να προσθέσετε νέες δηλώσεις ή περιοχές ή να επεξεργαστείτε τις υπάρχουσες, ενεργοποιήστε το JavaScript.",
 	"settings": "Ρυθμίσεις",
 	"settings-label-interface-language-code": "Γλώσσα διεπαφής χρήστη",
 	"settings-save": "Αποθήκευση",
@@ -46,5 +47,5 @@
 	"item-without-image": "Αυτό το στοιχείο δεν έχει εικόνα.",
 	"wrong-data-value-type-heading": "Εσφαλμένος τύπος τιμής",
 	"wrong-data-value-type-paragraph-1": "Εσφαλμένος τύπος τιμής για την ιδιότητα εικόνας: αναμενόταν <code>$1</code> αλλά ήταν <code>$2</code> .",
-	"wrong-data-value-type-paragraph-2": "Προσδιόρισατε λάθος ιδιότητα;"
+	"wrong-data-value-type-paragraph-2": "Προσδιορίσατε λάθος ιδιότητα;"
 }
