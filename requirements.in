@@ -7,7 +7,6 @@ iiif-prezi
 MarkupSafe
 mwapi
 mwoauth
-pymysql @ git+https://github.com/PyMySQL/PyMySQL@main
 pyyaml
 requests
 requests_oauthlib
