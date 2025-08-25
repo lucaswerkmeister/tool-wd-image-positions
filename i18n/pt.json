@@ -1,18 +1,19 @@
 {
 	"@metadata": {
 		"authors": [
+			"Albertoleoncio",
 			"Mansil alfalb"
 		]
 	},
-	"tool-name": "Posições de Imagem da Wikidados",
+	"tool-name": "Posições de Imagem do Wikidata",
 	"skip-to-main-content": "Ir para conteúdo principal",
 	"nav-documentation": "Documentação",
-	"nav-toolforge": "Wikimédia Toolforge",
+	"nav-toolforge": "Wikimedia Toolforge",
 	"nav-source-code": "Código fonte",
 	"nav-login": "Iniciar sessão",
 	"nav-logged-in": "{{GENDER:$2|Autenticou-se}} como $1.",
 	"index-paragraph-1": "Esta ferramenta mostra os qualificadores $1 nas declarações $2 ou $3 como áreas de imagem relevante.",
-	"index-paragraph-2": "Para declarações sobre itens da [$1 Wikidados], elas são mostradas em $2 (ou outra propriedade) do item. Para declarações sobre os ficheiros [$3 Dados Estruturados na Commons], elas são mostradas no próprio ficheiro.",
+	"index-paragraph-2": "Para declarações sobre itens do [$1 Wikidata], elas são mostradas em $2 (ou outra propriedade) do item. Para declarações sobre os ficheiros [$3 Dados Estruturados no Commons], elas são mostradas no próprio ficheiro.",
 	"index-heading-by-item-and-property": "Por item e propriedade",
 	"index-label-item-id": "Id. do Item",
 	"index-placeholder-item-id": "$1 ou $2 ou similar",
