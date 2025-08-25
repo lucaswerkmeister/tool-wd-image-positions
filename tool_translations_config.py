@@ -40,6 +40,9 @@ def _language_code_to_babel(code: str) -> str:
     if mapped != code:
         return mapped
     return {
+        # aig (Antiguan and Barbudan Creole) has no explicit fallbacks in MediaWiki,
+        # but is an English-based creole language and has the same plural forms
+        'aig': 'en',
         # bbc-latn (Toba Batak, Latin script) falls back to id (Indonesian) in MediaWiki,
         # which also has the same plural forms (same as English btw)
         'bbc-latn': 'id',
