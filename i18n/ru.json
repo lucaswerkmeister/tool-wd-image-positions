@@ -23,11 +23,15 @@
 	"image-button-edit-region": "Редактировать регион",
 	"image-button-select-region": "Выберите (нажмите) регион для редактирования",
 	"image-button-loading": "загружается…",
+	"alert-noscript": "JavaScript отключён, поэтому вы можете только просматривать существующие регионы и утверждения. Чтобы добавить новые утверждения или регионы или же изменить существующие, включите JavaScript.",
 	"settings": "Настройки",
 	"settings-label-interface-language-code": "Язык интерфейса",
 	"settings-save": "Сохранить",
 	"error-title": "Ошибка",
 	"file-not-found-heading": "Файл не найден",
+	"file-not-found-body": "Файл с названием <q>$1</q> не найден. Возможно, он отсутствует или название некорректно.",
 	"item-without-image": "У этого элемента нет изображения.",
-	"wrong-data-value-type-heading": "Неправильный тип значения"
+	"wrong-data-value-type-heading": "Неправильный тип значения",
+	"wrong-data-value-type-paragraph-1": "Неверный тип значения для свойства изображения: ожидалось <code>$1</code>, а было получено <code>$2</code>.",
+	"wrong-data-value-type-paragraph-2": "Возможно, вы указали неправильное свойство?"
 }
