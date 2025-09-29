@@ -1,0 +1,33 @@
+{
+	"@metadata": {
+		"authors": [
+			"Gminky"
+		]
+	},
+	"tool-name": "위키자료 화상위치",
+	"skip-to-main-content": "본문내용으로 건너뛰기",
+	"nav-documentation": "설명문서",
+	"nav-toolforge": "위키자료 도구단조",
+	"nav-source-code": "원천코드",
+	"nav-login": "가입",
+	"index-label-item-id": "항목ID",
+	"index-placeholder-item-id": "$1 또는 $2 또는 이와 근사한것",
+	"index-label-property-id-optional": "속성ID <small>(선택사항)</small>",
+	"index-button-load": "적재",
+	"index-button-preview-iiif": "IIIF 미리보기",
+	"index-heading-by-file": "서류별",
+	"index-label-file-title": "서류 제목",
+	"index-placeholder-file-title": "$1 , $2 , $3 또는 이와 근사한것",
+	"image-button-add-region": "지역추가",
+	"image-button-use-region": "이 지역 사용하기",
+	"image-button-cancel": "취소",
+	"image-button-edit-region": "지역편집",
+	"image-button-loading": "적재중...",
+	"settings": "설정",
+	"settings-label-interface-language-code": "사용자대면부 언어",
+	"settings-save": "보관",
+	"error-title": "오유",
+	"file-not-found-heading": "서류를 찾지 못합니다",
+	"item-without-image": "이 항목에는 화상이 없습니다.",
+	"wrong-data-value-type-heading": "잘못된 값형"
+}
