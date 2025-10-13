@@ -6,11 +6,13 @@
 			"Solidest"
 		]
 	},
+	"tool-name": "Позиции изображений в Викиданных",
 	"skip-to-main-content": "Перейти к основному содержанию",
 	"nav-documentation": "Документация",
 	"nav-toolforge": "Wikimedia Toolforge",
 	"nav-source-code": "Исходный код",
 	"nav-login": "Войти",
+	"nav-logged-in": "{{GENDER:$2|Вы вошли в систему}} как $1.",
 	"index-heading-by-item-and-property": "По элементу и свойству",
 	"index-label-item-id": "ID элемента",
 	"index-placeholder-item-id": "$1 или $2 или аналогичный",
@@ -19,6 +21,7 @@
 	"index-heading-by-file": "По файлу",
 	"index-label-file-title": "Название файла",
 	"image-button-add-region": "добавить регион",
+	"image-button-use-region": "использовать эту область",
 	"image-button-cancel": "отмена",
 	"image-button-edit-region": "Редактировать регион",
 	"image-button-select-region": "Выберите (нажмите) регион для редактирования",
