@@ -46,6 +46,9 @@ def _language_code_to_babel(code: str) -> str:
         # bbc-latn (Toba Batak, Latin script) falls back to id (Indonesian) in MediaWiki,
         # which also has the same plural forms (same as English btw)
         'bbc-latn': 'id',
+        # frp (Franco-Provençal, Latin script) falls back to fr (French) in MediaWiki,
+        # which also has the same plural forms
+        'frp': 'fr',
         # kaa (Karakalpak) is in Latin script in MediaWiki,
         # but its closest relatives in Babel are all in Cyrillic script;
         # uz (Uzbek) has the same plural forms,
