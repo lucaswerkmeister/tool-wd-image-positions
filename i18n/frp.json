@@ -35,6 +35,8 @@
 	"image-button-edit-region": "Changiér una règion",
 	"image-button-select-region": "Sèlèccionâd (clicâd) una règion a changiér",
 	"image-button-loading": "chargement...",
+	"alert-not-logged-in": "Vos éte pas branchiê<noscript> et JavaScript est dèsactivâ</noscript>, adonc vos pouéde vêre ren que les règions et les dècllaracions ègzistantes. Por apondre de dècllaracions novèles ou ben changiér celes ègzistantes, [$1 log in]<noscript> pués activâd JavaScript</noscript>",
+	"alert-noscript": "JavaScript est dèbranchiê, vos pouede donc afichiér que les règions et les dècllaracions ègzistantes. Por apondre de novèles dècllaracions ou règions ou modifiar celes ègzistantes, activâd JavaScript.",
 	"settings": "Paramètros",
 	"settings-label-interface-language-code": "Lengoua de l'entèrface usanciér",
 	"settings-save": "Encartar",
@@ -42,5 +44,7 @@
 	"file-not-found-heading": "Fichiér pas trovâ",
 	"file-not-found-body": "Un fichiér que s'apèle <q>$1</q> at pas ètâ trovâ. Il est ben-lèf mancant ou ben son titro est pas valido.",
 	"item-without-image": "Ceti articllo at gins d'émâge.",
+	"wrong-data-value-type-heading": "Tipo de valor incorrect",
+	"wrong-data-value-type-paragraph-1": "Tipo de valor incorrect por la propriètât d'émâge&nbsp;: <code>$1</code> atendu mas <code>$2</code> endicâ.",
 	"wrong-data-value-type-paragraph-2": "Vos éd pas buchiê la bôna propriètât ?"
 }
