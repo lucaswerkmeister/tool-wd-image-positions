@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Kareyac",
+			"Lvova",
 			"Okras",
 			"Solidest"
 		]
@@ -20,9 +21,11 @@
 	"index-button-load": "Загрузить",
 	"index-heading-by-file": "По файлу",
 	"index-label-file-title": "Название файла",
+	"index-placeholder-file-title": "$1 , $2 , $3 или вроде того",
 	"image-button-add-region": "добавить регион",
 	"image-button-use-region": "использовать эту область",
 	"image-button-cancel": "отмена",
+	"image-button-editing-statement": "редактирование утверждения…",
 	"image-button-edit-region": "Редактировать регион",
 	"image-button-select-region": "Выберите (нажмите) регион для редактирования",
 	"image-button-loading": "загружается…",

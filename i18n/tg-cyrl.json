@@ -1,0 +1,32 @@
+{
+	"@metadata": {
+		"authors": [
+			"Farorud"
+		]
+	},
+	"skip-to-main-content": "Рафтан ба муҳтавои асосӣ",
+	"nav-documentation": "Ҳуҷҷатгузорӣ",
+	"nav-toolforge": "Wikimedia Toolforge",
+	"nav-source-code": "Рамзи кунунӣ",
+	"nav-login": "Вуруд",
+	"nav-logged-in": "{{GENDER:$2|Шумо ба система}} чун $1 ворид шудед.",
+	"index-label-item-id": "ID-и элемент",
+	"index-placeholder-item-id": "$1 ё $2 ё монанд",
+	"index-label-property-id-optional": "ID-и хусусият <small>(ғайриҳатмӣ)</small>",
+	"index-button-load": "Бор кардан",
+	"index-button-preview-iiif": "Пешнамоиш IIIF",
+	"index-heading-by-file": "Аз рӯи файл",
+	"index-label-file-title": "Номи файл",
+	"index-placeholder-file-title": "$1 ё $2 ё $3 ё монанд",
+	"image-button-add-region": "иловаи минтақа",
+	"image-button-use-region": "истифодаи ин минтақа",
+	"image-button-cancel": "анҷом",
+	"image-button-editing-statement": "иловаи тасдиқот...",
+	"image-button-edit-region": "Вироиши минтақа",
+	"image-button-loading": "дар ҳоли бор шудан…",
+	"settings": "Танзимот",
+	"settings-save": "Захира",
+	"error-title": "Хато",
+	"file-not-found-heading": "Файл ёфта нашуд",
+	"item-without-image": "Ин элемент акс надорад."
+}

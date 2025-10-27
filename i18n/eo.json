@@ -1,0 +1,20 @@
+{
+	"@metadata": {
+		"authors": [
+			"Fitik",
+			"Tymewalk"
+		]
+	},
+	"nav-source-code": "Fontkodo",
+	"nav-login": "Ensaluti",
+	"index-heading-by-file": "Laŭ dosiero",
+	"index-label-file-title": "Titolo de dosiero",
+	"image-button-add-region": "aldoni regionon",
+	"image-button-use-region": "uzi ĉi tiun regionon",
+	"image-button-cancel": "nuligi",
+	"image-button-edit-region": "Redakti regionon",
+	"settings": "Agordoj",
+	"settings-save": "Konservi",
+	"error-title": "Eraro",
+	"file-not-found-heading": "Dosiero ne trovita"
+}
