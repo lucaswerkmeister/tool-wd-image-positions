@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"JeffreyKim",
-			"Ktchankt"
+			"Ktchankt",
+			"SaldırganSincap"
 		]
 	},
 	"tool-name": "維基數據張相嘅位置",
@@ -25,7 +26,7 @@
 	"index-label-file-title": "檔案標題",
 	"index-placeholder-file-title": "$1或者$2或者$3類似嘅嘢",
 	"index-heading-by-iiif": "按 IIIF 地區同屬性",
-	"index-label-iiif-region": "<abbr title= \"國際形象互操作框架\"> IIIF </ abbr> 地區",
+	"index-label-iiif-region": "<abbr title= \"國際形象互操作框架\">IIIF</abbr> 地區",
 	"image-scale": "圖片比例：&#32;",
 	"image-depicted-without-region": "描繪咗冇指定區域：",
 	"image-named-places-on-map-without-region": "地圖上冇指定地區嘅命名地點：",
