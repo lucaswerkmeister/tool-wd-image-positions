@@ -1,0 +1,40 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ильгиз"
+		]
+	},
+	"tool-name": "Викимәгълүматларда сурәтләрнең позицияләре",
+	"skip-to-main-content": "Төп эчтәлеккә күч",
+	"nav-documentation": "Документация",
+	"nav-toolforge": "Wikimedia Toolforge",
+	"nav-source-code": "Башлангыч код",
+	"nav-login": "Керү",
+	"nav-logged-in": "$1, {{GENDER:$2|Сез системага кердегез}}.",
+	"index-heading-by-item-and-property": "Элемент һәм үзлек буенча",
+	"index-label-item-id": "Элементның ID идентификаторы",
+	"index-placeholder-item-id": "$1 яки $2 яки охшаш",
+	"index-label-property-id-optional": "Үзлекнең ID идентификаторы <small>(мәҗбүри түгел)</small>",
+	"index-button-load": "Төя",
+	"index-button-iiif-manifest": "IIIF Манифесты",
+	"index-heading-by-file": "Файл буенча",
+	"index-label-file-title": "Файл исеме",
+	"index-placeholder-file-title": "$1, $2, $3 яки охшаш",
+	"image-button-add-region": "регионны өстә",
+	"image-button-use-region": "бу регионны куллан",
+	"image-button-cancel": "баш тарту",
+	"image-button-editing-statement": "белешмәне үзгәртү...",
+	"image-button-edit-region": "Регионны редакторла",
+	"image-button-select-region": "Редакторлау өчен регионны сайлагыз (басыгыз)",
+	"image-button-loading": "йөкләү бара...",
+	"alert-noscript": "JavaScript сүндерелгән, шуңа күрә сез бары тик моңарчы төзелгән регионнар һәм белешмәләрне генә карый аласыз. Яңа белешмәләрне яки регионнарны өстәү өчен яки булганнарын үзгәртү өчен JavaScript коралын кабызыгыз.",
+	"settings": "Көйләнмәләр",
+	"settings-label-interface-language-code": "Кулланучы интерфейсының теле",
+	"settings-save": "Сакла",
+	"error-title": "Хата",
+	"file-not-found-heading": "Файл табылмады",
+	"item-without-image": "Бу элементның сурәте юк",
+	"wrong-data-value-type-heading": "Кыйммәтнең типы дөрес сайланмаган",
+	"wrong-data-value-type-paragraph-1": "Сурәтнең үзлеге өчен кыйммәтнең тибы дөрес сайланмаган: <code>$1</code> көтелгән иде, ләкин <code>$2</code> кабул ителде.",
+	"wrong-data-value-type-paragraph-2": "Бәлки сез үзлекне дөрес сайламагансыздыр?"
+}
