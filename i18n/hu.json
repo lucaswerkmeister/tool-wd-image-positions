@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Boro",
 			"Dj",
 			"Urbalazs"
 		]
@@ -14,7 +15,11 @@
 	"index-button-load": "Betöltés",
 	"index-button-preview-iiif": "IIIF előnézete",
 	"index-label-file-title": "Fájl címe",
+	"image-button-cancel": "mégse",
 	"image-button-loading": "betöltés…",
+	"settings": "Beállítások",
+	"settings-label-interface-language-code": "Felhasználói felület nyelve",
+	"settings-save": "Mentés",
 	"error-title": "Hiba",
 	"file-not-found-heading": "A fájl nem található",
 	"item-without-image": "Ehhez az elemhez nincs kép.",
