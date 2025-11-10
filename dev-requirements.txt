@@ -6,13 +6,13 @@
 #
 flake8==7.3.0
     # via -r dev-requirements.in
-iniconfig==2.1.0
+iniconfig==2.3.0
     # via pytest
 mccabe==0.7.0
     # via flake8
 packaging==25.0
     # via
-    #   -c /home/lucas/git/wd-image-positions/requirements.txt
+    #   -c requirements.txt
     #   pytest
 pluggy==1.6.0
     # via pytest
@@ -22,5 +22,5 @@ pyflakes==3.4.0
     # via flake8
 pygments==2.19.2
     # via pytest
-pytest==8.4.1
+pytest==9.0.0
     # via -r dev-requirements.in
