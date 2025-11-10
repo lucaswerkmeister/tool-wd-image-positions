@@ -1,0 +1,26 @@
+{
+	"@metadata": {
+		"authors": [
+			"SZ475"
+		]
+	},
+	"skip-to-main-content": "Sari la conținutul principal",
+	"nav-documentation": "Documentație",
+	"nav-source-code": "Cod de sursă",
+	"nav-login": "Autentificare",
+	"index-label-item-id": "ID element",
+	"index-placeholder-item-id": "$1, $2, sau similar",
+	"index-button-load": "Încarcă",
+	"index-heading-by-file": "După fișier",
+	"index-label-file-title": "Titlul fișierului",
+	"index-placeholder-file-title": "$1, $2, $3, sau similar",
+	"image-button-add-region": "adăugare regiune",
+	"image-button-use-region": "foloseşte această regiune",
+	"image-button-cancel": "revocare",
+	"image-button-edit-region": "Editați o regiune",
+	"image-button-loading": "se încarcă...",
+	"settings": "Setări",
+	"settings-save": "Salvează",
+	"error-title": "Eroare",
+	"file-not-found-heading": "Fișierul nu a fost găsit"
+}
