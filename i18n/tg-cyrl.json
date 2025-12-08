@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Farorud"
+			"Farorud",
+			"ZulfiqorF"
 		]
 	},
 	"skip-to-main-content": "Рафтан ба муҳтавои асосӣ",
@@ -25,7 +26,7 @@
 	"image-button-edit-region": "Вироиши минтақа",
 	"image-button-loading": "дар ҳоли бор шудан…",
 	"settings": "Танзимот",
-	"settings-label-interface-language-code": "Забони интерфейс",
+	"settings-label-interface-language-code": "Забони интерфейси корбар",
 	"settings-save": "Захира",
 	"error-title": "Хато",
 	"file-not-found-heading": "Файл ёфта нашуд",
