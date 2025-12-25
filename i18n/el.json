@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"FocalPoint",
+			"Jimkats",
 			"Warudo"
 		]
 	},
@@ -13,9 +14,9 @@
 	"nav-login": "Σύνδεση",
 	"nav-logged-in": "{{GENDER:$2|Συνδεθήκατε}} ως $1.",
 	"index-paragraph-1": "Αυτό το εργαλείο εμφανίζει $1 qualifiers σε $2 ή $3 δηλώσεις ως περιοχές στη σχετική εικόνα.",
-	"index-paragraph-2": "Δηλώσεις σχετικά με στοιχεία [$1 Wikidata], εμφανίζονται στο $2 (ή σε άλλη ιδιότητα) του στοιχείου. Δηλώσεις σε αρχεία [$3 Structured Data on Commons], εμφανίζονται στο ίδιο το αρχείο.",
+	"index-paragraph-2": "Δηλώσεις σχετικά με στοιχεία [$1 Wikidata], εμφανίζονται στο $2 (ή σε άλλη ιδιότητα) του στοιχείου. Δηλώσεις σε αρχεία [$3 Structured Data στο Commons], εμφανίζονται στο ίδιο το αρχείο.",
 	"index-heading-by-item-and-property": "Ανά είδος (item) και ιδιότητα (property)",
-	"index-label-item-id": "Αναγνωριστικό αντικειμένου:",
+	"index-label-item-id": "Αναγνωριστικό αντικειμένου",
 	"index-placeholder-item-id": "$1 ή $2 ή παρόμοια",
 	"index-label-property-id-optional": "Αναγνωριστικό ταυτότητας <small>(προαιρετικό)</small>",
 	"index-button-load": "Φόρτωση",
