@@ -9,7 +9,7 @@
 		]
 	},
 	"tool-name": "Posizioni dell'immagine su Wikidata",
-	"skip-to-main-content": "Passa al contenuto principale",
+	"skip-to-main-content": "Vai al contenuto principale",
 	"nav-documentation": "Documentazione",
 	"nav-toolforge": "Wikimedia Toolforge",
 	"nav-source-code": "Codice sorgente",
@@ -27,7 +27,7 @@
 	"index-heading-by-file": "Per file",
 	"index-label-file-title": "Titolo del file",
 	"index-placeholder-file-title": "$1, $2, $3 o simile",
-	"index-heading-by-iiif": "By IIIF region and property",
+	"index-heading-by-iiif": "Per regione e proprietà IIIF",
 	"index-label-iiif-region": "<abbr title=\"Framework Internazionale di Interoperabilità delle Immagini\">IIIF</abbr> region",
 	"image-scale": "Scala dell'immagine:&#32;",
 	"image-depicted-without-region": "Raffigurato senza alcuna regione specificata:",
