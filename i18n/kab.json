@@ -1,0 +1,18 @@
+{
+	"@metadata": {
+		"authors": [
+			"ButterflyOfFire"
+		]
+	},
+	"nav-documentation": "Tasemlit",
+	"nav-source-code": "Tangalt taɣbalut",
+	"nav-login": "Qqen",
+	"nav-logged-in": "{{GENDER:$2|Logged in}} am $1.",
+	"index-label-file-title": "Azwel n ufaylu",
+	"image-button-cancel": "semmet",
+	"settings": "Iɣewwaren",
+	"settings-label-interface-language-code": "Tutlayt n ugrudem n useqdac",
+	"settings-save": "Sekles",
+	"error-title": "Tuccḍa",
+	"file-not-found-heading": "Afaylu ulac-it"
+}

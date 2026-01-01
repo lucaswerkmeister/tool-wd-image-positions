@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"L'Arpetani",
 			"Lluis Cat"
 		]
 	},
@@ -12,6 +13,7 @@
 	"nav-login": "Inicia sessió",
 	"nav-logged-in": "{{GENDER:$2|Has iniciat sessió}} amb l'usuari $1.",
 	"index-paragraph-1": "Aquesta eina mostra els qualificadors $1 en declaracions $2 o $3 com a àrees de la imatge rellevant.",
+	"index-paragraph-2": "Per a les declaracions sobre elements [$1 Wikidata], es mostren a la proprietat $2 de l'element (o una altra). Per a les declaracions sobre fitxers [$3 Dades estructurades en Commons], es mostren en el propri fitxer.",
 	"index-heading-by-item-and-property": "Per element i propietat",
 	"index-label-item-id": "ID de l'element",
 	"index-placeholder-item-id": "$1 o $2 o semblant",
@@ -23,6 +25,7 @@
 	"index-label-file-title": "Nom del fitxer",
 	"index-placeholder-file-title": "$1 o $2 o $3 o semblant",
 	"index-heading-by-iiif": "Per regió i propietat de l'IIIF",
+	"index-label-iiif-region": "Regió <abbr title=\"Marc Internacional d'Interoperabilitat d'Imatges\">IIIF</abbr>",
 	"image-scale": "Escala de la imatge:&#32;",
 	"image-depicted-without-region": "Representat sense cap regió especificada:",
 	"image-named-places-on-map-without-region": "Llocs amb nom al mapa sense cap regió especificada:",
