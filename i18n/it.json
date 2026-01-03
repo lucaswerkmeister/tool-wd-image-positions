@@ -3,6 +3,7 @@
 		"authors": [
 			"Beta16",
 			"Champ0999",
+			"Dream Indigo",
 			"Egidio24",
 			"Emabarto01",
 			"GseSro"
@@ -14,7 +15,7 @@
 	"nav-toolforge": "Wikimedia Toolforge",
 	"nav-source-code": "Codice sorgente",
 	"nav-login": "Entra",
-	"nav-logged-in": "{{GENDER:$2|Acceduto|Acceduta|Acceduto/a}} come $1.",
+	"nav-logged-in": "{{GENDER:$2|Accesso eseguito}} come $1.",
 	"index-paragraph-1": "Questo strumento mostra i qualificatori di $1 sulle dichiarazioni di $2 o $3 come aree dell'immagine pertinente.",
 	"index-paragraph-2": "Per le dichiarazioni sugli elementi di [$1 Wikidata], queste vengono visualizzate nella $2 dell'elemento (o in un'altra proprietà). Per le dichiarazioni sui file di [$3 Structured Data on Commons], queste vengono visualizzate sul file stesso.",
 	"index-heading-by-item-and-property": "Per elemento e proprietà",
