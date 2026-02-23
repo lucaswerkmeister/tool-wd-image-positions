@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Spotter"
+			"Spotter",
+			"WikipedistaOndra"
 		]
 	},
 	"tool-name": "Umístění obrázků Wikidata",
@@ -12,6 +13,7 @@
 	"nav-login": "Přihlásit se",
 	"index-heading-by-item-and-property": "Podle položky a majetku",
 	"index-label-item-id": "ID položky",
+	"index-placeholder-item-id": "$1 nebo $2 nebo podobné",
 	"index-button-load": "Načíst",
 	"index-button-preview-iiif": "Náhled IIIF",
 	"index-button-iiif-manifest": "Manifest IIIF",
