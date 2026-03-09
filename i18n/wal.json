@@ -9,6 +9,8 @@
 	"nav-source-code": "Man\"iya koodiya",
 	"nav-login": "Gela",
 	"nav-logged-in": "$1dan {{GENDER:$2|geliis}}.",
+	"index-button-load": "Eha",
+	"index-heading-by-file": "Fayliyan",
 	"index-label-file-title": "Fayliya sunttaa",
 	"index-placeholder-file-title": "$1 woykko $2 woykko $3 woykko malatiyagaa",
 	"image-scale": "Misiliya qottaa:&#32;",
@@ -22,10 +24,12 @@
 	"image-button-select-region": "Heeraa goydanawu bochcha",
 	"image-button-loading": "ehiiddi...",
 	"alert-noscript": "Jaavaaskriptee oottennan, hegaassi neeni kase gelida heeratanne qonccissotu xallaa be'anawu danddayaasa.",
+	"settings": "Giigissota",
 	"settings-label-interface-language-code": "Yaray go'ettiyo doonata",
 	"settings-save": "Minjja",
 	"error-title": "Balaa",
 	"file-not-found-heading": "Faylee beettibeenna",
 	"file-not-found-body": "<q>$1</q> sunttan de'iya faylee beettibeenna. Baynnaagaa woykko like gidenna suntta gidanawu danddayees.",
-	"item-without-image": "Ha dummatidaagaassi misilee baawa."
+	"item-without-image": "Ha dummatidaagaassi misilee baawa.",
+	"wrong-data-value-type-paragraph-2": "Neeni hanotaa balan qonccissadii?"
 }
