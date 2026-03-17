@@ -935,7 +935,8 @@ def depicted_properties_labels():
                                       languagefallback=True,
                                       ids=property_ids)['entities']
         for property_id, property_data in properties_data.items():
-            labels[property_id] = property_data['labels']
+            labels.setdefault(property_id, {})\
+                  .update(property_data['labels'])
     return labels
 
 @app.template_global(name='depicted_properties_labels')
