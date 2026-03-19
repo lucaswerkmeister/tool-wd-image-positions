@@ -34,7 +34,7 @@
 	"alert-not-logged-in": "Bu ka sta kunetadu<noscript> i JavaScript sta dizativadu</noscript>, unton, bu so podi udja rijons i diklarasons izistenti. Pa kirsenta diklarasons o rijons nobu, o pa idita kes izistenti, [$1 kuneta]<noscript> i ativa JavaScript</noscript>.",
 	"alert-noscript": "JavaScript sta dizativadu, unton, bu so podi udja rijons i diklarasons izistenti. Pa kirsenta diklarasons o rijons nobu, o pa idita kes izistenti, ativa JavaScript.",
 	"settings": "Kunfigurasons",
-	"settings-label-interface-language-code": "Linga di interfasi di uzuári",
+	"settings-label-interface-language-code": "Linga di nterfási di uzuári",
 	"settings-save": "Garda",
 	"error-title": "Éru",
 	"file-not-found-heading": "Fixeru ka foi atxadu",

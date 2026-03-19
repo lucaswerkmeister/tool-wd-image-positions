@@ -1,0 +1,36 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ahmed-Najib-Biabani-Ibrahimkhel",
+			"شاه زمان پټان"
+		]
+	},
+	"tool-name": "ويکي‌اومتوک انځور ځايونه",
+	"skip-to-main-content": "ارې منځپانگې ته ورتېرېدل",
+	"nav-documentation": "لاسوند",
+	"nav-source-code": "سرچينې کوډ",
+	"nav-login": "ننوتل",
+	"nav-logged-in": "د $1 په توگه {{GENDER:$2|ننوتل}}.",
+	"index-label-item-id": "توکي پېژند",
+	"index-placeholder-item-id": "$1 يا $2 يا دوی ته ورته",
+	"index-label-property-id-optional": "ځانتيا پېژند <small>(اختياري)</small>",
+	"index-button-load": "بارول",
+	"index-heading-by-file": "دوتنې له مخې",
+	"index-label-file-title": "دوتنې سرليک",
+	"index-placeholder-file-title": "$1 يا $2 يا $3 يا دوی ته ورته",
+	"image-button-add-region": "سيمه ورگډول",
+	"image-button-use-region": "دا سيمه وکاروئ",
+	"image-button-cancel": "ناگارل",
+	"image-button-editing-statement": "پرېکړه‌ليک سمېږي...",
+	"image-button-edit-region": "سيمه سمول",
+	"image-button-select-region": "سيمې سمولو لپاره (کېکاږل) غوره کړئ",
+	"image-button-loading": "بارېږي...",
+	"settings": "اوڼنې",
+	"settings-label-interface-language-code": "کارن مخبڼې ژبه",
+	"settings-save": "خوندي کول",
+	"error-title": "تېروتنه",
+	"file-not-found-heading": "دوتنه و نه موندل شوه",
+	"item-without-image": "دا توکی هېڅ انځور نه لري",
+	"wrong-data-value-type-heading": "د ارزښت ناسم ډول",
+	"wrong-data-value-type-paragraph-2": "ايا تاسو ناسمه ځانتيا مشخص کړې ده؟"
+}
