@@ -38,7 +38,7 @@
 	"settings-save": "Garda",
 	"error-title": "Éru",
 	"file-not-found-heading": "Fixeru ka foi atxadu",
-	"file-not-found-body": "Ka foi pusívi utxa un fixeru ku titlu <q>$1</q>. El podi sa-ta falta, o titlu podi ser nbálidu.",
+	"file-not-found-body": "Ka foi pusívi utxa un fixeru ku titlu <q>$1</q>. El podi sta ozenti, o titlu podi ser nbálidu.",
 	"item-without-image": "Es ilimentu ka tene imáji.",
 	"wrong-data-value-type-heading": "Tipu di balor nkurétu",
 	"wrong-data-value-type-paragraph-1": "Tipu di balor nkurétu pa prupiadadi di imáji: speradu <code>$1</code> mas éra <code>$2</code>.",
