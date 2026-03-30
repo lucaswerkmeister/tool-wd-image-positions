@@ -1,0 +1,21 @@
+{
+	"@metadata": {
+		"authors": [
+			"Apple TD",
+			"Chqaz",
+			"Foomin10",
+			"RhAnish"
+		]
+	},
+	"skip-to-main-content": "メインコンテンツへスキップ",
+	"nav-login": "ログイン",
+	"index-label-file-title": "ファイル名",
+	"image-button-add-region": "地域を追加",
+	"image-button-use-region": "この地域を使用する",
+	"image-button-cancel": "キャンセル",
+	"image-button-loading": "読み込み中...",
+	"settings": "設定",
+	"settings-save": "保存",
+	"error-title": "エラー",
+	"file-not-found-heading": "ファイルが見つかりません"
+}
