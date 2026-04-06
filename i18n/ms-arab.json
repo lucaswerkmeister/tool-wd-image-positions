@@ -1,0 +1,21 @@
+{
+	"@metadata": {
+		"authors": [
+			"Tofeiku"
+		]
+	},
+	"nav-source-code": "کود سومبر",
+	"index-label-item-id": "اءي.دي. بوتير",
+	"index-placeholder-item-id": "$1 اتاو $2 اتاو سروڤا",
+	"index-heading-by-file": "مڠيکوت فاءيل",
+	"index-label-file-title": "تاجوق فاءيل",
+	"index-placeholder-file-title": "$1 اتاو $2 اتاو $3 اتاو سروڤا",
+	"image-button-cancel": "بطل",
+	"image-button-editing-statement": "مڽونتيڠ کڽاتاءن…",
+	"settings": "تتڤن",
+	"settings-label-interface-language-code": "بهاس انتارا موک ڤڠݢونا",
+	"settings-save": "سيمڤن",
+	"error-title": "رالت",
+	"file-not-found-heading": "فاءيل تودق دجومڤاءي",
+	"wrong-data-value-type-heading": "جنيس نيلاي يڠ ساله"
+}
