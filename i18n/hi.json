@@ -1,0 +1,32 @@
+{
+	"@metadata": {
+		"authors": [
+			"Abijeet Patro",
+			"Saurmandal"
+		]
+	},
+	"skip-to-main-content": "मुख्य सामग्री पर जाएँ",
+	"nav-documentation": "प्रलेख",
+	"nav-toolforge": "विकिमीडिया Toolforge",
+	"nav-source-code": "स्रोत कोड",
+	"nav-login": "लॉग-इन करें",
+	"nav-logged-in": "$1 के रूप में {{GENDER:$2|लॉग-इन किया हुआ}}।",
+	"index-heading-by-item-and-property": "आयटम और गुणधर्म के अनुसार",
+	"index-label-item-id": "आयटम ID",
+	"index-placeholder-item-id": "$1 या $2 या समकक्ष",
+	"index-label-property-id-optional": "गुणधर्म ID <small>(वैकल्पिक)</small>",
+	"index-button-load": "लोड करें",
+	"index-button-preview-iiif": "IIIF का पूर्वावलोकन",
+	"index-button-iiif-manifest": "IIIF मैनिफ़ेस्ट",
+	"index-heading-by-file": "फ़ाइल के अनुसार",
+	"index-label-file-title": "फ़ाइल की शीर्षक",
+	"index-placeholder-file-title": "$1 या $2 या $3 या समकक्ष",
+	"index-heading-by-iiif": "IIIF क्षेत्र और गुणधर्म के अनुसार",
+	"index-label-iiif-region": "<abbr title=\"International Image Interoperability Framework\">IIIF</abbr> क्षेत्र",
+	"image-button-add-region": "क्षेत्र जोड़ें",
+	"image-button-use-region": "इस क्षेत्र का उपयोग करें",
+	"image-button-cancel": "रद्द करें",
+	"image-button-loading": "लोड हो रहा है…",
+	"settings-save": "सहेजें",
+	"error-title": "त्रुटि"
+}
