@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Tensama0415",
 			"Ykhwong",
 			"밥풀떼기"
 		]
@@ -11,6 +12,7 @@
 	"nav-toolforge": "위키미디어 툴포지",
 	"nav-source-code": "소스 코드",
 	"nav-login": "로그인",
+	"nav-logged-in": "$1님으로 {{GENDER:$2|로그인했습니다}}.",
 	"index-heading-by-item-and-property": "항목 및 속성별",
 	"index-label-item-id": "항목 ID",
 	"index-placeholder-item-id": "$1 또는 $2 또는 이와 유사한 것",
@@ -22,6 +24,7 @@
 	"index-label-file-title": "파일 제목",
 	"index-placeholder-file-title": "$1 , $2 , $3 또는 이와 유사한 것",
 	"index-heading-by-iiif": "IIIF 지역 및 속성별",
+	"index-label-iiif-region": "<abbr title=\"International Image Interoperability Framework\">IIIF</abbr> 지역",
 	"image-scale": "이미지 크기:&#32;",
 	"image-button-add-region": "지역 추가",
 	"image-button-use-region": "이 지역 사용하기",
