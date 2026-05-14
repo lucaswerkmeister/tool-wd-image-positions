@@ -1,0 +1,20 @@
+{
+	"@metadata": {
+		"authors": [
+			"Bapham123",
+			"Henrydat",
+			"Trần Xuân"
+		]
+	},
+	"nav-documentation": "Tài liệu",
+	"nav-source-code": "Mã nguồn",
+	"nav-login": "Đăng nhập",
+	"index-button-load": "Tải",
+	"image-button-cancel": "Hủy bỏ",
+	"image-button-editing-statement": "Đang sửa đổi lời phát biểu...",
+	"image-button-loading": "đang tải…",
+	"settings": "Tùy chọn",
+	"settings-save": "Lưu",
+	"file-not-found-heading": "Không tìm thấy tập tin",
+	"item-without-image": "Mục này không có hình ảnh."
+}
