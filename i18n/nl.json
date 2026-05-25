@@ -44,7 +44,7 @@
 	"settings-save": "Opslaan",
 	"error-title": "Fout",
 	"file-not-found-heading": "Bestand niet gevonden",
-	"file-not-found-body": "Er kon geen bestand met de titel <q>$1</q> worden gevonden. Het kan zijn dat deze ontbreekt of dat de titel ongeldig is.",
+	"file-not-found-body": "Er kon geen bestand met de titel <q>$1</q> worden gevonden. Het kan zijn dat deze ontbreekt of dat de titel incorrect is.",
 	"item-without-image": "Dit item heeft geen afbeelding.",
 	"wrong-data-value-type-heading": "Onjuist waardetype",
 	"wrong-data-value-type-paragraph-1": "Onjuist waardetype voor de afbeeldingseigenschap: <code>$1</code> werd verwacht maar het was <code>$2</code>.",
