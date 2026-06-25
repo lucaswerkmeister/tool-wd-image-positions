@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Spotter",
+			"Walter Klosse",
 			"WikipedistaOndra"
 		]
 	},
@@ -11,6 +12,7 @@
 	"nav-toolforge": "Wikimedia Toolforge",
 	"nav-source-code": "Zdrojový kód",
 	"nav-login": "Přihlásit se",
+	"nav-logged-in": "{{GENDER:$2|Přihlášen|Přihlášena}} jako $1.",
 	"index-heading-by-item-and-property": "Podle položky a majetku",
 	"index-label-item-id": "ID položky",
 	"index-placeholder-item-id": "$1 nebo $2 nebo podobné",
