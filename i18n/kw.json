@@ -1,0 +1,21 @@
+{
+	"@metadata": {
+		"authors": [
+			"Flynn"
+		]
+	},
+	"nav-login": "Omgelmi",
+	"nav-logged-in": "{{GENDER:$2|Omgelmys}} avel $1.",
+	"index-placeholder-item-id": "$1 po $2 po haval",
+	"index-button-load": "Karga",
+	"index-button-preview-iiif": "Ragweles IIIF",
+	"index-label-file-title": "Titel an restren",
+	"index-placeholder-file-title": "$1 po $2 po $3 po haval",
+	"image-button-cancel": "hedhi",
+	"image-button-loading": "ow karga…",
+	"settings": "Settyansow",
+	"settings-label-interface-language-code": "Yeth ynterfas",
+	"settings-save": "Sawya",
+	"error-title": "Gwall",
+	"file-not-found-heading": "Restren nyns yw kevys"
+}
