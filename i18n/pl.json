@@ -1,0 +1,42 @@
+{
+	"@metadata": {
+		"authors": [
+			"Isxoes",
+			"Strebski",
+			"Woytecr",
+			"Xdlol45"
+		]
+	},
+	"tool-name": "Pozycje obrazów Wikidata",
+	"skip-to-main-content": "Przejdź do treści głównej",
+	"nav-documentation": "Dokumentacja",
+	"nav-toolforge": "Wikimedia Toolforge",
+	"nav-source-code": "Kod źródłowy",
+	"nav-login": "Zaloguj się",
+	"nav-logged-in": "{{GENDER:$2| Zalogowany| Zalogowana| Zalogowano}} jako $1.",
+	"index-heading-by-item-and-property": "Według przedmiotu i właściwości",
+	"index-label-item-id": "ID przedmiotu",
+	"index-placeholder-item-id": "$1 lub $2 lub podobne",
+	"index-button-load": "Załaduj",
+	"index-button-iiif-manifest": "Manifest IIIF",
+	"index-heading-by-file": "Według pliku",
+	"index-label-file-title": "Tytuł pliku",
+	"index-heading-by-iiif": "Według regionu i właściwości IIIF",
+	"image-scale": "Skala obrazu:&#32;",
+	"image-depicted-without-region": "Przedstawiono bez określenia regionu:",
+	"image-named-places-on-map-without-region": "Nazwane miejsca na mapie bez określonego regionu:",
+	"image-button-add-region": "dodaj region",
+	"image-button-use-region": "użyj tego regionu",
+	"image-button-cancel": "anuluj",
+	"image-button-edit-region": "Edytuj region",
+	"image-button-select-region": "Wybierz (kliknij) region do edycji",
+	"image-button-loading": "wczytywanie…",
+	"settings": "Ustawienia",
+	"settings-label-interface-language-code": "Język interfejsu użytkownika",
+	"settings-save": "Zapisz",
+	"error-title": "Błąd",
+	"file-not-found-heading": "Nie odnaleziono pliku",
+	"item-without-image": "Ten element nie posiada obrazka.",
+	"wrong-data-value-type-heading": "Nieprawidłowy typ wartości",
+	"wrong-data-value-type-paragraph-2": "Czy podałeś niewłaściwą właściwość?"
+}
