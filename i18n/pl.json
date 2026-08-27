@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Isxoes",
+			"PanWor",
 			"Strebski",
 			"Woytecr",
 			"Xdlol45"
@@ -38,5 +39,5 @@
 	"file-not-found-heading": "Nie odnaleziono pliku",
 	"item-without-image": "Ten element nie posiada obrazka.",
 	"wrong-data-value-type-heading": "Nieprawidłowy typ wartości",
-	"wrong-data-value-type-paragraph-2": "Czy podałeś niewłaściwą właściwość?"
+	"wrong-data-value-type-paragraph-2": "Czy podana przez Ciebie właściwość jest niewłaściwa?"
 }
