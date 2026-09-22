@@ -18,37 +18,45 @@ please see the tool’s [on-wiki documentation page](https://www.wikidata.org/wi
 ## Toolforge setup
 
 On Wikimedia Toolforge, this tool runs under the `wd-image-positions` tool name,
-from a container built using the [Toolforge Build Service](https://wikitech.wikimedia.org/wiki/Help:Toolforge/Building_container_images).
+using the [Toolforge Components Service](https://wikitech.wikimedia.org/wiki/Help:Toolforge/Deploy_your_tool) to coordinate
+building a container with the [Toolforge Build Service](https://wikitech.wikimedia.org/wiki/Help:Toolforge/Build_Service)
+and then deploying that for the webservice and background runner.
+The components configuration is in the `toolforge.yaml` file.
 
-### Image build
-
-To build a new version of the image,
+To start a new deployment,
 run the following command on Toolforge after becoming the tool account:
 
 ```sh
-toolforge build start --use-latest-versions https://gitlab.wikimedia.org/toolforge-repos/wd-image-positions
+toolforge components deployment create
 ```
 
-The image will contain all the dependencies listed in `requirements.txt`,
-as well as the commands specified in the `Procfile`.
+This should automatically kick off an image build and restart the webservice at the end.
 
-### Webservice
+### Details and troubleshooting
 
-The web frontend of the tool runs as a webservice using the `buildpack` type.
-The web service runs the first command in the `Procfile` (`web`),
-which runs the Flask WSGI app using gunicorn.
+To inspect the overall deployment status, run:
 
-```
-webservice start
+```sh
+toolforge components deployment show
 ```
 
-Or, if the `~/service.template` file went missing:
+To debug the image build step, it may be useful to trigger an image build explicitly –
+you can add `--ref=foobar` to build from the `foobar` branch instead of the `main` branch:
 
-```
-webservice --mount=none buildservice start
+```sh
+toolforge build start https://gitlab.wikimedia.org/toolforge-repos/wd-image-positions
 ```
 
-If it’s acting up, try the same command with `restart` instead of `start`.
+The web frontent is a Flask WSGI app using gunicorn,
+and runs as the `wd-image-positions` job,
+which you may inspect with commands like these:
+
+```sh
+toolforge jobs show wd-image-positions
+toolforge jobs logs wd-image-positions
+kubectl get deployment wd-image-positions
+kubectl exec -it deployment/wd-image-positions -- bash
+```
 
 ### Configuration
 
