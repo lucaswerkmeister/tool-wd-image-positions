@@ -20,7 +20,7 @@ please see the tool’s [on-wiki documentation page](https://www.wikidata.org/wi
 On Wikimedia Toolforge, this tool runs under the `wd-image-positions` tool name,
 using the [Toolforge Components Service](https://wikitech.wikimedia.org/wiki/Help:Toolforge/Deploy_your_tool) to coordinate
 building a container with the [Toolforge Build Service](https://wikitech.wikimedia.org/wiki/Help:Toolforge/Build_Service)
-and then deploying that for the webservice and background runner.
+and then deploying that for the webservice.
 The components configuration is in the `toolforge.yaml` file.
 
 To start a new deployment,
@@ -81,13 +81,8 @@ For the available configuration variables, see the `config.yaml.example` file.
 
 ### Update
 
-To update the tool, build a new version of the image as described above,
-then restart the webservice:
-
-```sh
-toolforge build start --use-latest-versions https://gitlab.wikimedia.org/toolforge-repos/wd-image-positions
-webservice restart
-```
+The tool should automatically be updated on every push to the `main` branch.
+To trigger a manual update, run `toolforge components deployment create` as described above.
 
 ## Local development setup
 
