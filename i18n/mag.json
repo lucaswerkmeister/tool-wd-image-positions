@@ -1,0 +1,33 @@
+{
+	"@metadata": {
+		"authors": [
+			"ऐक्टिवेटेड्"
+		]
+	},
+	"nav-documentation": "प्रलेखन",
+	"nav-toolforge": "विकिमीडिया टूलफोर्ज",
+	"nav-source-code": "स्रोत कोड",
+	"nav-login": "प्रवेश करथिन",
+	"nav-logged-in": "$1 के रूपमे {{GENDER:$2|प्रवेश भेल}} ।",
+	"index-label-item-id": "वस्तु आइडि",
+	"index-placeholder-item-id": "$1 वा $2 वा समकक्ष",
+	"index-label-property-id-optional": "गुणधर्म आइडि <small>(वैकल्पिक)</small>",
+	"index-button-load": "लोड करथिन",
+	"index-button-preview-iiif": "IIIF पूर्वावलोकन",
+	"index-button-iiif-manifest": "IIIF घोषणा",
+	"index-heading-by-file": "सञ्चिका अनुसार",
+	"index-label-file-title": "सञ्चिका शीर्षक",
+	"index-placeholder-file-title": "$1 वा $2 वा $3 वा समकक्ष",
+	"index-heading-by-iiif": "IIIF क्षेत्र आउ गुणधर्म अनुसार",
+	"image-button-add-region": "क्षेत्र जोड़थिन",
+	"image-button-use-region": "एह क्षेत्र प्रयोग करथिन",
+	"image-button-cancel": "निरस्त करथिन",
+	"image-button-editing-statement": "कथन सम्पादित होवैत…",
+	"image-button-edit-region": "क्षेत्र सम्पादित करथिन",
+	"image-button-loading": "लोड होवैत…",
+	"settings": "सेटिङ्ग",
+	"settings-label-interface-language-code": "प्रयोगकर्ता अन्तराफलक भाषा",
+	"settings-save": "सहेजथिन",
+	"error-title": "त्रुटि",
+	"file-not-found-heading": "सञ्चिका नै भेटाएल"
+}
