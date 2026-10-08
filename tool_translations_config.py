@@ -58,6 +58,10 @@ def _language_code_to_babel(code: str) -> str:
         # they share the Cyrillic script, and while Russian has more plural forms,
         # I don’t think that should be a problem
         'krc': 'ru',
+        # mag (Magahi) has no explicit fallbacks in MediaWiki, and has the same plural forms as English;
+        # of the other Bihari languages in English Wikipedia, only two are in Babel –
+        # bho (Bhojpuri) and mai (Maithili) – and both of those have different plural forms
+        'mag': 'en',
         # rki (Rakhine / Arakanese) is closely related to my (Burmese)
         # and has the same script and plural forms in MediaWiki
         'rki': 'my',
