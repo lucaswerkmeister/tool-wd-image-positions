@@ -20,6 +20,7 @@ import urllib.parse
 import yaml
 
 from exceptions import WrongDataValueType
+from init import user_agent
 from toolforge_i18n import ToolforgeI18n, interface_language_code_from_request, lang_autonym, message, pop_html_lang, push_html_lang
 import messages
 
@@ -36,8 +37,6 @@ def interface_language_code(translations):
         return interface_language_code_from_request(translations)
 
 i18n = ToolforgeI18n(app, interface_language_code)
-
-user_agent = toolforge.set_user_agent('lexeme-forms', email='mail@lucaswerkmeister.de')
 
 default_property = 'P18'
 

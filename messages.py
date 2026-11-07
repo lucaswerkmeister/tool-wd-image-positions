@@ -2,6 +2,8 @@ import cachetools
 import mwapi
 import threading
 
+from init import user_agent
+
 
 _messages_cache = cachetools.TTLCache(maxsize=1024, ttl=24 * 60 * 60)
 _messages_cache_lock = threading.RLock()
@@ -10,7 +12,7 @@ _messages_cache_lock = threading.RLock()
 @cachetools.cached(cache=_messages_cache,
                    lock=_messages_cache_lock)
 def _load_messages(language):
-    session = mwapi.Session('https://www.wikidata.org')
+    session = mwapi.Session('https://www.wikidata.org', user_agent=user_agent)
     response = session.get(action='query',
                            meta='allmessages',
                            ammessages=['wikibase-snakview-variations-somevalue-label',
