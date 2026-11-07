@@ -43,7 +43,8 @@
     --color: 255, 0, 255;
 }
 
-.wd-image-positions--depicted:hover {
+.wd-image-positions--depicted:hover,
+.wd-image-positions--depicted__highlighted {
     /*
      * make the “active” area even more visible – many overlapping areas can be hard to distinguish
      * (note that outlines, unlike borders, never occupy space,

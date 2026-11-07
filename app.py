@@ -360,7 +360,10 @@ def iiif_region_and_property(iiif_region, property_id):
         else:
             items.append(item)
 
-    return flask.render_template('iiif_region.html', items=items, items_without_image=items_without_image)
+    return flask.render_template('iiif_region.html',
+                                 items=items,
+                                 items_without_image=items_without_image,
+                                 highlighted_iiif_regions={iiif_region})
 
 @app.route('/file/<image_title>')
 def file(image_title):

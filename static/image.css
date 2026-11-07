@@ -47,7 +47,7 @@ label > .wd-image-positions--scale {
 .wd-image-positions--scale[value="4"]:checked ~ .wd-image-positions--wrapper > .wd-image-positions--image { --scale: 4; }
 .wd-image-positions--scale[value="5"]:checked ~ .wd-image-positions--wrapper > .wd-image-positions--image { --scale: 5; }
 
-.wd-image-positions--image:not(:hover) .wd-image-positions--depicted {
+.wd-image-positions--image:not(:hover) .wd-image-positions--depicted:not(.wd-image-positions--depicted__highlighted) {
     /*
      * don’t show this element unless the user hovers over the image
      */
