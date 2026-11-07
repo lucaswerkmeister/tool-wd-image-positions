@@ -39,12 +39,6 @@ i18n = ToolforgeI18n(app, interface_language_code)
 
 user_agent = toolforge.set_user_agent('lexeme-forms', email='mail@lucaswerkmeister.de')
 
-requests_session = requests.Session()
-requests_session.headers.update({
-    'Accept': 'application/json',
-    'User-Agent': user_agent,
-})
-
 default_property = 'P18'
 
 # maps property IDs to message keys for “… with no region specified:” list labels
@@ -69,6 +63,15 @@ else:
     print('No OAuth configuration found, assuming local development setup')
     if app.secret_key is None:
         app.secret_key = 'fake'
+
+wdqs_session = requests.Session()
+wdqs_session.headers['Accept'] = 'application/json'
+if (query_next_user_agent := app.config.get('QUERY_NEXT_USER_AGENT')) is not None:
+    wdqs_session.headers['User-Agent'] = query_next_user_agent
+    wdqs_url = 'https://query-next.wikidata.org/sparql'
+else:
+    wdqs_session.headers['User-Agent'] = user_agent
+    wdqs_url = 'https://query.wikidata.org/sparql'
 
 def anonymous_session(domain):
     host = 'https://' + domain
@@ -345,8 +348,8 @@ def iiif_region_and_property(iiif_region, property_id):
         ?item ?p [ pq:P2677 %s ].
       }
     ''' % (property_claim_predicates, iiif_region_string)
-    query_results = requests_session.get('https://query.wikidata.org/sparql',
-                                         params={'query': query}).json()
+    query_results = wdqs_session.get(wdqs_url,
+                                     params={'query': query}).json()
 
     items = []
     items_without_image = []
