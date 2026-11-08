@@ -69,12 +69,12 @@ Nested dicts are specified with envvar names where `__` separates the key compon
 so that e.g. the following are equivalent:
 
 ```sh
-toolforge envvars create TOOL_OAUTH__CONSUMER_KEY 271b735e0cf895694f2ee7a3ae7a2dbc
+toolforge envvars create TOOL_OAUTH__CLIENT_ID ff1428e010c8f94f8f17d0d5e61c0c80
 ```
 
 ```yaml
 OAUTH:
-    CONSUMER_KEY: 271b735e0cf895694f2ee7a3ae7a2dbc
+    CLIENT_ID: ff1428e010c8f94f8f17d0d5e61c0c80
 ```
 
 For the available configuration variables, see the `config.yaml.example` file.
