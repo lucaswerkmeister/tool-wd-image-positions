@@ -6,7 +6,7 @@ gunicorn
 iiif-prezi
 MarkupSafe
 mwapi
-mwoauth2
+mwoauth2[Flask,mwapi]
 pyyaml
 requests
 toolforge >= 6.1.0
