@@ -2,15 +2,12 @@
 source_url: https://gitlab.wikimedia.org/toolforge-repos/wd-image-positions/-/raw/main/toolforge.yaml
 components:
   wd-image-positions:
-    component_type: continuous
+    component_type: webservice
     build:
       repository: https://gitlab.wikimedia.org/toolforge-repos/wd-image-positions
       ref: main
     run:
-      command: web
       mount: none
-      port: 8000
-      publish: /
       health_check_http: /healthz
 defaults:
   alerts:
